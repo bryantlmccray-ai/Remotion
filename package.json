@@ -1,0 +1,24 @@
+{
+  "name": "monark-wellness-demo-video",
+  "version": "1.0.0",
+  "description": "Luxury demo video for Monark Relationship Wellness Platform",
+  "scripts": {
+    "start": "remotion studio",
+    "build": "remotion render",
+    "render": "remotion render WellnessDemo out/wellness-demo.mp4 --codec=h264"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.250",
+    "remotion": "4.0.250",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.0",
+    "typescript": "5.3.3"
+  },
+  "remotion": {
+    "entrypoint": "src/index.ts"
+  }
+}
