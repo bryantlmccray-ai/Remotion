@@ -251,7 +251,7 @@ export const Scene04_Onboarding: React.FC = () => {
       }}
     >
       <ParticleField />
-      <GlowOrb x="70%" y="50%" size={600} color="rgba(155,142,196,0.2)" delay={20} />
+      <GlowOrb x="70%" y="50%" size={600} color="rgba(94,110,74,0.2)" delay={20} />
       <GlowOrb x="20%" y="30%" size={400} color="rgba(201,168,76,0.2)" delay={0} />
 
       {/* Left: copy */}

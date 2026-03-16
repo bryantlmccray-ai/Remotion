@@ -50,7 +50,7 @@ export const Scene01_BrandReveal: React.FC = () => {
       <ParticleField />
       <GlowOrb x="15%" y="25%" size={600} color="rgba(201,168,76,0.3)" delay={0} />
       <GlowOrb x="85%" y="75%" size={500} color="rgba(232,160,160,0.25)" delay={60} />
-      <GlowOrb x="50%" y="10%" size={400} color="rgba(155,142,196,0.2)" delay={30} />
+      <GlowOrb x="50%" y="10%" size={400} color="rgba(94,110,74,0.2)" delay={30} />
 
       {/* Logo Ring */}
       <div

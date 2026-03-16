@@ -216,7 +216,7 @@ export const Scene06_WeeklyCheckin: React.FC = () => {
     >
       <ParticleField />
       <GlowOrb x="25%" y="55%" size={600} color="rgba(201,168,76,0.25)" delay={0} />
-      <GlowOrb x="75%" y="35%" size={450} color="rgba(155,142,196,0.2)" delay={60} />
+      <GlowOrb x="75%" y="35%" size={450} color="rgba(192,128,138,0.2)" delay={60} />
 
       {/* Left text */}
       <div style={{ maxWidth: 420 }}>
@@ -246,7 +246,7 @@ export const Scene06_WeeklyCheckin: React.FC = () => {
           }}
         >
           Measure what{" "}
-          <span style={{ background: "linear-gradient(135deg, #9B8EC4, #C4BAE8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          <span style={{ background: "linear-gradient(135deg, #C0808A, #D4A0A8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             truly matters
           </span>
         </div>

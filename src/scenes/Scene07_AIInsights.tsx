@@ -75,8 +75,8 @@ const PhoneAIScreen: React.FC = () => {
           marginBottom: 16,
           padding: "10px 14px",
           borderRadius: 14,
-          background: "rgba(155,142,196,0.1)",
-          border: `1px solid rgba(155,142,196,0.3)`,
+          background: "rgba(127,90,56,0.1)",
+          border: `1px solid rgba(127,90,56,0.3)`,
         }}
       >
         <div
@@ -84,7 +84,7 @@ const PhoneAIScreen: React.FC = () => {
             width: 32,
             height: 32,
             borderRadius: "50%",
-            background: "linear-gradient(135deg, #9B8EC4, #C4BAE8)",
+            background: "linear-gradient(135deg, #7F5A38, #AB7B54)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -115,8 +115,8 @@ const PhoneAIScreen: React.FC = () => {
         style={{
           padding: "12px 14px",
           borderRadius: 14,
-          background: "rgba(155,142,196,0.08)",
-          border: `1px solid rgba(155,142,196,0.2)`,
+          background: "rgba(127,90,56,0.08)",
+          border: `1px solid rgba(127,90,56,0.2)`,
           marginBottom: 14,
           fontSize: 11,
           color: colors.textPrimary,
@@ -191,7 +191,7 @@ export const Scene07_AIInsights: React.FC = () => {
       }}
     >
       <ParticleField />
-      <GlowOrb x="30%" y="40%" size={600} color="rgba(155,142,196,0.25)" delay={0} />
+      <GlowOrb x="30%" y="40%" size={600} color="rgba(127,90,56,0.25)" delay={0} />
       <GlowOrb x="80%" y="65%" size={400} color="rgba(201,168,76,0.2)" delay={50} />
 
       {/* Left content */}
@@ -230,7 +230,7 @@ export const Scene07_AIInsights: React.FC = () => {
           Your personal{" "}
           <span
             style={{
-              background: "linear-gradient(135deg, #9B8EC4, #C4BAE8, #E8C97A)",
+              background: "linear-gradient(135deg, #7F5A38, #AB7B54, #E8C97A)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
@@ -244,7 +244,7 @@ export const Scene07_AIInsights: React.FC = () => {
           style={{
             width: 80,
             height: 1,
-            background: "linear-gradient(90deg, #9B8EC4, #C4BAE8)",
+            background: "linear-gradient(90deg, #A6935F, #BBA876)",
             marginBottom: 24,
           }}
         />

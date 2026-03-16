@@ -28,7 +28,7 @@ const AvatarRing: React.FC<{ frame: number }> = ({ frame }) => {
           position: "absolute",
           inset: 3,
           borderRadius: "50%",
-          background: `linear-gradient(135deg, #2a2040, #1a1530)`,
+          background: `linear-gradient(135deg, #503F30, #433627)`,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",

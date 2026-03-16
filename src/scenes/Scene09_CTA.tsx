@@ -86,7 +86,7 @@ export const Scene09_CTA: React.FC = () => {
       <ParticleField />
       <GlowOrb x="50%" y="50%" size={800} color="rgba(201,168,76,0.15)" delay={0} pulse={true} />
       <GlowOrb x="20%" y="20%" size={400} color="rgba(232,160,160,0.2)" delay={30} />
-      <GlowOrb x="80%" y="80%" size={350} color="rgba(155,142,196,0.2)" delay={60} />
+      <GlowOrb x="80%" y="80%" size={350} color="rgba(94,110,74,0.2)" delay={60} />
 
       {/* Orbiting hearts */}
       <div
