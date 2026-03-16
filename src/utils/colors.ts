@@ -1,35 +1,44 @@
 export const colors = {
-  // Deep luxury backgrounds
-  bg: "#0A0A0F",
-  bgCard: "#12121A",
-  bgGlass: "rgba(255,255,255,0.04)",
-  bgGlassBright: "rgba(255,255,255,0.08)",
+  // Warm linen backgrounds — never pure white, never flat
+  bg: "#F5F0E8",
+  bgWarm: "#EDE7DB",
+  bgCream: "#FAF7F2",
+  bgDark: "#2C2520",
+  bgCard: "#EDE7DB", // legacy alias
+  bgGlass: "rgba(201,168,76,0.04)",
+  bgGlassBright: "rgba(201,168,76,0.08)",
 
-  // Brand gradient – warm gold to blush rose
+  // Brand gradient – warm gold
   gold: "#C9A84C",
   goldLight: "#E8C97A",
   goldDim: "#8B6F2E",
-  rose: "#E8A0A0",
-  roseLight: "#F5C6C6",
-  roseDim: "#A06060",
+  goldSoft: "rgba(201,168,76,0.12)",
 
-  // Accent lavender
+  // Rose/mauve — exclusively for "truly matters"
+  rose: "#C4848A",
+  roseLight: "#D4A0A5",
+  roseSoft: "rgba(196,132,138,0.15)",
+
+  // Lavender accents
   lavender: "#9B8EC4",
   lavenderLight: "#C4BAE8",
 
-  // Text
-  textPrimary: "#F5F0E8",
-  textSecondary: "rgba(245,240,232,0.6)",
-  textMuted: "rgba(245,240,232,0.35)",
+  // Text — dark on cream
+  textPrimary: "#2C2520",
+  textSecondary: "rgba(44,37,32,0.6)",
+  textMuted: "rgba(44,37,32,0.35)",
 
   // Borders
-  border: "rgba(201,168,76,0.18)",
+  border: "rgba(201,168,76,0.2)",
   borderBright: "rgba(201,168,76,0.4)",
+
+  // Pentagon particles
+  particleCream: "rgba(201,168,76,0.20)",
 
   // Gradients
   gradientGold: "linear-gradient(135deg, #C9A84C 0%, #E8C97A 50%, #C9A84C 100%)",
-  gradientRose: "linear-gradient(135deg, #E8A0A0 0%, #F5C6C6 50%, #C9A84C 100%)",
-  gradientBg: "linear-gradient(180deg, #0A0A0F 0%, #0F0D1A 50%, #0A0A0F 100%)",
+  gradientRose: "linear-gradient(135deg, #C4848A 0%, #D4A0A5 50%, #C9A84C 100%)",
+  gradientBg: "linear-gradient(180deg, #F5F0E8 0%, #EDE7DB 50%, #F5F0E8 100%)",
   gradientCard: "linear-gradient(145deg, rgba(201,168,76,0.08) 0%, rgba(155,142,196,0.05) 100%)",
 };
 
