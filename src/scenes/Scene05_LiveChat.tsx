@@ -5,25 +5,22 @@ import { GlowOrb } from "../components/GlowOrb";
 import { ParticleField } from "../components/ParticleField";
 import { PhoneMockup } from "../components/PhoneMockup";
 
-const TypingIndicator: React.FC<{ frame: number }> = ({ frame }) => {
-  const dots = [0, 1, 2];
-  return (
-    <div style={{ display: "flex", gap: 4, alignItems: "center", padding: "4px 0" }}>
-      {dots.map((d) => (
-        <div
-          key={d}
-          style={{
-            width: 6,
-            height: 6,
-            borderRadius: "50%",
-            background: colors.lavender,
-            opacity: 0.4 + 0.6 * Math.sin(frame * 0.2 + d * 1.2),
-          }}
-        />
-      ))}
-    </div>
-  );
-};
+const TypingIndicator: React.FC<{ frame: number }> = ({ frame }) => (
+  <div style={{ display: "flex", gap: 4, alignItems: "center", padding: "4px 0" }}>
+    {[0, 1, 2].map((d) => (
+      <div
+        key={d}
+        style={{
+          width: 6,
+          height: 6,
+          borderRadius: "50%",
+          background: colors.accent,
+          opacity: 0.4 + 0.6 * Math.sin(frame * 0.2 + d * 1.2),
+        }}
+      />
+    ))}
+  </div>
+);
 
 interface ChatMessage {
   sender: "match" | "user";
@@ -39,17 +36,13 @@ const MESSAGES: ChatMessage[] = [
   { sender: "match", text: "Honestly? I was tired of surface-level apps. This felt different from the first question 💜", startFrame: 200 },
 ];
 
-const ChatBubble: React.FC<{
-  message: ChatMessage;
-  matchName: string;
-}> = ({ message, matchName }) => {
+const ChatBubble: React.FC<{ message: ChatMessage; matchName: string }> = ({ message, matchName }) => {
   const frame = useCurrentFrame();
   const isMatch = message.sender === "match";
 
   const appear = interpolate(frame, [message.startFrame, message.startFrame + 15], [0, 1], { extrapolateRight: "clamp" });
   const slideY = interpolate(frame, [message.startFrame, message.startFrame + 15], [12, 0], { extrapolateRight: "clamp" });
 
-  // Typing text effect
   const charProgress = interpolate(
     frame,
     [message.startFrame + 5, message.startFrame + 5 + message.text.length * 0.8],
@@ -79,10 +72,8 @@ const ChatBubble: React.FC<{
           maxWidth: "80%",
           padding: "10px 14px",
           borderRadius: isMatch ? "16px 16px 16px 4px" : "16px 16px 4px 16px",
-          background: isMatch
-            ? "rgba(155,142,196,0.15)"
-            : "rgba(201,168,76,0.15)",
-          border: `1px solid ${isMatch ? "rgba(155,142,196,0.3)" : "rgba(201,168,76,0.3)"}`,
+          background: isMatch ? "rgba(127,90,56,0.08)" : "rgba(166,147,95,0.12)",
+          border: `1px solid ${isMatch ? "rgba(127,90,56,0.15)" : "rgba(166,147,95,0.2)"}`,
           fontSize: 11,
           color: colors.textPrimary,
           lineHeight: 1.5,
@@ -90,7 +81,7 @@ const ChatBubble: React.FC<{
       >
         {displayText}
         {Math.floor(charProgress) < message.text.length && (
-          <span style={{ opacity: frame % 20 < 10 ? 1 : 0, color: isMatch ? colors.lavender : colors.gold }}>|</span>
+          <span style={{ opacity: frame % 20 < 10 ? 1 : 0, color: isMatch ? colors.accent : colors.gold }}>|</span>
         )}
       </div>
     </div>
@@ -100,23 +91,12 @@ const ChatBubble: React.FC<{
 const PhoneChatScreen: React.FC = () => {
   const frame = useCurrentFrame();
 
-  // Show typing indicator before each match message
   const showTyping1 = frame > 5 && frame < 20;
   const showTyping2 = frame > 50 && frame < 65;
   const showTyping3 = frame > 185 && frame < 200;
 
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        background: colors.bg,
-        display: "flex",
-        flexDirection: "column",
-        fontFamily: fonts.sans,
-      }}
-    >
-      {/* Chat header */}
+    <div style={{ width: "100%", height: "100%", background: colors.bgCard, display: "flex", flexDirection: "column", fontFamily: fonts.sans }}>
       <div
         style={{
           padding: "50px 16px 12px",
@@ -131,7 +111,7 @@ const PhoneChatScreen: React.FC = () => {
             width: 36,
             height: 36,
             borderRadius: "50%",
-            background: "linear-gradient(135deg, rgba(201,168,76,0.2), rgba(155,142,196,0.2))",
+            background: "rgba(166,147,95,0.1)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -143,17 +123,17 @@ const PhoneChatScreen: React.FC = () => {
         </div>
         <div>
           <div style={{ fontSize: 13, color: colors.textPrimary, fontWeight: 600 }}>Amara</div>
-          <div style={{ fontSize: 9, color: "#4ade80", display: "flex", alignItems: "center", gap: 4 }}>
-            <div style={{ width: 5, height: 5, borderRadius: "50%", background: "#4ade80" }} />
+          <div style={{ fontSize: 9, color: colors.olive, display: "flex", alignItems: "center", gap: 4 }}>
+            <div style={{ width: 5, height: 5, borderRadius: "50%", background: colors.olive }} />
             Online now
           </div>
         </div>
-        <div style={{ marginLeft: "auto", display: "flex", gap: 12 }}>
+        <div style={{ marginLeft: "auto" }}>
           <div
             style={{
               padding: "4px 10px",
               borderRadius: 20,
-              background: "rgba(201,168,76,0.1)",
+              background: "rgba(166,147,95,0.1)",
               border: `1px solid ${colors.border}`,
               fontSize: 9,
               color: colors.gold,
@@ -165,42 +145,19 @@ const PhoneChatScreen: React.FC = () => {
         </div>
       </div>
 
-      {/* Messages area */}
-      <div
-        style={{
-          flex: 1,
-          padding: "16px 14px",
-          display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
-        }}
-      >
-        {/* Date separator */}
-        <div
-          style={{
-            textAlign: "center",
-            fontSize: 9,
-            color: colors.textMuted,
-            marginBottom: 16,
-            letterSpacing: 1,
-          }}
-        >
-          Today
-        </div>
-
+      <div style={{ flex: 1, padding: "16px 14px", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+        <div style={{ textAlign: "center", fontSize: 9, color: colors.textMuted, marginBottom: 16, letterSpacing: 1 }}>Today</div>
         {MESSAGES.map((msg, i) => (
           <ChatBubble key={i} message={msg} matchName="Amara" />
         ))}
-
-        {/* Typing indicators */}
         {(showTyping1 || showTyping2 || showTyping3) && (
           <div style={{ display: "flex", alignItems: "center", gap: 8, marginLeft: 4 }}>
             <div
               style={{
                 padding: "8px 14px",
                 borderRadius: "16px 16px 16px 4px",
-                background: "rgba(155,142,196,0.1)",
-                border: `1px solid rgba(155,142,196,0.2)`,
+                background: "rgba(127,90,56,0.06)",
+                border: `1px solid rgba(127,90,56,0.12)`,
               }}
             >
               <TypingIndicator frame={frame} />
@@ -209,7 +166,6 @@ const PhoneChatScreen: React.FC = () => {
         )}
       </div>
 
-      {/* Input bar */}
       <div
         style={{
           padding: "10px 14px 24px",
@@ -242,7 +198,8 @@ const PhoneChatScreen: React.FC = () => {
             alignItems: "center",
             justifyContent: "center",
             fontSize: 16,
-            boxShadow: "0 4px 16px rgba(201,168,76,0.3)",
+            color: colors.bgCard,
+            boxShadow: "0 4px 16px rgba(166,147,95,0.2)",
           }}
         >
           ↑
@@ -276,19 +233,14 @@ export const Scene05_LiveChat: React.FC = () => {
       }}
     >
       <ParticleField />
-      <GlowOrb x="30%" y="50%" size={500} color="rgba(155,142,196,0.2)" delay={0} />
-      <GlowOrb x="75%" y="35%" size={450} color="rgba(201,168,76,0.2)" delay={40} />
+      <GlowOrb x="30%" y="50%" size={500} color="rgba(94,110,74,0.08)" delay={0} />
+      <GlowOrb x="75%" y="35%" size={450} color="rgba(166,147,95,0.1)" delay={40} />
 
-      {/* Left content */}
       <div style={{ maxWidth: 420 }}>
         <div
           style={{
-            fontFamily: fonts.sans,
-            fontSize: 12,
-            letterSpacing: 5,
-            color: colors.rose,
-            textTransform: "uppercase",
-            marginBottom: 20,
+            fontFamily: fonts.sans, fontSize: 12, letterSpacing: 5, color: colors.rose,
+            textTransform: "uppercase", marginBottom: 20,
             opacity: interpolate(frame, [5, 35], [0, 1], { extrapolateRight: "clamp" }),
           }}
         >
@@ -296,11 +248,7 @@ export const Scene05_LiveChat: React.FC = () => {
         </div>
         <div
           style={{
-            fontFamily: fonts.serif,
-            fontSize: 52,
-            fontWeight: 300,
-            lineHeight: 1.15,
-            color: colors.textPrimary,
+            fontFamily: fonts.serif, fontSize: 52, fontWeight: 300, lineHeight: 1.15, color: colors.textPrimary,
             marginBottom: 24,
             opacity: interpolate(frame, [15, 45], [0, 1], { extrapolateRight: "clamp" }),
             transform: `translateY(${interpolate(frame, [15, 45], [30, 0], { extrapolateRight: "clamp" })}px)`,
@@ -311,16 +259,10 @@ export const Scene05_LiveChat: React.FC = () => {
             Just depth.
           </span>
         </div>
-
         <div style={{ width: 80, height: 1, background: colors.gradientRose, marginBottom: 24 }} />
-
         <div
           style={{
-            fontFamily: fonts.sans,
-            fontSize: 15,
-            color: colors.textSecondary,
-            lineHeight: 1.7,
-            marginBottom: 40,
+            fontFamily: fonts.sans, fontSize: 15, color: colors.textSecondary, lineHeight: 1.7, marginBottom: 40,
             opacity: interpolate(frame, [30, 60], [0, 1], { extrapolateRight: "clamp" }),
           }}
         >
@@ -339,10 +281,7 @@ export const Scene05_LiveChat: React.FC = () => {
             key={title}
             style={{
               opacity: interpolate(frame, [40 + i * 10, 65 + i * 10], [0, 1], { extrapolateRight: "clamp" }),
-              display: "flex",
-              gap: 12,
-              marginBottom: 14,
-              alignItems: "center",
+              display: "flex", gap: 12, marginBottom: 14, alignItems: "center",
             }}
           >
             <span style={{ fontSize: 20 }}>{icon}</span>
@@ -354,7 +293,6 @@ export const Scene05_LiveChat: React.FC = () => {
         ))}
       </div>
 
-      {/* Right phone */}
       <div style={{ transform: `translateX(${phoneX}px) scale(${phoneScale})` }}>
         <PhoneMockup scale={1}>
           <PhoneChatScreen />

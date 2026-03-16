@@ -14,7 +14,7 @@ const PhoneLandingScreen: React.FC = () => {
       style={{
         width: "100%",
         height: "100%",
-        background: colors.bg,
+        background: colors.bgCard,
         display: "flex",
         flexDirection: "column",
         padding: "60px 20px 20px",
@@ -22,7 +22,6 @@ const PhoneLandingScreen: React.FC = () => {
       }}
     >
       <div style={{ transform: `translateY(${scrollY}px)` }}>
-        {/* Hero */}
         <div style={{ textAlign: "center", marginBottom: 24 }}>
           <div
             style={{
@@ -43,7 +42,6 @@ const PhoneLandingScreen: React.FC = () => {
           </div>
         </div>
 
-        {/* CTA Buttons */}
         <div
           style={{
             background: colors.gradientGold,
@@ -51,10 +49,10 @@ const PhoneLandingScreen: React.FC = () => {
             padding: "13px 24px",
             textAlign: "center",
             marginBottom: 10,
-            boxShadow: "0 8px 32px rgba(201,168,76,0.35)",
+            boxShadow: "0 8px 32px rgba(166,147,95,0.2)",
           }}
         >
-          <div style={{ color: "#0A0A0F", fontSize: 13, fontWeight: 700, letterSpacing: 1 }}>
+          <div style={{ color: colors.bgCard, fontSize: 13, fontWeight: 700, letterSpacing: 1 }}>
             Start Your Journey
           </div>
         </div>
@@ -65,21 +63,13 @@ const PhoneLandingScreen: React.FC = () => {
             textAlign: "center",
             marginBottom: 20,
             border: `1.5px solid ${colors.borderBright}`,
-            background: "transparent",
           }}
         >
-          <div style={{ color: colors.gold, fontSize: 12, fontWeight: 600, letterSpacing: 1 }}>
-            Explore the App
-          </div>
+          <div style={{ color: colors.gold, fontSize: 12, fontWeight: 600, letterSpacing: 1 }}>Explore the App</div>
         </div>
 
-        {/* Stats row */}
         <div style={{ display: "flex", gap: 8, marginBottom: 18 }}>
-          {[
-            ["92%", "Match Rate"],
-            ["4.9", "Rating"],
-            ["15K+", "Members"],
-          ].map(([num, label]) => (
+          {[["92%", "Match Rate"], ["4.9", "Rating"], ["15K+", "Members"]].map(([num, label]) => (
             <div
               key={label}
               style={{
@@ -107,7 +97,6 @@ const PhoneLandingScreen: React.FC = () => {
           ))}
         </div>
 
-        {/* Feature previews */}
         {[
           { icon: "🧬", title: "RIF Assessment", desc: "Deep personality & values profiling" },
           { icon: "💬", title: "Live Chat", desc: "Real conversations, not swiping" },
@@ -166,10 +155,9 @@ export const Scene02_Landing: React.FC = () => {
       }}
     >
       <ParticleField />
-      <GlowOrb x="20%" y="50%" size={500} color="rgba(201,168,76,0.25)" delay={0} />
-      <GlowOrb x="80%" y="30%" size={400} color="rgba(232,160,160,0.2)" delay={45} />
+      <GlowOrb x="20%" y="50%" size={500} color="rgba(166,147,95,0.12)" delay={0} />
+      <GlowOrb x="80%" y="30%" size={400} color="rgba(192,128,138,0.1)" delay={45} />
 
-      {/* Left content */}
       <div
         style={{
           flex: 1,
@@ -190,7 +178,6 @@ export const Scene02_Landing: React.FC = () => {
         >
           Depth-First Dating
         </div>
-
         <div
           style={{
             fontFamily: fonts.serif,
@@ -202,28 +189,12 @@ export const Scene02_Landing: React.FC = () => {
           }}
         >
           Where{" "}
-          <span
-            style={{
-              background: colors.gradientGold,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
+          <span style={{ background: colors.gradientGold, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             connection
           </span>{" "}
-          <br />
-          runs deep
+          <br />runs deep
         </div>
-
-        <div
-          style={{
-            width: 80,
-            height: 1,
-            background: colors.gradientGold,
-            marginBottom: 24,
-          }}
-        />
-
+        <div style={{ width: 80, height: 1, background: colors.gradientGold, marginBottom: 24 }} />
         <div
           style={{
             fontFamily: fonts.sans,
@@ -238,7 +209,6 @@ export const Scene02_Landing: React.FC = () => {
           share your values, communication style, and vision for the future.
         </div>
 
-        {/* Feature bullets */}
         {[
           { icon: "🧬", title: "RIF Intelligence Framework", desc: "Map your relational DNA across 12 dimensions", delay: 50 },
           { icon: "🎯", title: "Curated Matches", desc: "Your Top 3 each week — quality over quantity", delay: 65 },
@@ -259,7 +229,6 @@ export const Scene02_Landing: React.FC = () => {
                 borderRadius: 16,
                 background: colors.bgGlass,
                 border: `1px solid ${colors.border}`,
-                backdropFilter: "blur(10px)",
                 marginBottom: 12,
               }}
             >
@@ -268,7 +237,7 @@ export const Scene02_Landing: React.FC = () => {
                   width: 38,
                   height: 38,
                   borderRadius: 12,
-                  background: "rgba(201,168,76,0.12)",
+                  background: "rgba(166,147,95,0.1)",
                   border: `1px solid ${colors.border}`,
                   display: "flex",
                   alignItems: "center",
@@ -288,7 +257,6 @@ export const Scene02_Landing: React.FC = () => {
         })}
       </div>
 
-      {/* Right phone mockup */}
       <div
         style={{
           display: "flex",

@@ -20,15 +20,15 @@ export const PhoneMockup: React.FC<PhoneMockupProps> = ({ children, scale = 1, s
         height: phoneH,
         borderRadius: borderR,
         border: `${border}px solid`,
-        borderColor: colors.borderBright,
+        borderColor: "rgba(166,147,95,0.35)",
         background: colors.bgCard,
         position: "relative",
         overflow: "hidden",
         boxShadow: `
           0 0 0 ${border}px ${colors.bgCard},
-          0 40px 120px rgba(0,0,0,0.8),
-          0 0 60px rgba(201,168,76,0.15),
-          inset 0 1px 0 rgba(255,255,255,0.1)
+          0 40px 120px rgba(80,63,48,0.25),
+          0 0 60px rgba(166,147,95,0.08),
+          inset 0 1px 0 rgba(255,255,255,0.3)
         `,
         ...style,
       }}
@@ -51,15 +51,15 @@ export const PhoneMockup: React.FC<PhoneMockupProps> = ({ children, scale = 1, s
           gap: 6 * scale,
         }}
       >
-        <div style={{ width: 10 * scale, height: 10 * scale, borderRadius: "50%", background: "#1a1a2e" }} />
-        <div style={{ width: 60 * scale, height: 6 * scale, borderRadius: 3 * scale, background: "#1a1a2e" }} />
+        <div style={{ width: 10 * scale, height: 10 * scale, borderRadius: "50%", background: "rgba(67,54,39,0.12)" }} />
+        <div style={{ width: 60 * scale, height: 6 * scale, borderRadius: 3 * scale, background: "rgba(67,54,39,0.12)" }} />
       </div>
       {/* Screen glow overlay */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(180deg, rgba(201,168,76,0.03) 0%, transparent 30%)",
+          background: "linear-gradient(180deg, rgba(166,147,95,0.04) 0%, transparent 30%)",
           pointerEvents: "none",
           zIndex: 50,
         }}

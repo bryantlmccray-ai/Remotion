@@ -16,8 +16,8 @@ const PARTICLES: Particle[] = Array.from({ length: 40 }, (_, i) => ({
   y: (i * 73.21) % 100,
   size: 1 + (i % 3),
   speed: 0.008 + (i % 5) * 0.003,
-  opacity: 0.15 + (i % 4) * 0.1,
-  hue: i % 2 === 0 ? 42 : 320, // gold or rose
+  opacity: 0.1 + (i % 4) * 0.06,
+  hue: i % 3, // 0=gold, 1=rose, 2=olive
 }));
 
 export const ParticleField: React.FC = () => {
@@ -28,6 +28,7 @@ export const ParticleField: React.FC = () => {
       {PARTICLES.map((p, i) => {
         const y = (p.y + frame * p.speed * 100) % 110 - 5;
         const drift = Math.sin(frame * 0.01 + i) * 1.5;
+        const particleColor = p.hue === 0 ? colors.gold : p.hue === 1 ? colors.rose : colors.olive;
         return (
           <div
             key={i}
@@ -38,8 +39,8 @@ export const ParticleField: React.FC = () => {
               width: p.size,
               height: p.size,
               borderRadius: "50%",
-              backgroundColor: p.hue === 42 ? colors.gold : colors.rose,
-              opacity: p.opacity * (0.5 + 0.5 * Math.sin(frame * 0.05 + i)),
+              backgroundColor: particleColor,
+              opacity: p.opacity * (0.4 + 0.4 * Math.sin(frame * 0.05 + i)),
               filter: `blur(${p.size * 0.5}px)`,
             }}
           />

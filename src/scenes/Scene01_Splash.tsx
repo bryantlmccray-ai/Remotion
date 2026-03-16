@@ -16,10 +16,7 @@ export const Scene01_Splash: React.FC = () => {
   const ring3Scale = spring({ frame: frame - 24, fps, config: { damping: 60, stiffness: 100, mass: 1 } });
   const ring3Opacity = interpolate(frame, [24, 50], [0, 0.7], { extrapolateRight: "clamp" });
 
-  // Rotating conic gradient on outer ring
   const conicAngle = frame * 1.8;
-
-  // Heartbeat pulse on rings
   const pulse = 1 + 0.03 * Math.sin(frame * 0.15);
 
   // Logo monogram entrance
@@ -37,10 +34,10 @@ export const Scene01_Splash: React.FC = () => {
   const tagOpacity = interpolate(frame, [80, 105], [0, 1], { extrapolateRight: "clamp" });
   const tagY = interpolate(frame, [80, 105], [15, 0], { extrapolateRight: "clamp" });
 
-  // Shimmer sweep across brand name
+  // Shimmer sweep
   const shimmerX = interpolate(frame, [90, 150], [-120, 400], { extrapolateRight: "clamp" });
 
-  // Loading bar at bottom
+  // Loading bar
   const loadProgress = interpolate(frame, [40, 160], [0, 100], { extrapolateRight: "clamp" });
 
   return (
@@ -58,19 +55,12 @@ export const Scene01_Splash: React.FC = () => {
       }}
     >
       <ParticleField />
-      <GlowOrb x="50%" y="45%" size={800} color="rgba(201,168,76,0.2)" delay={0} />
-      <GlowOrb x="25%" y="30%" size={500} color="rgba(232,160,160,0.18)" delay={40} />
-      <GlowOrb x="75%" y="70%" size={450} color="rgba(155,142,196,0.15)" delay={20} />
+      <GlowOrb x="50%" y="45%" size={800} color="rgba(166,147,95,0.12)" delay={0} />
+      <GlowOrb x="25%" y="30%" size={500} color="rgba(192,128,138,0.1)" delay={40} />
+      <GlowOrb x="75%" y="70%" size={450} color="rgba(94,110,74,0.08)" delay={20} />
 
       {/* Animated Rings Container */}
-      <div
-        style={{
-          position: "relative",
-          width: 240,
-          height: 240,
-          marginBottom: 48,
-        }}
-      >
+      <div style={{ position: "relative", width: 240, height: 240, marginBottom: 48 }}>
         {/* Ring 3 (outermost) */}
         <div
           style={{
@@ -86,11 +76,10 @@ export const Scene01_Splash: React.FC = () => {
               width: "100%",
               height: "100%",
               borderRadius: "50%",
-              border: `1px solid rgba(201,168,76,0.2)`,
-              boxShadow: `0 0 60px rgba(201,168,76,0.1)`,
+              border: `1px solid rgba(166,147,95,0.25)`,
+              boxShadow: `0 0 60px rgba(166,147,95,0.08)`,
             }}
           />
-          {/* Rotating conic highlight */}
           <div
             style={{
               position: "absolute",
@@ -118,8 +107,8 @@ export const Scene01_Splash: React.FC = () => {
               width: "100%",
               height: "100%",
               borderRadius: "50%",
-              border: `1.5px solid rgba(232,160,160,0.3)`,
-              boxShadow: `0 0 40px rgba(232,160,160,0.1)`,
+              border: `1.5px solid rgba(192,128,138,0.35)`,
+              boxShadow: `0 0 40px rgba(192,128,138,0.08)`,
             }}
           />
           <div
@@ -150,7 +139,7 @@ export const Scene01_Splash: React.FC = () => {
               height: "100%",
               borderRadius: "50%",
               border: `2px solid ${colors.borderBright}`,
-              boxShadow: `0 0 50px rgba(201,168,76,0.25), inset 0 0 30px rgba(201,168,76,0.05)`,
+              boxShadow: `0 0 50px rgba(166,147,95,0.15), inset 0 0 30px rgba(166,147,95,0.04)`,
             }}
           />
         </div>
@@ -161,7 +150,7 @@ export const Scene01_Splash: React.FC = () => {
             position: "absolute",
             inset: 70,
             borderRadius: "50%",
-            background: `radial-gradient(circle, rgba(201,168,76,0.15) 0%, transparent 70%)`,
+            background: `radial-gradient(circle, rgba(166,147,95,0.1) 0%, transparent 70%)`,
             opacity: logoOpacity,
             transform: `scale(${logoScale})`,
           }}
@@ -218,12 +207,11 @@ export const Scene01_Splash: React.FC = () => {
         >
           MONARK
         </div>
-        {/* Shimmer sweep */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            background: `linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%)`,
+            background: `linear-gradient(90deg, transparent 0%, rgba(166,147,95,0.3) 50%, transparent 100%)`,
             transform: `translateX(${shimmerX}%)`,
             width: "30%",
             pointerEvents: "none",
@@ -270,22 +258,14 @@ export const Scene01_Splash: React.FC = () => {
           bottom: 80,
           width: 240,
           height: 2,
-          background: "rgba(255,255,255,0.06)",
+          background: "rgba(67,54,39,0.08)",
           borderRadius: 2,
           overflow: "hidden",
         }}
       >
-        <div
-          style={{
-            height: "100%",
-            width: `${loadProgress}%`,
-            background: colors.gradientGold,
-            borderRadius: 2,
-          }}
-        />
+        <div style={{ height: "100%", width: `${loadProgress}%`, background: colors.gradientGold, borderRadius: 2 }} />
       </div>
 
-      {/* Bottom tagline */}
       <div
         style={{
           position: "absolute",

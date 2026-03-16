@@ -2,11 +2,6 @@ import React from "react";
 import { interpolate, useCurrentFrame } from "remotion";
 import { colors } from "../utils/colors";
 
-interface SceneTransitionProps {
-  type?: "fade" | "wipe-gold";
-  durationFrames?: number;
-}
-
 export const FadeTransition: React.FC<{ durationIn?: number; durationOut?: number; totalFrames: number }> = ({
   durationIn = 20,
   durationOut = 20,

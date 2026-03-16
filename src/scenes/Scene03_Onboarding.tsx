@@ -14,14 +14,13 @@ const ProgressDots: React.FC<{ step: number; total: number }> = ({ step, total }
           width: i === step ? 24 : 8,
           height: 8,
           borderRadius: 4,
-          background: i <= step ? colors.gradientGold : "rgba(255,255,255,0.1)",
+          background: i <= step ? colors.gradientGold : "rgba(67,54,39,0.1)",
         }}
       />
     ))}
   </div>
 );
 
-// Step 1: RIF Dimension selection
 const RIFStep1: React.FC = () => {
   const frame = useCurrentFrame();
   const fadeIn = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
@@ -56,7 +55,7 @@ const RIFStep1: React.FC = () => {
                 padding: "14px 10px",
                 borderRadius: 14,
                 border: `1.5px solid ${selected ? colors.borderBright : colors.border}`,
-                background: selected ? "rgba(201,168,76,0.1)" : colors.bgGlass,
+                background: selected ? "rgba(166,147,95,0.1)" : colors.bgGlass,
                 textAlign: "center",
               }}
             >
@@ -82,7 +81,6 @@ const RIFStep1: React.FC = () => {
   );
 };
 
-// Step 2: Slider-based values quiz
 const RIFStep2: React.FC = () => {
   const frame = useCurrentFrame();
   const fadeIn = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
@@ -108,17 +106,8 @@ const RIFStep2: React.FC = () => {
         return (
           <div key={q} style={{ opacity: appear, marginBottom: 20 }}>
             <div style={{ fontSize: 12, color: colors.textPrimary, marginBottom: 10, fontWeight: 500 }}>{q}</div>
-            {/* Slider track */}
-            <div style={{ position: "relative", height: 6, borderRadius: 3, background: "rgba(255,255,255,0.08)", marginBottom: 6 }}>
-              <div
-                style={{
-                  height: "100%",
-                  width: `${sliderFill * 100}%`,
-                  background: colors.gradientGold,
-                  borderRadius: 3,
-                }}
-              />
-              {/* Thumb */}
+            <div style={{ position: "relative", height: 6, borderRadius: 3, background: "rgba(67,54,39,0.08)", marginBottom: 6 }}>
+              <div style={{ height: "100%", width: `${sliderFill * 100}%`, background: colors.gradientGold, borderRadius: 3 }} />
               <div
                 style={{
                   position: "absolute",
@@ -129,8 +118,8 @@ const RIFStep2: React.FC = () => {
                   height: 16,
                   borderRadius: "50%",
                   background: colors.gold,
-                  border: `2px solid ${colors.bg}`,
-                  boxShadow: `0 0 12px rgba(201,168,76,0.5)`,
+                  border: `2px solid ${colors.bgCard}`,
+                  boxShadow: `0 0 12px rgba(166,147,95,0.3)`,
                 }}
               />
             </div>
@@ -151,7 +140,7 @@ const RIFStep2: React.FC = () => {
           opacity: interpolate(frame, [50, 70], [0, 1], { extrapolateRight: "clamp" }),
         }}
       >
-        <div style={{ color: "#0A0A0F", fontSize: 12, fontWeight: 700, letterSpacing: 1 }}>Continue</div>
+        <div style={{ color: colors.bgCard, fontSize: 12, fontWeight: 700, letterSpacing: 1 }}>Continue</div>
       </div>
     </div>
   );
@@ -180,17 +169,16 @@ export const Scene03_Onboarding: React.FC = () => {
       }}
     >
       <ParticleField />
-      <GlowOrb x="70%" y="50%" size={600} color="rgba(155,142,196,0.2)" delay={20} />
-      <GlowOrb x="20%" y="30%" size={400} color="rgba(201,168,76,0.2)" delay={0} />
+      <GlowOrb x="70%" y="50%" size={600} color="rgba(94,110,74,0.1)" delay={20} />
+      <GlowOrb x="20%" y="30%" size={400} color="rgba(166,147,95,0.1)" delay={0} />
 
-      {/* Left copy */}
       <div style={{ maxWidth: 420 }}>
         <div
           style={{
             fontFamily: fonts.sans,
             fontSize: 12,
             letterSpacing: 5,
-            color: colors.lavender,
+            color: colors.olive,
             textTransform: "uppercase",
             marginBottom: 20,
             opacity: interpolate(frame, [0, 30], [0, 1], { extrapolateRight: "clamp" }),
@@ -211,18 +199,12 @@ export const Scene03_Onboarding: React.FC = () => {
           }}
         >
           Know yourself.{" "}
-          <span
-            style={{
-              background: "linear-gradient(135deg, #9B8EC4, #C4BAE8)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
+          <span style={{ background: colors.gradientGold, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             Find your match.
           </span>
         </div>
 
-        <div style={{ width: 80, height: 1, background: "linear-gradient(90deg, #9B8EC4, #C4BAE8)", marginBottom: 24 }} />
+        <div style={{ width: 80, height: 1, background: colors.gradientGold, marginBottom: 24 }} />
 
         <div
           style={{
@@ -239,7 +221,6 @@ export const Scene03_Onboarding: React.FC = () => {
           people who truly align with how you love.
         </div>
 
-        {/* Step indicators */}
         {["Select your dimensions", "Define your spectrum", "Review your RIF score", "Get matched"].map((label, i) => {
           const isActive = i === step;
           const isPast = i < step;
@@ -259,8 +240,8 @@ export const Scene03_Onboarding: React.FC = () => {
                   width: 30,
                   height: 30,
                   borderRadius: "50%",
-                  border: `2px solid ${isActive ? colors.lavender : isPast ? colors.lavenderLight : colors.border}`,
-                  background: isPast ? "rgba(155,142,196,0.2)" : "transparent",
+                  border: `2px solid ${isActive ? colors.gold : isPast ? colors.goldDim : colors.border}`,
+                  background: isPast ? "rgba(166,147,95,0.12)" : "transparent",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -268,9 +249,9 @@ export const Scene03_Onboarding: React.FC = () => {
                 }}
               >
                 {isPast ? (
-                  <span style={{ color: colors.lavender, fontSize: 13 }}>✓</span>
+                  <span style={{ color: colors.gold, fontSize: 13 }}>✓</span>
                 ) : (
-                  <span style={{ fontSize: 11, color: isActive ? colors.lavender : colors.textMuted }}>{i + 1}</span>
+                  <span style={{ fontSize: 11, color: isActive ? colors.gold : colors.textMuted }}>{i + 1}</span>
                 )}
               </div>
               <div style={{ fontFamily: fonts.sans, fontSize: 13, color: isActive ? colors.textPrimary : colors.textSecondary }}>
@@ -281,12 +262,7 @@ export const Scene03_Onboarding: React.FC = () => {
         })}
       </div>
 
-      {/* Right phone */}
-      <div
-        style={{
-          transform: `scale(${spring({ frame, fps, config: { damping: 70, stiffness: 120, mass: 0.9 } })})`,
-        }}
-      >
+      <div style={{ transform: `scale(${spring({ frame, fps, config: { damping: 70, stiffness: 120, mass: 0.9 } })})` }}>
         <PhoneMockup scale={1}>
           {step === 0 && <RIFStep1 />}
           {step === 1 && <RIFStep2 />}

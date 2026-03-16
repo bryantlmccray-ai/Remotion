@@ -10,7 +10,6 @@ interface Moment {
   name: string;
   time: string;
   text: string;
-  image?: string;
   likes: number;
   comments: number;
   tag: string;
@@ -51,7 +50,6 @@ const MomentCard: React.FC<{ moment: Moment; index: number }> = ({ moment, index
   const delay = 15 + index * 25;
   const appear = interpolate(frame, [delay, delay + 20], [0, 1], { extrapolateRight: "clamp" });
   const slideY = interpolate(frame, [delay, delay + 20], [20, 0], { extrapolateRight: "clamp" });
-
   const likeAnim = Math.round(interpolate(frame, [delay + 10, delay + 40], [0, moment.likes], { extrapolateRight: "clamp" }));
 
   return (
@@ -66,19 +64,13 @@ const MomentCard: React.FC<{ moment: Moment; index: number }> = ({ moment, index
         marginBottom: 10,
       }}
     >
-      {/* Header */}
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
         <div
           style={{
-            width: 32,
-            height: 32,
-            borderRadius: "50%",
-            background: "rgba(201,168,76,0.15)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 16,
-            border: `1px solid ${colors.border}`,
+            width: 32, height: 32, borderRadius: "50%",
+            background: "rgba(166,147,95,0.1)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 16, border: `1px solid ${colors.border}`,
           }}
         >
           {moment.avatar}
@@ -87,26 +79,11 @@ const MomentCard: React.FC<{ moment: Moment; index: number }> = ({ moment, index
           <div style={{ fontSize: 11, color: colors.textPrimary, fontWeight: 600 }}>{moment.name}</div>
           <div style={{ fontSize: 8, color: colors.textMuted }}>{moment.time}</div>
         </div>
-        <div
-          style={{
-            padding: "2px 8px",
-            borderRadius: 12,
-            background: "rgba(201,168,76,0.12)",
-            fontSize: 8,
-            color: colors.gold,
-            letterSpacing: 0.5,
-          }}
-        >
+        <div style={{ padding: "2px 8px", borderRadius: 12, background: "rgba(166,147,95,0.1)", fontSize: 8, color: colors.gold }}>
           {moment.tag}
         </div>
       </div>
-
-      {/* Text */}
-      <div style={{ fontSize: 10, color: colors.textSecondary, lineHeight: 1.6, marginBottom: 10 }}>
-        {moment.text}
-      </div>
-
-      {/* Engagement */}
+      <div style={{ fontSize: 10, color: colors.textSecondary, lineHeight: 1.6, marginBottom: 10 }}>{moment.text}</div>
       <div style={{ display: "flex", gap: 16, fontSize: 9, color: colors.textMuted }}>
         <span>❤️ {likeAnim}</span>
         <span>💬 {moment.comments}</span>
@@ -121,59 +98,32 @@ const PhoneMomentsScreen: React.FC = () => {
   const scrollY = interpolate(frame, [40, 200], [0, -60], { extrapolateRight: "clamp" });
 
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        background: colors.bg,
-        fontFamily: fonts.sans,
-        overflow: "hidden",
-      }}
-    >
+    <div style={{ width: "100%", height: "100%", background: colors.bgCard, fontFamily: fonts.sans, overflow: "hidden" }}>
       <div style={{ padding: "56px 14px 14px", transform: `translateY(${scrollY}px)` }}>
-        {/* Header */}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
           <div>
-            <div style={{ fontFamily: fonts.serif, fontSize: 16, color: colors.textPrimary, fontWeight: 600 }}>
-              MonArk Moments
-            </div>
+            <div style={{ fontFamily: fonts.serif, fontSize: 16, color: colors.textPrimary, fontWeight: 600 }}>MonArk Moments</div>
             <div style={{ fontSize: 9, color: colors.textSecondary }}>Real stories from real connections</div>
           </div>
-          <div
-            style={{
-              padding: "5px 12px",
-              borderRadius: 20,
-              background: colors.gradientGold,
-              fontSize: 9,
-              fontWeight: 700,
-              color: "#0A0A0F",
-            }}
-          >
+          <div style={{ padding: "5px 12px", borderRadius: 20, background: colors.gradientGold, fontSize: 9, fontWeight: 700, color: colors.bgCard }}>
             + Share
           </div>
         </div>
-
-        {/* Filter tabs */}
-        <div style={{ display: "flex", gap: 6, marginBottom: 14, overflowX: "hidden" }}>
+        <div style={{ display: "flex", gap: 6, marginBottom: 14 }}>
           {["All", "First Date", "Milestones", "Curated", "Growth"].map((tab, i) => (
             <div
               key={tab}
               style={{
-                padding: "5px 12px",
-                borderRadius: 20,
-                background: i === 0 ? "rgba(201,168,76,0.15)" : "transparent",
+                padding: "5px 12px", borderRadius: 20,
+                background: i === 0 ? "rgba(166,147,95,0.12)" : "transparent",
                 border: `1px solid ${i === 0 ? colors.borderBright : colors.border}`,
-                fontSize: 9,
-                color: i === 0 ? colors.gold : colors.textSecondary,
-                whiteSpace: "nowrap",
+                fontSize: 9, color: i === 0 ? colors.gold : colors.textSecondary, whiteSpace: "nowrap",
               }}
             >
               {tab}
             </div>
           ))}
         </div>
-
-        {/* Moment cards */}
         {MOMENTS.map((m, i) => (
           <MomentCard key={i} moment={m} index={i} />
         ))}
@@ -185,7 +135,6 @@ const PhoneMomentsScreen: React.FC = () => {
 export const Scene07_MonArkMoments: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-
   const fadeIn = interpolate(frame, [0, 15], [0, 1], { extrapolateRight: "clamp" });
   const phoneSlide = spring({ frame, fps, config: { damping: 70, stiffness: 120, mass: 0.9 } });
   const phoneY = interpolate(phoneSlide, [0, 1], [100, 0]);
@@ -193,32 +142,20 @@ export const Scene07_MonArkMoments: React.FC = () => {
   return (
     <div
       style={{
-        width: "100%",
-        height: "100%",
-        background: colors.gradientBg,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0 80px",
-        opacity: fadeIn,
-        position: "relative",
-        overflow: "hidden",
+        width: "100%", height: "100%", background: colors.gradientBg,
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+        padding: "0 80px", opacity: fadeIn, position: "relative", overflow: "hidden",
       }}
     >
       <ParticleField />
-      <GlowOrb x="25%" y="50%" size={550} color="rgba(232,160,160,0.2)" delay={0} />
-      <GlowOrb x="80%" y="40%" size={400} color="rgba(201,168,76,0.2)" delay={50} />
+      <GlowOrb x="25%" y="50%" size={550} color="rgba(192,128,138,0.1)" delay={0} />
+      <GlowOrb x="80%" y="40%" size={400} color="rgba(166,147,95,0.1)" delay={50} />
 
-      {/* Left text */}
       <div style={{ maxWidth: 420 }}>
         <div
           style={{
-            fontFamily: fonts.sans,
-            fontSize: 12,
-            letterSpacing: 5,
-            color: colors.roseLight,
-            textTransform: "uppercase",
-            marginBottom: 20,
+            fontFamily: fonts.sans, fontSize: 12, letterSpacing: 5, color: colors.rose,
+            textTransform: "uppercase", marginBottom: 20,
             opacity: interpolate(frame, [5, 35], [0, 1], { extrapolateRight: "clamp" }),
           }}
         >
@@ -226,12 +163,8 @@ export const Scene07_MonArkMoments: React.FC = () => {
         </div>
         <div
           style={{
-            fontFamily: fonts.serif,
-            fontSize: 52,
-            fontWeight: 300,
-            lineHeight: 1.15,
-            color: colors.textPrimary,
-            marginBottom: 24,
+            fontFamily: fonts.serif, fontSize: 52, fontWeight: 300, lineHeight: 1.15,
+            color: colors.textPrimary, marginBottom: 24,
             opacity: interpolate(frame, [15, 45], [0, 1], { extrapolateRight: "clamp" }),
             transform: `translateY(${interpolate(frame, [15, 45], [30, 0], { extrapolateRight: "clamp" })}px)`,
           }}
@@ -241,16 +174,10 @@ export const Scene07_MonArkMoments: React.FC = () => {
             real connection
           </span>
         </div>
-
         <div style={{ width: 80, height: 1, background: colors.gradientRose, marginBottom: 24 }} />
-
         <div
           style={{
-            fontFamily: fonts.sans,
-            fontSize: 15,
-            color: colors.textSecondary,
-            lineHeight: 1.7,
-            marginBottom: 40,
+            fontFamily: fonts.sans, fontSize: 15, color: colors.textSecondary, lineHeight: 1.7, marginBottom: 40,
             opacity: interpolate(frame, [30, 60], [0, 1], { extrapolateRight: "clamp" }),
           }}
         >
@@ -258,33 +185,10 @@ export const Scene07_MonArkMoments: React.FC = () => {
           First dates, milestones, and growth moments — shared by members who found
           something real through depth-first matching.
         </div>
-
-        {/* Stats */}
-        <div
-          style={{
-            display: "flex",
-            gap: 24,
-            opacity: interpolate(frame, [50, 80], [0, 1], { extrapolateRight: "clamp" }),
-          }}
-        >
-          {[
-            { num: "2,400+", label: "Stories Shared" },
-            { num: "89%", label: "Second Date Rate" },
-            { num: "340+", label: "Relationships Formed" },
-          ].map(({ num, label }) => (
+        <div style={{ display: "flex", gap: 24, opacity: interpolate(frame, [50, 80], [0, 1], { extrapolateRight: "clamp" }) }}>
+          {[{ num: "2,400+", label: "Stories Shared" }, { num: "89%", label: "Second Date Rate" }, { num: "340+", label: "Relationships Formed" }].map(({ num, label }) => (
             <div key={label} style={{ textAlign: "center" }}>
-              <div
-                style={{
-                  fontFamily: fonts.serif,
-                  fontSize: 28,
-                  fontWeight: 700,
-                  background: colors.gradientGold,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  lineHeight: 1,
-                  marginBottom: 4,
-                }}
-              >
+              <div style={{ fontFamily: fonts.serif, fontSize: 28, fontWeight: 700, background: colors.gradientGold, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", lineHeight: 1, marginBottom: 4 }}>
                 {num}
               </div>
               <div style={{ fontSize: 11, color: colors.textSecondary }}>{label}</div>
@@ -293,11 +197,8 @@ export const Scene07_MonArkMoments: React.FC = () => {
         </div>
       </div>
 
-      {/* Right phone */}
       <div style={{ transform: `translateY(${phoneY}px)` }}>
-        <PhoneMockup scale={1}>
-          <PhoneMomentsScreen />
-        </PhoneMockup>
+        <PhoneMockup scale={1}><PhoneMomentsScreen /></PhoneMockup>
       </div>
     </div>
   );

@@ -186,7 +186,7 @@ const PhoneCheckinScreen: React.FC = () => {
       {/* Bars */}
       <WellnessBar label="Emotional Connection" value={0.88} color={colors.gradientGold} frame={frame} delay={20} />
       <WellnessBar label="Quality Time" value={0.72} color={colors.rose} frame={frame} delay={30} />
-      <WellnessBar label="Conflict Resolution" value={0.65} color={colors.lavender} frame={frame} delay={40} />
+      <WellnessBar label="Conflict Resolution" value={0.65} color={colors.olive} frame={frame} delay={40} />
     </div>
   );
 };
@@ -225,7 +225,7 @@ export const Scene06_WeeklyCheckin: React.FC = () => {
             fontFamily: fonts.sans,
             fontSize: 12,
             letterSpacing: 5,
-            color: colors.lavender,
+            color: colors.olive,
             textTransform: "uppercase",
             marginBottom: 20,
             opacity: interpolate(frame, [10, 40], [0, 1], { extrapolateRight: "clamp" }),

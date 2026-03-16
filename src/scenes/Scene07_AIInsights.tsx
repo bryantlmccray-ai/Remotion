@@ -123,7 +123,7 @@ const PhoneAIScreen: React.FC = () => {
           lineHeight: 1.5,
         }}
       >
-        <div style={{ color: colors.lavender, fontSize: 9, letterSpacing: 1, marginBottom: 6, textTransform: "uppercase" }}>
+        <div style={{ color: colors.olive, fontSize: 9, letterSpacing: 1, marginBottom: 6, textTransform: "uppercase" }}>
           Weekly Analysis
         </div>
         {frame > 10 && (
@@ -197,7 +197,7 @@ export const Scene07_AIInsights: React.FC = () => {
       {/* Left content */}
       <div style={{ maxWidth: 430 }}>
         {[
-          { text: "AI-Powered", color: colors.lavenderLight, size: 12, spacing: 5, delay: 5 },
+          { text: "AI-Powered", color: colors.oliveLight, size: 12, spacing: 5, delay: 5 },
         ].map(({ text, color, size, spacing, delay }) => (
           <div
             key={text}
