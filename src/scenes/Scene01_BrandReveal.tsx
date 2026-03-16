@@ -80,7 +80,7 @@ export const Scene01_BrandReveal: React.FC = () => {
             position: "absolute",
             inset: -2,
             borderRadius: "50%",
-            background: `conic-gradient(from ${frame * 1.5}deg, transparent 70%, ${colors.gold} 85%, transparent 100%)`,
+            background: `conic-gradient(from 45deg, transparent 70%, ${colors.gold} 85%, transparent 100%)`,
             mask: "radial-gradient(circle, transparent 68px, black 70px, black 80px, transparent 82px)",
             WebkitMask: "radial-gradient(circle, transparent 68px, black 70px, black 80px, transparent 82px)",
           }}

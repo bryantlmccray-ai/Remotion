@@ -16,7 +16,7 @@ const AvatarRing: React.FC<{ frame: number }> = ({ frame }) => {
           position: "absolute",
           inset: -3,
           borderRadius: "50%",
-          background: `conic-gradient(from ${rotate}deg, ${colors.gold}, ${colors.rose}, ${colors.olive}, ${colors.gold})`,
+          background: `conic-gradient(from 0deg, ${colors.gold}, ${colors.rose}, ${colors.olive}, ${colors.gold})`,
           padding: 3,
         }}
       >

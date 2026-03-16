@@ -11,7 +11,7 @@ interface Particle {
   hue: number;
 }
 
-const PARTICLES: Particle[] = Array.from({ length: 40 }, (_, i) => ({
+const PARTICLES: Particle[] = Array.from({ length: 15 }, (_, i) => ({
   x: (i * 137.508) % 100,
   y: (i * 73.21) % 100,
   size: 1 + (i % 3),
@@ -41,7 +41,6 @@ export const ParticleField: React.FC = () => {
               borderRadius: "50%",
               backgroundColor: particleColor,
               opacity: p.opacity * (0.4 + 0.4 * Math.sin(frame * 0.05 + i)),
-              filter: `blur(${p.size * 0.5}px)`,
             }}
           />
         );

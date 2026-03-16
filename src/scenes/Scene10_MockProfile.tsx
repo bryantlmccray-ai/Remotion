@@ -13,7 +13,7 @@ const AvatarGlow: React.FC<{ frame: number; size: number }> = ({ frame, size }) 
       <div
         style={{
           position: "absolute", inset: -4, borderRadius: "50%",
-          background: `conic-gradient(from ${rotate}deg, ${colors.gold}, ${colors.rose}, ${colors.olive}, ${colors.gold})`,
+          background: `conic-gradient(from 0deg, ${colors.gold}, ${colors.rose}, ${colors.olive}, ${colors.gold})`,
           padding: 4,
         }}
       >

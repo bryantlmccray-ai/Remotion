@@ -85,7 +85,7 @@ export const Scene01_Splash: React.FC = () => {
               position: "absolute",
               inset: -1,
               borderRadius: "50%",
-              background: `conic-gradient(from ${conicAngle}deg, transparent 60%, ${colors.gold} 80%, transparent 100%)`,
+              background: `conic-gradient(from 0deg, transparent 60%, ${colors.gold} 80%, transparent 100%)`,
               mask: "radial-gradient(circle, transparent 108px, black 110px, black 120px, transparent 122px)",
               WebkitMask: "radial-gradient(circle, transparent 108px, black 110px, black 120px, transparent 122px)",
             }}
@@ -116,7 +116,7 @@ export const Scene01_Splash: React.FC = () => {
               position: "absolute",
               inset: -1,
               borderRadius: "50%",
-              background: `conic-gradient(from ${conicAngle + 120}deg, transparent 70%, ${colors.rose} 85%, transparent 100%)`,
+              background: `conic-gradient(from 120deg, transparent 70%, ${colors.rose} 85%, transparent 100%)`,
               mask: "radial-gradient(circle, transparent 78px, black 80px, black 88px, transparent 90px)",
               WebkitMask: "radial-gradient(circle, transparent 78px, black 80px, black 88px, transparent 90px)",
             }}

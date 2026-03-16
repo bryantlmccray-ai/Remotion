@@ -27,7 +27,6 @@ export const GlowOrb: React.FC<GlowOrbProps> = ({ x, y, size, color, pulse = tru
         background: `radial-gradient(circle, ${color} 0%, transparent 70%)`,
         opacity,
         transform: `translate(-50%, -50%) scale(${scale})`,
-        filter: `blur(${size * 0.3}px)`,
         pointerEvents: "none",
       }}
     />
