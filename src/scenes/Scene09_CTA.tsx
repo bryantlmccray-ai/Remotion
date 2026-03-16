@@ -1,41 +1,44 @@
 import React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { colors, fonts } from "../utils/colors";
-import { GlowOrb } from "../components/GlowOrb";
-import { ParticleField } from "../components/ParticleField";
+import { LuxuryBackground } from "../components/LuxuryBackground";
 
 const StatPill: React.FC<{ num: string; label: string; delay: number }> = ({ num, label, delay }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const appear = spring({ frame: frame - delay, fps, config: { damping: 80, stiffness: 200, mass: 0.6 } });
+  const float = Math.sin(frame * 0.03 + delay * 0.1) * 3;
+
   return (
     <div
       style={{
         opacity: appear,
-        transform: `scale(${appear})`,
-        padding: "20px 32px",
-        borderRadius: 20,
-        background: "rgba(201,168,76,0.08)",
+        transform: `scale(${appear}) translateY(${float}px)`,
+        padding: "24px 36px",
+        borderRadius: 22,
+        background: `linear-gradient(145deg, rgba(201,168,76,0.1), rgba(155,142,196,0.05))`,
         border: `1px solid ${colors.borderBright}`,
         textAlign: "center",
-        backdropFilter: "blur(10px)",
+        backdropFilter: "blur(12px)",
+        boxShadow: `0 8px 32px rgba(0,0,0,0.3), 0 0 24px rgba(201,168,76,0.08), inset 0 1px 0 rgba(255,255,255,0.05)`,
       }}
     >
       <div
         style={{
           fontFamily: fonts.serif,
-          fontSize: 40,
+          fontSize: 44,
           fontWeight: 700,
-          background: colors.gradientGold,
+          background: `linear-gradient(135deg, ${colors.gold}, ${colors.goldLight}, ${colors.rose})`,
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           lineHeight: 1,
-          marginBottom: 6,
+          marginBottom: 8,
+          filter: `drop-shadow(0 0 12px rgba(201,168,76,0.3))`,
         }}
       >
         {num}
       </div>
-      <div style={{ fontFamily: fonts.sans, fontSize: 12, color: colors.textSecondary, letterSpacing: 1 }}>{label}</div>
+      <div style={{ fontFamily: fonts.sans, fontSize: 12, color: colors.textSecondary, letterSpacing: 2 }}>{label}</div>
     </div>
   );
 };
@@ -46,10 +49,13 @@ export const Scene09_CTA: React.FC = () => {
 
   const fadeIn = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
 
-  // Animated hearts orbiting
-  const heart1Angle = frame * 1.2 * (Math.PI / 180);
-  const heart2Angle = frame * 1.2 * (Math.PI / 180) + Math.PI;
-  const orbitR = 280;
+  // Animated hearts orbiting — more of them, different sizes
+  const hearts = [
+    { emoji: "💛", offset: 0, radius: 300, speed: 1.2, size: 28, opacity: 0.4 },
+    { emoji: "🌹", offset: Math.PI, radius: 300, speed: 1.2, size: 24, opacity: 0.3 },
+    { emoji: "💫", offset: Math.PI / 2, radius: 350, speed: 0.8, size: 20, opacity: 0.25 },
+    { emoji: "✨", offset: Math.PI * 1.5, radius: 340, speed: 0.9, size: 18, opacity: 0.2 },
+  ];
 
   // Main title
   const titleScale = spring({ frame, fps, config: { damping: 60, stiffness: 100, mass: 1 } });
@@ -68,12 +74,16 @@ export const Scene09_CTA: React.FC = () => {
   // Final shimmer
   const shimmerX = interpolate(frame, [60, 120], [-200, 500], { extrapolateRight: "clamp", extrapolateLeft: "clamp" });
 
+  // Expanding rings from center
+  const ring1 = (frame * 0.4) % 100;
+  const ring2 = ((frame * 0.4) + 50) % 100;
+
   return (
     <div
       style={{
         width: "100%",
         height: "100%",
-        background: colors.gradientBg,
+        background: colors.bg,
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
@@ -83,38 +93,48 @@ export const Scene09_CTA: React.FC = () => {
         overflow: "hidden",
       }}
     >
-      <ParticleField />
-      <GlowOrb x="50%" y="50%" size={800} color="rgba(201,168,76,0.15)" delay={0} pulse={true} />
-      <GlowOrb x="20%" y="20%" size={400} color="rgba(232,160,160,0.2)" delay={30} />
-      <GlowOrb x="80%" y="80%" size={350} color="rgba(155,142,196,0.2)" delay={60} />
+      <LuxuryBackground variant="warm" intensity={1.2} />
 
-      {/* Orbiting hearts */}
-      <div
-        style={{
-          position: "absolute",
-          left: "50%",
-          top: "50%",
-          transform: `translate(${orbitR * Math.cos(heart1Angle)}px, ${orbitR * 0.5 * Math.sin(heart1Angle)}px)`,
-          fontSize: 28,
-          opacity: 0.4,
-          filter: "blur(1px)",
-        }}
-      >
-        💛
-      </div>
-      <div
-        style={{
-          position: "absolute",
-          left: "50%",
-          top: "50%",
-          transform: `translate(${orbitR * Math.cos(heart2Angle)}px, ${orbitR * 0.5 * Math.sin(heart2Angle)}px)`,
-          fontSize: 24,
-          opacity: 0.3,
-          filter: "blur(1px)",
-        }}
-      >
-        🌹
-      </div>
+      {/* Expanding concentric rings */}
+      {[ring1, ring2].map((r, i) => (
+        <div
+          key={i}
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            width: r * 14,
+            height: r * 14,
+            borderRadius: "50%",
+            border: `1px solid ${colors.gold}`,
+            transform: "translate(-50%, -50%)",
+            opacity: 0.06 * (1 - r / 100),
+            pointerEvents: "none",
+          }}
+        />
+      ))}
+
+      {/* Orbiting emojis */}
+      {hearts.map((h, i) => {
+        const angle = frame * h.speed * (Math.PI / 180) + h.offset;
+        return (
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              transform: `translate(${h.radius * Math.cos(angle)}px, ${h.radius * 0.45 * Math.sin(angle)}px)`,
+              fontSize: h.size,
+              opacity: h.opacity,
+              filter: "blur(1px)",
+              pointerEvents: "none",
+            }}
+          >
+            {h.emoji}
+          </div>
+        );
+      })}
 
       {/* Main logo */}
       <div
@@ -124,24 +144,25 @@ export const Scene09_CTA: React.FC = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          marginBottom: 40,
+          marginBottom: 44,
+          zIndex: 2,
         }}
       >
         <div
           style={{
-            width: 100,
-            height: 100,
+            width: 110,
+            height: 110,
             borderRadius: "50%",
             border: `2px solid ${colors.borderBright}`,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            marginBottom: 24,
-            background: "rgba(201,168,76,0.06)",
-            boxShadow: `0 0 60px rgba(201,168,76,0.2)`,
+            marginBottom: 28,
+            background: `radial-gradient(circle, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.03) 60%, transparent 80%)`,
+            boxShadow: `0 0 80px rgba(201,168,76,0.3), 0 0 160px rgba(201,168,76,0.1), inset 0 0 40px rgba(201,168,76,0.05)`,
           }}
         >
-          <svg width="44" height="40" viewBox="0 0 48 44" fill="none">
+          <svg width="48" height="44" viewBox="0 0 48 44" fill="none">
             <path
               d="M24 40C24 40 2 26 2 14C2 7.4 7.4 2 14 2C17.6 2 20.8 3.6 24 6.4C27.2 3.6 30.4 2 34 2C40.6 2 46 7.4 46 14C46 26 24 40 24 40Z"
               fill="url(#heartGradCTA)"
@@ -160,12 +181,13 @@ export const Scene09_CTA: React.FC = () => {
           <div
             style={{
               fontFamily: fonts.serif,
-              fontSize: 80,
+              fontSize: 84,
               fontWeight: 300,
-              letterSpacing: 20,
+              letterSpacing: 24,
               color: colors.textPrimary,
               textTransform: "uppercase",
               lineHeight: 1,
+              textShadow: `0 0 60px rgba(201,168,76,0.3), 0 0 120px rgba(201,168,76,0.1)`,
             }}
           >
             MONARK
@@ -175,9 +197,9 @@ export const Scene09_CTA: React.FC = () => {
             style={{
               position: "absolute",
               inset: 0,
-              background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)",
+              background: `linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)`,
               transform: `translateX(${shimmerX}px)`,
-              width: 120,
+              width: 140,
               pointerEvents: "none",
             }}
           />
@@ -190,30 +212,31 @@ export const Scene09_CTA: React.FC = () => {
           opacity: tagOpacity,
           transform: `translateY(${tagY}px)`,
           textAlign: "center",
-          marginBottom: 50,
+          marginBottom: 54,
+          zIndex: 2,
         }}
       >
         <div
           style={{
             fontFamily: fonts.serif,
-            fontSize: 30,
+            fontSize: 32,
             fontWeight: 300,
             color: colors.textPrimary,
-            marginBottom: 12,
+            marginBottom: 14,
           }}
         >
           Your love story deserves{" "}
-          <span style={{ background: colors.gradientGold, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+          <span style={{ background: `linear-gradient(135deg, ${colors.gold}, ${colors.goldLight}, ${colors.rose})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
             extraordinary care
           </span>
         </div>
-        <div style={{ fontFamily: fonts.sans, fontSize: 15, color: colors.textSecondary, letterSpacing: 2 }}>
+        <div style={{ fontFamily: fonts.sans, fontSize: 15, color: colors.textSecondary, letterSpacing: 3 }}>
           Join 50,000+ couples building a lasting, fulfilling relationship
         </div>
       </div>
 
       {/* Stats */}
-      <div style={{ display: "flex", gap: 24, marginBottom: 50, opacity: statsOpacity }}>
+      <div style={{ display: "flex", gap: 28, marginBottom: 54, opacity: statsOpacity, zIndex: 2 }}>
         <StatPill num="50K+" label="Couples Thriving" delay={55} />
         <StatPill num="4.9★" label="App Store Rating" delay={65} />
         <StatPill num="95%" label="Report Improvement" delay={75} />
@@ -225,35 +248,35 @@ export const Scene09_CTA: React.FC = () => {
           transform: `scale(${btnScale})`,
           opacity: interpolate(frame, [70, 90], [0, 1], { extrapolateRight: "clamp" }),
           position: "relative",
+          zIndex: 2,
         }}
       >
         <div
           style={{
             position: "absolute",
-            inset: -8,
+            inset: -12,
             borderRadius: 50,
-            background: colors.gradientGold,
-            opacity: btnGlow * 0.3,
-            filter: "blur(16px)",
+            background: `linear-gradient(135deg, ${colors.gold}, ${colors.rose})`,
+            opacity: btnGlow * 0.25,
+            filter: "blur(20px)",
           }}
         />
         <div
           style={{
             position: "relative",
-            background: colors.gradientGold,
+            background: `linear-gradient(135deg, ${colors.gold}, ${colors.goldLight}, ${colors.gold})`,
             borderRadius: 50,
-            padding: "20px 56px",
-            cursor: "pointer",
-            boxShadow: `0 8px 40px rgba(201,168,76,${btnGlow})`,
+            padding: "22px 64px",
+            boxShadow: `0 8px 40px rgba(201,168,76,${btnGlow}), 0 0 80px rgba(201,168,76,0.15)`,
           }}
         >
           <div
             style={{
               fontFamily: fonts.sans,
-              fontSize: 16,
+              fontSize: 17,
               fontWeight: 700,
               color: "#0A0A0F",
-              letterSpacing: 2,
+              letterSpacing: 3,
               textTransform: "uppercase",
             }}
           >
@@ -266,13 +289,13 @@ export const Scene09_CTA: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          bottom: 40,
+          bottom: 44,
           fontFamily: fonts.sans,
           fontSize: 12,
-          letterSpacing: 3,
+          letterSpacing: 4,
           color: colors.textMuted,
           textTransform: "uppercase",
-          opacity: interpolate(frame, [90, 120], [0, 1], { extrapolateRight: "clamp" }),
+          opacity: interpolate(frame, [90, 120], [0, 0.6], { extrapolateRight: "clamp" }),
         }}
       >
         monark.app · Your Love. Elevated.

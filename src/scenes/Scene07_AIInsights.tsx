@@ -1,8 +1,7 @@
 import React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { colors, fonts } from "../utils/colors";
-import { GlowOrb } from "../components/GlowOrb";
-import { ParticleField } from "../components/ParticleField";
+import { LuxuryBackground } from "../components/LuxuryBackground";
 import { PhoneMockup } from "../components/PhoneMockup";
 
 const TypingText: React.FC<{ text: string; startFrame: number }> = ({ text, startFrame }) => {
@@ -31,17 +30,18 @@ const InsightCard: React.FC<{
       style={{
         opacity,
         transform: `translateY(${y}px)`,
-        padding: "12px",
-        borderRadius: 12,
-        background: colors.bgGlass,
-        border: `1px solid ${colors.border}`,
+        padding: "13px",
+        borderRadius: 14,
+        background: `linear-gradient(135deg, rgba(155,142,196,0.06), rgba(201,168,76,0.03))`,
+        border: `1px solid rgba(155,142,196,0.12)`,
         marginBottom: 8,
+        boxShadow: `0 4px 16px rgba(0,0,0,0.2)`,
       }}
     >
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 6 }}>
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
           <span style={{ fontSize: 16 }}>{emoji}</span>
-          <div style={{ fontSize: 10, color: colors.textSecondary, letterSpacing: 1, textTransform: "uppercase" }}>{category}</div>
+          <div style={{ fontSize: 10, color: colors.lavender, letterSpacing: 1, textTransform: "uppercase" }}>{category}</div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
           <span style={{ fontSize: 10, color: trendColor, fontWeight: 700 }}>{trendIcon}</span>
@@ -49,7 +49,10 @@ const InsightCard: React.FC<{
             style={{
               fontSize: 12,
               fontWeight: 700,
-              color: score >= 0.8 ? colors.gold : score >= 0.6 ? colors.rose : colors.textSecondary,
+              background: score >= 0.8 ? colors.gradientGold : "none",
+              color: score >= 0.8 ? undefined : score >= 0.6 ? colors.rose : colors.textSecondary,
+              WebkitBackgroundClip: score >= 0.8 ? "text" : undefined,
+              WebkitTextFillColor: score >= 0.8 ? "transparent" : undefined,
             }}
           >
             {Math.round(score * 100)}%
@@ -65,7 +68,7 @@ const PhoneAIScreen: React.FC = () => {
   const frame = useCurrentFrame();
 
   return (
-    <div style={{ padding: "60px 16px 16px", fontFamily: fonts.sans, background: colors.bg, height: "100%", overflow: "hidden" }}>
+    <div style={{ padding: "60px 16px 16px", fontFamily: fonts.sans, background: `linear-gradient(180deg, #0D0D14, #0A0A0F)`, height: "100%", overflow: "hidden" }}>
       {/* AI Header */}
       <div
         style={{
@@ -73,23 +76,25 @@ const PhoneAIScreen: React.FC = () => {
           alignItems: "center",
           gap: 10,
           marginBottom: 16,
-          padding: "10px 14px",
-          borderRadius: 14,
-          background: "rgba(155,142,196,0.1)",
-          border: `1px solid rgba(155,142,196,0.3)`,
+          padding: "12px 14px",
+          borderRadius: 16,
+          background: `linear-gradient(135deg, rgba(155,142,196,0.12), rgba(155,142,196,0.04))`,
+          border: `1px solid rgba(155,142,196,0.25)`,
+          boxShadow: `0 4px 20px rgba(0,0,0,0.3), 0 0 20px rgba(155,142,196,0.05)`,
         }}
       >
         <div
           style={{
-            width: 32,
-            height: 32,
+            width: 34,
+            height: 34,
             borderRadius: "50%",
-            background: "linear-gradient(135deg, #9B8EC4, #C4BAE8)",
+            background: `linear-gradient(135deg, ${colors.lavender}, ${colors.lavenderLight})`,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             fontSize: 16,
             flexShrink: 0,
+            boxShadow: `0 0 16px rgba(155,142,196,0.3)`,
           }}
         >
           ✨
@@ -113,17 +118,18 @@ const PhoneAIScreen: React.FC = () => {
       {/* AI Message */}
       <div
         style={{
-          padding: "12px 14px",
-          borderRadius: 14,
-          background: "rgba(155,142,196,0.08)",
-          border: `1px solid rgba(155,142,196,0.2)`,
+          padding: "14px 16px",
+          borderRadius: 16,
+          background: `linear-gradient(135deg, rgba(155,142,196,0.1), rgba(155,142,196,0.03))`,
+          border: `1px solid rgba(155,142,196,0.15)`,
           marginBottom: 14,
           fontSize: 11,
           color: colors.textPrimary,
           lineHeight: 1.5,
+          boxShadow: `0 4px 16px rgba(0,0,0,0.2)`,
         }}
       >
-        <div style={{ color: colors.lavender, fontSize: 9, letterSpacing: 1, marginBottom: 6, textTransform: "uppercase" }}>
+        <div style={{ color: colors.lavender, fontSize: 9, letterSpacing: 1.5, marginBottom: 8, textTransform: "uppercase" }}>
           Weekly Analysis
         </div>
         {frame > 10 && (
@@ -132,37 +138,16 @@ const PhoneAIScreen: React.FC = () => {
             text="Great week, Alexandra! Your communication score jumped 12%. I notice you and James had fewer conflicts — consider scheduling a tech-free evening to deepen connection."
           />
         )}
-        {frame > 40 && <span style={{ opacity: frame % 30 < 15 ? 1 : 0 }}>|</span>}
+        {frame > 40 && <span style={{ opacity: frame % 30 < 15 ? 1 : 0, color: colors.lavender }}>|</span>}
       </div>
 
       {/* Insights */}
-      <div style={{ fontSize: 9, color: colors.textMuted, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>
+      <div style={{ fontSize: 9, color: colors.lavender, letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>
         Key Insights
       </div>
-      <InsightCard
-        emoji="💬"
-        category="Communication"
-        insight="Active listening scores up 18% this week"
-        score={0.88}
-        trend="up"
-        delay={50}
-      />
-      <InsightCard
-        emoji="❤️"
-        category="Intimacy"
-        insight="Schedule intentional quality time this weekend"
-        score={0.71}
-        trend="stable"
-        delay={65}
-      />
-      <InsightCard
-        emoji="🌱"
-        category="Growth"
-        insight="Both showing strong commitment to improvement"
-        score={0.92}
-        trend="up"
-        delay={80}
-      />
+      <InsightCard emoji="💬" category="Communication" insight="Active listening scores up 18% this week" score={0.88} trend="up" delay={50} />
+      <InsightCard emoji="❤️" category="Intimacy" insight="Schedule intentional quality time this weekend" score={0.71} trend="stable" delay={65} />
+      <InsightCard emoji="🌱" category="Growth" insight="Both showing strong commitment to improvement" score={0.92} trend="up" delay={80} />
     </div>
   );
 };
@@ -174,13 +159,19 @@ export const Scene07_AIInsights: React.FC = () => {
   const fadeIn = interpolate(frame, [0, 15], [0, 1], { extrapolateRight: "clamp" });
   const phoneSlide = spring({ frame, fps, config: { damping: 70, stiffness: 120, mass: 0.9 } });
   const phoneX = interpolate(phoneSlide, [0, 1], [200, 0]);
+  const phoneFloat = Math.sin(frame * 0.025) * 5;
+
+  const dividerWidth = interpolate(frame, [45, 70], [0, 100], { extrapolateRight: "clamp" });
+
+  // Animated AI "thinking" dots near the phone
+  const dotPulse = (i: number) => 0.3 + 0.7 * Math.abs(Math.sin(frame * 0.08 + i * 0.8));
 
   return (
     <div
       style={{
         width: "100%",
         height: "100%",
-        background: colors.gradientBg,
+        background: colors.bg,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -190,39 +181,53 @@ export const Scene07_AIInsights: React.FC = () => {
         overflow: "hidden",
       }}
     >
-      <ParticleField />
-      <GlowOrb x="30%" y="40%" size={600} color="rgba(155,142,196,0.25)" delay={0} />
-      <GlowOrb x="80%" y="65%" size={400} color="rgba(201,168,76,0.2)" delay={50} />
+      <LuxuryBackground variant="cool" />
+
+      {/* AI neural network decorative lines */}
+      <svg
+        style={{ position: "absolute", width: "100%", height: "100%", pointerEvents: "none", opacity: 0.05 }}
+        viewBox="0 0 1920 1080"
+      >
+        {Array.from({ length: 6 }).map((_, i) => {
+          const y1 = 180 + i * 140;
+          const cp = 960 + Math.sin(frame * 0.01 + i) * 200;
+          return (
+            <path
+              key={i}
+              d={`M 0 ${y1} Q ${cp} ${y1 + 60 * Math.sin(frame * 0.02 + i)} 1920 ${y1}`}
+              fill="none"
+              stroke={i % 2 === 0 ? colors.lavender : colors.gold}
+              strokeWidth="1"
+            />
+          );
+        })}
+      </svg>
 
       {/* Left content */}
-      <div style={{ maxWidth: 430 }}>
-        {[
-          { text: "AI-Powered", color: colors.lavenderLight, size: 12, spacing: 5, delay: 5 },
-        ].map(({ text, color, size, spacing, delay }) => (
-          <div
-            key={text}
-            style={{
-              fontFamily: fonts.sans,
-              fontSize: size,
-              letterSpacing: spacing,
-              color,
-              textTransform: "uppercase",
-              marginBottom: 20,
-              opacity: interpolate(frame, [delay, delay + 30], [0, 1], { extrapolateRight: "clamp" }),
-            }}
-          >
-            {text}
-          </div>
-        ))}
+      <div style={{ maxWidth: 440, zIndex: 2 }}>
+        <div
+          style={{
+            fontFamily: fonts.sans,
+            fontSize: 12,
+            letterSpacing: 6,
+            color: colors.lavenderLight,
+            textTransform: "uppercase",
+            marginBottom: 24,
+            opacity: interpolate(frame, [5, 35], [0, 1], { extrapolateRight: "clamp" }),
+            textShadow: `0 0 20px rgba(155,142,196,0.3)`,
+          }}
+        >
+          AI-Powered
+        </div>
 
         <div
           style={{
             fontFamily: fonts.serif,
-            fontSize: 52,
+            fontSize: 54,
             fontWeight: 300,
-            lineHeight: 1.15,
+            lineHeight: 1.12,
             color: colors.textPrimary,
-            marginBottom: 24,
+            marginBottom: 28,
             opacity: interpolate(frame, [15, 45], [0, 1], { extrapolateRight: "clamp" }),
             transform: `translateY(${interpolate(frame, [15, 45], [30, 0], { extrapolateRight: "clamp" })}px)`,
           }}
@@ -230,7 +235,7 @@ export const Scene07_AIInsights: React.FC = () => {
           Your personal{" "}
           <span
             style={{
-              background: "linear-gradient(135deg, #9B8EC4, #C4BAE8, #E8C97A)",
+              background: `linear-gradient(135deg, ${colors.lavender}, ${colors.lavenderLight}, ${colors.goldLight})`,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
@@ -240,12 +245,14 @@ export const Scene07_AIInsights: React.FC = () => {
           coach
         </div>
 
+        {/* Animated divider */}
         <div
           style={{
-            width: 80,
-            height: 1,
-            background: "linear-gradient(90deg, #9B8EC4, #C4BAE8)",
-            marginBottom: 24,
+            width: dividerWidth,
+            height: 2,
+            background: `linear-gradient(90deg, ${colors.lavender}, ${colors.gold}, transparent)`,
+            marginBottom: 28,
+            boxShadow: `0 0 10px rgba(155,142,196,0.3)`,
           }}
         />
 
@@ -255,42 +262,83 @@ export const Scene07_AIInsights: React.FC = () => {
             fontSize: 15,
             color: colors.textSecondary,
             lineHeight: 1.7,
-            marginBottom: 40,
+            marginBottom: 44,
             opacity: interpolate(frame, [30, 60], [0, 1], { extrapolateRight: "clamp" }),
           }}
         >
           Monark's AI engine analyzes your weekly check-ins, identifies patterns, and delivers personalized coaching that adapts to the unique rhythm of your relationship.
         </div>
 
-        {/* AI Capabilities */}
+        {/* AI Capabilities with glass cards */}
         {[
           { icon: "🔍", title: "Pattern Recognition", desc: "Spots trends before they become issues" },
           { icon: "💬", title: "Conversational Coaching", desc: "Ask questions, get instant guidance" },
-          { icon: "🎯", title: "Goal Alignment", desc: "Keeps both partners moving toward shared vision" },
+          { icon: "🎯", title: "Goal Alignment", desc: "Keeps both partners toward shared vision" },
           { icon: "🔮", title: "Predictive Wellness", desc: "Forecasts challenges before they arise" },
-        ].map(({ icon, title, desc }, i) => (
-          <div
-            key={title}
-            style={{
-              opacity: interpolate(frame, [40 + i * 10, 65 + i * 10], [0, 1], { extrapolateRight: "clamp" }),
-              display: "flex",
-              gap: 12,
-              marginBottom: 14,
-              alignItems: "center",
-            }}
-          >
-            <span style={{ fontSize: 20 }}>{icon}</span>
-            <div>
-              <div style={{ fontFamily: fonts.serif, fontSize: 14, color: colors.textPrimary }}>{title}</div>
-              <div style={{ fontFamily: fonts.sans, fontSize: 12, color: colors.textSecondary }}>{desc}</div>
+        ].map(({ icon, title, desc }, i) => {
+          const opacity = interpolate(frame, [40 + i * 10, 65 + i * 10], [0, 1], { extrapolateRight: "clamp" });
+          const x = interpolate(frame, [40 + i * 10, 65 + i * 10], [-20, 0], { extrapolateRight: "clamp" });
+          return (
+            <div
+              key={title}
+              style={{
+                opacity,
+                transform: `translateX(${x}px)`,
+                display: "flex",
+                gap: 14,
+                marginBottom: 14,
+                alignItems: "center",
+                padding: "12px 16px",
+                borderRadius: 14,
+                background: `linear-gradient(135deg, rgba(155,142,196,0.06), rgba(201,168,76,0.03))`,
+                border: `1px solid rgba(155,142,196,0.1)`,
+                boxShadow: `0 4px 16px rgba(0,0,0,0.2)`,
+              }}
+            >
+              <div
+                style={{
+                  width: 38,
+                  height: 38,
+                  borderRadius: 10,
+                  background: `linear-gradient(135deg, rgba(155,142,196,0.15), rgba(155,142,196,0.05))`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 20,
+                  flexShrink: 0,
+                }}
+              >
+                {icon}
+              </div>
+              <div>
+                <div style={{ fontFamily: fonts.serif, fontSize: 14, color: colors.textPrimary, fontWeight: 600 }}>{title}</div>
+                <div style={{ fontFamily: fonts.sans, fontSize: 12, color: colors.textSecondary }}>{desc}</div>
+              </div>
             </div>
-          </div>
+          );
+        })}
+      </div>
+
+      {/* AI thinking dots between content and phone */}
+      <div style={{ position: "absolute", right: 380, top: "50%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: 12, zIndex: 1 }}>
+        {[0, 1, 2].map((i) => (
+          <div
+            key={i}
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              background: colors.lavender,
+              opacity: dotPulse(i),
+              boxShadow: `0 0 10px ${colors.lavender}`,
+            }}
+          />
         ))}
       </div>
 
       {/* Right phone */}
-      <div style={{ transform: `translateX(${phoneX}px)` }}>
-        <PhoneMockup scale={1}>
+      <div style={{ transform: `translateX(${phoneX}px) translateY(${phoneFloat}px)`, zIndex: 2 }}>
+        <PhoneMockup scale={1.05}>
           <PhoneAIScreen />
         </PhoneMockup>
       </div>

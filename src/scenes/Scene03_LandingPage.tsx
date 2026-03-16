@@ -1,52 +1,54 @@
 import React from "react";
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { colors, fonts } from "../utils/colors";
-import { GlowOrb } from "../components/GlowOrb";
-import { ParticleField } from "../components/ParticleField";
+import { LuxuryBackground } from "../components/LuxuryBackground";
 import { PhoneMockup } from "../components/PhoneMockup";
-import { GoldDivider } from "../components/GoldDivider";
 
 const Feature: React.FC<{ icon: string; title: string; desc: string; delay: number }> = ({ icon, title, desc, delay }) => {
   const frame = useCurrentFrame();
   const opacity = interpolate(frame, [delay, delay + 25], [0, 1], { extrapolateRight: "clamp" });
-  const y = interpolate(frame, [delay, delay + 25], [30, 0], {
+  const x = interpolate(frame, [delay, delay + 25], [-30, 0], {
     extrapolateRight: "clamp",
     easing: (t) => 1 - Math.pow(1 - t, 3),
   });
+  const glowPulse = 0.1 + 0.05 * Math.sin(frame * 0.05 + delay);
+
   return (
     <div
       style={{
         opacity,
-        transform: `translateY(${y}px)`,
+        transform: `translateX(${x}px)`,
         display: "flex",
         alignItems: "flex-start",
         gap: 16,
-        padding: "16px 20px",
-        borderRadius: 16,
-        background: colors.bgGlass,
-        border: `1px solid ${colors.border}`,
-        backdropFilter: "blur(10px)",
-        marginBottom: 12,
+        padding: "18px 22px",
+        borderRadius: 18,
+        background: `linear-gradient(135deg, rgba(201,168,76,0.06) 0%, rgba(155,142,196,0.03) 100%)`,
+        border: `1px solid rgba(201,168,76,${glowPulse + 0.1})`,
+        backdropFilter: "blur(12px)",
+        marginBottom: 14,
+        boxShadow: `0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)`,
       }}
     >
       <div
         style={{
-          width: 40,
-          height: 40,
-          borderRadius: 12,
-          background: "rgba(201,168,76,0.12)",
+          width: 44,
+          height: 44,
+          borderRadius: 14,
+          background: `linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05))`,
           border: `1px solid ${colors.border}`,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 20,
+          fontSize: 22,
           flexShrink: 0,
+          boxShadow: `0 0 20px rgba(201,168,76,0.1)`,
         }}
       >
         {icon}
       </div>
       <div>
-        <div style={{ fontFamily: fonts.serif, fontSize: 15, color: colors.textPrimary, fontWeight: 600, marginBottom: 4 }}>{title}</div>
+        <div style={{ fontFamily: fonts.serif, fontSize: 16, color: colors.textPrimary, fontWeight: 600, marginBottom: 4 }}>{title}</div>
         <div style={{ fontFamily: fonts.sans, fontSize: 12, color: colors.textSecondary, lineHeight: 1.5 }}>{desc}</div>
       </div>
     </div>
@@ -55,14 +57,14 @@ const Feature: React.FC<{ icon: string; title: string; desc: string; delay: numb
 
 const PhoneScreen: React.FC = () => {
   const frame = useCurrentFrame();
-  const scrollY = interpolate(frame, [20, 120], [0, -80], { extrapolateRight: "clamp" });
+  const scrollY = interpolate(frame, [20, 140], [0, -100], { extrapolateRight: "clamp" });
 
   return (
     <div
       style={{
         width: "100%",
         height: "100%",
-        background: colors.bg,
+        background: `linear-gradient(180deg, #0D0D14 0%, #0A0A0F 100%)`,
         display: "flex",
         flexDirection: "column",
         padding: "60px 20px 20px",
@@ -77,7 +79,7 @@ const PhoneScreen: React.FC = () => {
               fontSize: 24,
               fontFamily: fonts.serif,
               fontWeight: 700,
-              background: colors.gradientGold,
+              background: `linear-gradient(135deg, ${colors.gold}, ${colors.goldLight}, ${colors.rose})`,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               lineHeight: 1.2,
@@ -96,10 +98,10 @@ const PhoneScreen: React.FC = () => {
           style={{
             background: colors.gradientGold,
             borderRadius: 30,
-            padding: "12px 24px",
+            padding: "14px 24px",
             textAlign: "center",
             marginBottom: 20,
-            boxShadow: "0 8px 32px rgba(201,168,76,0.3)",
+            boxShadow: `0 8px 32px rgba(201,168,76,0.4), 0 0 60px rgba(201,168,76,0.15)`,
           }}
         >
           <div style={{ color: "#0A0A0F", fontSize: 13, fontWeight: 700, letterSpacing: 1 }}>Begin Your Journey</div>
@@ -113,15 +115,16 @@ const PhoneScreen: React.FC = () => {
               style={{
                 flex: 1,
                 textAlign: "center",
-                padding: "12px 8px",
-                borderRadius: 12,
-                background: colors.bgGlass,
+                padding: "14px 8px",
+                borderRadius: 14,
+                background: `linear-gradient(145deg, rgba(201,168,76,0.08), rgba(155,142,196,0.04))`,
                 border: `1px solid ${colors.border}`,
+                boxShadow: `inset 0 1px 0 rgba(255,255,255,0.04)`,
               }}
             >
               <div
                 style={{
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: 700,
                   background: colors.gradientGold,
                   WebkitBackgroundClip: "text",
@@ -130,7 +133,7 @@ const PhoneScreen: React.FC = () => {
               >
                 {num}
               </div>
-              <div style={{ fontSize: 9, color: colors.textSecondary, marginTop: 2 }}>{label}</div>
+              <div style={{ fontSize: 9, color: colors.textSecondary, marginTop: 3 }}>{label}</div>
             </div>
           ))}
         </div>
@@ -147,14 +150,15 @@ const PhoneScreen: React.FC = () => {
               display: "flex",
               alignItems: "center",
               gap: 12,
-              padding: "10px 14px",
-              borderRadius: 12,
-              background: colors.bgGlass,
+              padding: "12px 14px",
+              borderRadius: 14,
+              background: `linear-gradient(135deg, rgba(201,168,76,0.06), rgba(155,142,196,0.03))`,
               border: `1px solid ${colors.border}`,
               marginBottom: 8,
+              boxShadow: `0 2px 12px rgba(0,0,0,0.3)`,
             }}
           >
-            <span style={{ fontSize: 20 }}>{emoji}</span>
+            <span style={{ fontSize: 22 }}>{emoji}</span>
             <div>
               <div style={{ fontSize: 12, color: colors.textPrimary, fontWeight: 600 }}>{title}</div>
               <div style={{ fontSize: 10, color: colors.textSecondary }}>{desc}</div>
@@ -171,7 +175,6 @@ export const Scene03_LandingPage: React.FC = () => {
   const { fps } = useVideoConfig();
 
   const fadeIn = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
-
   const phoneScale = spring({ frame, fps, config: { damping: 70, stiffness: 120, mass: 1 } });
   const phoneX = interpolate(phoneScale, [0, 1], [-200, 0]);
 
@@ -181,12 +184,15 @@ export const Scene03_LandingPage: React.FC = () => {
     easing: (t) => 1 - Math.pow(1 - t, 3),
   });
 
+  // Decorative line that traces the divider area
+  const dividerWidth = interpolate(frame, [50, 80], [0, 100], { extrapolateRight: "clamp" });
+
   return (
     <div
       style={{
         width: "100%",
         height: "100%",
-        background: colors.gradientBg,
+        background: colors.bg,
         display: "flex",
         alignItems: "center",
         opacity: fadeIn,
@@ -194,9 +200,20 @@ export const Scene03_LandingPage: React.FC = () => {
         overflow: "hidden",
       }}
     >
-      <ParticleField />
-      <GlowOrb x="20%" y="50%" size={500} color="rgba(201,168,76,0.25)" delay={0} />
-      <GlowOrb x="80%" y="30%" size={400} color="rgba(232,160,160,0.2)" delay={45} />
+      <LuxuryBackground variant="default" />
+
+      {/* Decorative vertical line on the split */}
+      <div
+        style={{
+          position: "absolute",
+          left: "55%",
+          top: "10%",
+          width: 1,
+          height: "80%",
+          background: `linear-gradient(180deg, transparent, rgba(201,168,76,0.15), rgba(232,160,160,0.1), transparent)`,
+          pointerEvents: "none",
+        }}
+      />
 
       {/* Left content */}
       <div
@@ -205,16 +222,18 @@ export const Scene03_LandingPage: React.FC = () => {
           padding: "0 80px",
           opacity: titleOpacity,
           transform: `translateY(${titleY}px)`,
+          zIndex: 2,
         }}
       >
         <div
           style={{
             fontFamily: fonts.sans,
             fontSize: 13,
-            letterSpacing: 5,
+            letterSpacing: 6,
             color: colors.gold,
             textTransform: "uppercase",
-            marginBottom: 20,
+            marginBottom: 24,
+            textShadow: `0 0 20px rgba(201,168,76,0.3)`,
           }}
         >
           Relationship Wellness Platform
@@ -223,17 +242,17 @@ export const Scene03_LandingPage: React.FC = () => {
         <div
           style={{
             fontFamily: fonts.serif,
-            fontSize: 56,
+            fontSize: 58,
             fontWeight: 300,
-            lineHeight: 1.15,
+            lineHeight: 1.12,
             color: colors.textPrimary,
-            marginBottom: 24,
+            marginBottom: 28,
           }}
         >
           Cultivate a{" "}
           <span
             style={{
-              background: colors.gradientGold,
+              background: `linear-gradient(135deg, ${colors.gold}, ${colors.goldLight}, ${colors.rose})`,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
             }}
@@ -244,7 +263,16 @@ export const Scene03_LandingPage: React.FC = () => {
           relationship
         </div>
 
-        <GoldDivider width="80px" />
+        {/* Animated gold divider */}
+        <div
+          style={{
+            width: dividerWidth,
+            height: 2,
+            background: `linear-gradient(90deg, ${colors.gold}, ${colors.rose}, transparent)`,
+            borderRadius: 2,
+            boxShadow: `0 0 12px rgba(201,168,76,0.3)`,
+          }}
+        />
 
         <div
           style={{
@@ -252,9 +280,9 @@ export const Scene03_LandingPage: React.FC = () => {
             fontSize: 16,
             color: colors.textSecondary,
             lineHeight: 1.7,
-            marginTop: 24,
+            marginTop: 28,
             marginBottom: 40,
-            maxWidth: 380,
+            maxWidth: 400,
           }}
         >
           Science-backed tools and AI-powered insights to help couples build
@@ -274,9 +302,10 @@ export const Scene03_LandingPage: React.FC = () => {
           justifyContent: "center",
           padding: "40px 80px 40px 40px",
           transform: `translateX(${phoneX}px) scale(${phoneScale})`,
+          zIndex: 2,
         }}
       >
-        <PhoneMockup scale={1}>
+        <PhoneMockup scale={1.05}>
           <PhoneScreen />
         </PhoneMockup>
       </div>
