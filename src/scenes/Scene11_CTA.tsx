@@ -3,17 +3,20 @@ import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { colors, fonts } from "../utils/colors";
 import { LuxuryBackground } from "../components/LuxuryBackground";
 
-const StatPill: React.FC<{ num: string; label: string; delay: number }> = ({ num, label, delay }) => {
+const StatPill: React.FC<{ num: string; label: string; delay: number; index: number }> = ({ num, label, delay, index }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const appear = spring({ frame: frame - delay, fps, config: { damping: 80, stiffness: 200, mass: 0.6 } });
   const float = Math.sin(frame * 0.03 + delay * 0.1) * 3;
 
+  // 3D tilt per pill: center pill (index 1) is flat, others tilt outward
+  const tiltY = (index - 1) * 5;
+
   return (
     <div
       style={{
         opacity: appear,
-        transform: `scale(${appear}) translateY(${float}px)`,
+        transform: `perspective(800px) rotateY(${tiltY}deg) scale(${appear}) translateY(${float}px)`,
         padding: "24px 36px",
         borderRadius: 22,
         background: `linear-gradient(145deg, rgba(201,168,76,0.1), rgba(155,142,196,0.05))`,
@@ -43,7 +46,7 @@ const StatPill: React.FC<{ num: string; label: string; delay: number }> = ({ num
   );
 };
 
-export const Scene09_CTA: React.FC = () => {
+export const Scene11_CTA: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -51,10 +54,10 @@ export const Scene09_CTA: React.FC = () => {
 
   // Animated hearts orbiting — more of them, different sizes
   const hearts = [
-    { emoji: "💛", offset: 0, radius: 300, speed: 1.2, size: 28, opacity: 0.4 },
-    { emoji: "🌹", offset: Math.PI, radius: 300, speed: 1.2, size: 24, opacity: 0.3 },
-    { emoji: "💫", offset: Math.PI / 2, radius: 350, speed: 0.8, size: 20, opacity: 0.25 },
-    { emoji: "✨", offset: Math.PI * 1.5, radius: 340, speed: 0.9, size: 18, opacity: 0.2 },
+    { emoji: "\uD83D\uDC9B", offset: 0, radius: 300, speed: 1.2, size: 28, opacity: 0.4 },
+    { emoji: "\uD83C\uDF39", offset: Math.PI, radius: 300, speed: 1.2, size: 24, opacity: 0.3 },
+    { emoji: "\uD83D\uDCAB", offset: Math.PI / 2, radius: 350, speed: 0.8, size: 20, opacity: 0.25 },
+    { emoji: "\u2728", offset: Math.PI * 1.5, radius: 340, speed: 0.9, size: 18, opacity: 0.2 },
   ];
 
   // Main title
@@ -77,6 +80,10 @@ export const Scene09_CTA: React.FC = () => {
   // Expanding rings from center
   const ring1 = (frame * 0.4) % 100;
   const ring2 = ((frame * 0.4) + 50) % 100;
+
+  // 3D rotation for logo section
+  const logoRotateY = Math.sin(frame * 0.02) * 8;
+  const logoRotateX = Math.cos(frame * 0.015) * 5;
 
   return (
     <div
@@ -136,73 +143,80 @@ export const Scene09_CTA: React.FC = () => {
         );
       })}
 
-      {/* Main logo */}
+      {/* Main logo with 3D perspective wrapper */}
       <div
         style={{
-          transform: `scale(${titleScale})`,
-          opacity: titleOpacity,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          marginBottom: 44,
+          perspective: 600,
           zIndex: 2,
         }}
       >
         <div
           style={{
-            width: 110,
-            height: 110,
-            borderRadius: "50%",
-            border: `2px solid ${colors.borderBright}`,
+            transform: `scale(${titleScale}) rotateY(${logoRotateY}deg) rotateX(${logoRotateX}deg)`,
+            opacity: titleOpacity,
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center",
-            marginBottom: 28,
-            background: `radial-gradient(circle, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.03) 60%, transparent 80%)`,
-            boxShadow: `0 0 80px rgba(201,168,76,0.3), 0 0 160px rgba(201,168,76,0.1), inset 0 0 40px rgba(201,168,76,0.05)`,
+            marginBottom: 44,
+            transformStyle: "preserve-3d",
           }}
         >
-          <svg width="48" height="44" viewBox="0 0 48 44" fill="none">
-            <path
-              d="M24 40C24 40 2 26 2 14C2 7.4 7.4 2 14 2C17.6 2 20.8 3.6 24 6.4C27.2 3.6 30.4 2 34 2C40.6 2 46 7.4 46 14C46 26 24 40 24 40Z"
-              fill="url(#heartGradCTA)"
-            />
-            <defs>
-              <linearGradient id="heartGradCTA" x1="2" y1="2" x2="46" y2="40" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#C9A84C" />
-                <stop offset="0.5" stopColor="#E8C97A" />
-                <stop offset="1" stopColor="#E8A0A0" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-
-        <div style={{ position: "relative", overflow: "hidden" }}>
           <div
             style={{
-              fontFamily: fonts.serif,
-              fontSize: 84,
-              fontWeight: 300,
-              letterSpacing: 24,
-              color: colors.textPrimary,
-              textTransform: "uppercase",
-              lineHeight: 1,
-              textShadow: `0 0 60px rgba(201,168,76,0.3), 0 0 120px rgba(201,168,76,0.1)`,
+              width: 110,
+              height: 110,
+              borderRadius: "50%",
+              border: `2px solid ${colors.borderBright}`,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginBottom: 28,
+              background: `radial-gradient(circle, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.03) 60%, transparent 80%)`,
+              boxShadow: `0 0 80px rgba(201,168,76,0.3), 0 0 160px rgba(201,168,76,0.1), inset 0 0 40px rgba(201,168,76,0.05)`,
             }}
           >
-            MONARK
+            <svg width="48" height="44" viewBox="0 0 48 44" fill="none">
+              <path
+                d="M24 40C24 40 2 26 2 14C2 7.4 7.4 2 14 2C17.6 2 20.8 3.6 24 6.4C27.2 3.6 30.4 2 34 2C40.6 2 46 7.4 46 14C46 26 24 40 24 40Z"
+                fill="url(#heartGradCTA11)"
+              />
+              <defs>
+                <linearGradient id="heartGradCTA11" x1="2" y1="2" x2="46" y2="40" gradientUnits="userSpaceOnUse">
+                  <stop stopColor="#C9A84C" />
+                  <stop offset="0.5" stopColor="#E8C97A" />
+                  <stop offset="1" stopColor="#E8A0A0" />
+                </linearGradient>
+              </defs>
+            </svg>
           </div>
-          {/* Shimmer */}
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              background: `linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)`,
-              transform: `translateX(${shimmerX}px)`,
-              width: 140,
-              pointerEvents: "none",
-            }}
-          />
+
+          <div style={{ position: "relative", overflow: "hidden" }}>
+            <div
+              style={{
+                fontFamily: fonts.serif,
+                fontSize: 84,
+                fontWeight: 300,
+                letterSpacing: 24,
+                color: colors.textPrimary,
+                textTransform: "uppercase",
+                lineHeight: 1,
+                textShadow: `0 0 60px rgba(201,168,76,0.3), 0 0 120px rgba(201,168,76,0.1)`,
+              }}
+            >
+              MONARK
+            </div>
+            {/* Shimmer */}
+            <div
+              style={{
+                position: "absolute",
+                inset: 0,
+                background: `linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent)`,
+                transform: `translateX(${shimmerX}px)`,
+                width: 140,
+                pointerEvents: "none",
+              }}
+            />
+          </div>
         </div>
       </div>
 
@@ -235,20 +249,21 @@ export const Scene09_CTA: React.FC = () => {
         </div>
       </div>
 
-      {/* Stats */}
+      {/* Stats with 3D tilt */}
       <div style={{ display: "flex", gap: 28, marginBottom: 54, opacity: statsOpacity, zIndex: 2 }}>
-        <StatPill num="50K+" label="Couples Thriving" delay={55} />
-        <StatPill num="4.9★" label="App Store Rating" delay={65} />
-        <StatPill num="95%" label="Report Improvement" delay={75} />
+        <StatPill num="50K+" label="Couples Thriving" delay={55} index={0} />
+        <StatPill num="4.9\u2605" label="App Store Rating" delay={65} index={1} />
+        <StatPill num="95%" label="Report Improvement" delay={75} index={2} />
       </div>
 
-      {/* CTA Button */}
+      {/* CTA Button with 3D depth */}
       <div
         style={{
           transform: `scale(${btnScale})`,
           opacity: interpolate(frame, [70, 90], [0, 1], { extrapolateRight: "clamp" }),
           position: "relative",
           zIndex: 2,
+          perspective: 800,
         }}
       >
         <div
@@ -267,7 +282,9 @@ export const Scene09_CTA: React.FC = () => {
             background: `linear-gradient(135deg, ${colors.gold}, ${colors.goldLight}, ${colors.gold})`,
             borderRadius: 50,
             padding: "22px 64px",
-            boxShadow: `0 8px 40px rgba(201,168,76,${btnGlow}), 0 0 80px rgba(201,168,76,0.15)`,
+            boxShadow: `0 8px 40px rgba(201,168,76,${btnGlow}), 0 0 80px rgba(201,168,76,0.15), 0 20px 40px rgba(0,0,0,0.3)`,
+            transform: `translateZ(20px)`,
+            transformStyle: "preserve-3d",
           }}
         >
           <div
@@ -298,7 +315,7 @@ export const Scene09_CTA: React.FC = () => {
           opacity: interpolate(frame, [90, 120], [0, 0.6], { extrapolateRight: "clamp" }),
         }}
       >
-        monark.app · Your Love. Elevated.
+        monark.app &middot; Your Love. Elevated.
       </div>
     </div>
   );

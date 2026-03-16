@@ -94,11 +94,11 @@ const PhoneDiscoveryScreen: React.FC = () => {
   const frame = useCurrentFrame();
 
   const profiles = [
-    { emoji: "👨‍💼", name: "James", age: 30, trait: "Communicator", compat: 94, x: 160, y: 150, delay: 20 },
-    { emoji: "👩‍🎨", name: "Sophie", age: 27, trait: "Creative", compat: 81, x: 72, y: 240, delay: 35 },
-    { emoji: "👨‍🔬", name: "Marcus", age: 32, trait: "Intellectual", compat: 76, x: 248, y: 240, delay: 50 },
-    { emoji: "👩‍⚕️", name: "Elena", age: 29, trait: "Empath", compat: 88, x: 72, y: 140, delay: 65 },
-    { emoji: "👨‍🎭", name: "Theo", age: 31, trait: "Adventurer", compat: 72, x: 248, y: 140, delay: 80 },
+    { emoji: "\uD83D\uDC68\u200D\uD83D\uDCBC", name: "James", age: 30, trait: "Communicator", compat: 94, x: 160, y: 150, delay: 20 },
+    { emoji: "\uD83D\uDC69\u200D\uD83C\uDFA8", name: "Sophie", age: 27, trait: "Creative", compat: 81, x: 72, y: 240, delay: 35 },
+    { emoji: "\uD83D\uDC68\u200D\uD83D\uDD2C", name: "Marcus", age: 32, trait: "Intellectual", compat: 76, x: 248, y: 240, delay: 50 },
+    { emoji: "\uD83D\uDC69\u200D\u2695\uFE0F", name: "Elena", age: 29, trait: "Empath", compat: 88, x: 72, y: 140, delay: 65 },
+    { emoji: "\uD83D\uDC68\u200D\uD83C\uDFAD", name: "Theo", age: 31, trait: "Adventurer", compat: 72, x: 248, y: 140, delay: 80 },
   ];
 
   const connProgress = interpolate(frame, [50, 100], [0, 1], { extrapolateRight: "clamp" });
@@ -137,7 +137,7 @@ const PhoneDiscoveryScreen: React.FC = () => {
               border: `2px solid ${colors.borderBright}`,
             }}
           >
-            👩
+            {"\uD83D\uDC69"}
           </div>
           <div style={{ textAlign: "center", marginTop: 4, fontSize: 9, color: colors.gold, fontWeight: 600 }}>You</div>
         </div>
@@ -174,7 +174,7 @@ const PhoneDiscoveryScreen: React.FC = () => {
   );
 };
 
-export const Scene08_Discovery: React.FC = () => {
+export const Scene09_Discovery: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -283,10 +283,10 @@ export const Scene08_Discovery: React.FC = () => {
         </div>
 
         {[
-          { icon: "🧬", title: "Deep Compatibility", desc: "12-dimension matching algorithm" },
-          { icon: "🎯", title: "Values-First", desc: "Aligned on what matters most" },
-          { icon: "🌐", title: "Curated Network", desc: "Quality over quantity, always" },
-          { icon: "🔐", title: "Safe Space", desc: "Verified, respectful community" },
+          { icon: "\uD83E\uDDEC", title: "Deep Compatibility", desc: "12-dimension matching algorithm" },
+          { icon: "\uD83C\uDFAF", title: "Values-First", desc: "Aligned on what matters most" },
+          { icon: "\uD83C\uDF10", title: "Curated Network", desc: "Quality over quantity, always" },
+          { icon: "\uD83D\uDD10", title: "Safe Space", desc: "Verified, respectful community" },
         ].map(({ icon, title, desc }, i) => {
           const opacity = interpolate(frame, [40 + i * 10, 65 + i * 10], [0, 1], { extrapolateRight: "clamp" });
           const x = interpolate(frame, [40 + i * 10, 65 + i * 10], [-20, 0], { extrapolateRight: "clamp" });
@@ -331,9 +331,14 @@ export const Scene08_Discovery: React.FC = () => {
         })}
       </div>
 
-      {/* Right phone */}
+      {/* Right phone with 3D transforms and floating */}
       <div style={{ transform: `scale(${phoneScale}) translateY(${phoneFloat}px)`, zIndex: 2 }}>
-        <PhoneMockup scale={1.05}>
+        <PhoneMockup
+          scale={1.05}
+          rotateY={-6 + Math.sin(frame * 0.025) * 4}
+          rotateX={2}
+          perspective={1000}
+        >
           <PhoneDiscoveryScreen />
         </PhoneMockup>
       </div>

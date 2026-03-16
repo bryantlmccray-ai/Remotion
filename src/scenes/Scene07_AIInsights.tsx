@@ -283,7 +283,7 @@ export const Scene07_AIInsights: React.FC = () => {
               key={title}
               style={{
                 opacity,
-                transform: `translateX(${x}px)`,
+                transform: `translateX(${x}px) perspective(800px) rotateX(${1 + i * 0.5}deg) rotateY(${-2 + i}deg)`,
                 display: "flex",
                 gap: 14,
                 marginBottom: 14,
@@ -320,7 +320,7 @@ export const Scene07_AIInsights: React.FC = () => {
       </div>
 
       {/* AI thinking dots between content and phone */}
-      <div style={{ position: "absolute", right: 380, top: "50%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: 12, zIndex: 1 }}>
+      <div style={{ position: "absolute", right: 380, top: "50%", transform: "translateY(-50%)", display: "flex", flexDirection: "column", gap: 12, zIndex: 1, perspective: 600 }}>
         {[0, 1, 2].map((i) => (
           <div
             key={i}
@@ -331,6 +331,7 @@ export const Scene07_AIInsights: React.FC = () => {
               background: colors.lavender,
               opacity: dotPulse(i),
               boxShadow: `0 0 10px ${colors.lavender}`,
+              transform: `translateZ(${Math.sin(frame * 0.05 + i * 1.2) * 20}px)`,
             }}
           />
         ))}
@@ -338,7 +339,7 @@ export const Scene07_AIInsights: React.FC = () => {
 
       {/* Right phone */}
       <div style={{ transform: `translateX(${phoneX}px) translateY(${phoneFloat}px)`, zIndex: 2 }}>
-        <PhoneMockup scale={1.05}>
+        <PhoneMockup scale={1.05} rotateY={8 + Math.sin(frame * 0.02) * 4} rotateX={-2 + Math.cos(frame * 0.015) * 3} perspective={900}>
           <PhoneAIScreen />
         </PhoneMockup>
       </div>

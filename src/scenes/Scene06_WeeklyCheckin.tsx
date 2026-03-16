@@ -279,7 +279,7 @@ export const Scene06_WeeklyCheckin: React.FC = () => {
               key={title}
               style={{
                 opacity,
-                transform: `translateX(${x}px)`,
+                transform: `translateX(${x}px) perspective(800px) rotateY(${2 - i * 0.5}deg)`,
                 display: "flex",
                 gap: 14,
                 marginBottom: 14,
@@ -317,7 +317,7 @@ export const Scene06_WeeklyCheckin: React.FC = () => {
 
       {/* Right phone */}
       <div style={{ transform: `translateY(${phoneY + phoneFloat}px)`, zIndex: 2 }}>
-        <PhoneMockup scale={1.05}>
+        <PhoneMockup scale={1.05} rotateY={-6 + Math.sin(frame * 0.025) * 5} rotateX={2 + Math.cos(frame * 0.02) * 2} perspective={1000}>
           <PhoneCheckinScreen />
         </PhoneMockup>
       </div>

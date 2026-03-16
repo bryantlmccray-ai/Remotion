@@ -290,12 +290,12 @@ export const Scene04_Onboarding: React.FC = () => {
         </div>
 
         {/* Step indicators */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 18, perspective: 800 }}>
           {["Share your values", "Define what matters", "Check current wellness"].map((label, i) => {
             const isActive = i === step;
             const isPast = i < step;
             return (
-              <div key={label} style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              <div key={label} style={{ display: "flex", alignItems: "center", gap: 16, transform: `rotateX(${isActive ? -2 : isPast ? 1 : 3}deg)`, transformStyle: "preserve-3d" }}>
                 <div
                   style={{
                     width: 36,
@@ -334,7 +334,7 @@ export const Scene04_Onboarding: React.FC = () => {
 
       {/* Right: phone */}
       <div style={{ transform: `translateY(${phoneFloat}px)`, zIndex: 2 }}>
-        <PhoneMockup scale={1.05}>
+        <PhoneMockup scale={1.05} rotateY={-6 + Math.sin(frame * 0.02) * 4} rotateX={3} perspective={1000}>
           {step === 0 && <OnboardingStep1 />}
           {step === 1 && <OnboardingStep2 />}
           {step === 2 && <OnboardingStep3 />}

@@ -158,7 +158,7 @@ export const Scene05_ProfileCreation: React.FC = () => {
 
       {/* Phone */}
       <div style={{ transform: `scale(${phoneScale}) translateY(${phoneFloat}px)`, transformOrigin: "center", zIndex: 2 }}>
-        <PhoneMockup scale={1.05}>
+        <PhoneMockup scale={1.05} rotateY={8 + Math.sin(frame * 0.02) * 4} rotateX={2} perspective={1000}>
           <PhoneProfileScreen />
         </PhoneMockup>
       </div>
@@ -204,7 +204,7 @@ export const Scene05_ProfileCreation: React.FC = () => {
               key={title}
               style={{
                 opacity,
-                transform: `translateX(${x}px)`,
+                transform: `translateX(${x}px) perspective(600px) rotateY(${-3 + i}deg)`,
                 display: "flex",
                 gap: 16,
                 marginBottom: 18,
