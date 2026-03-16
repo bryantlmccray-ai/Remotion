@@ -3,6 +3,7 @@ import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { colors, fonts } from "../utils/colors";
 import { LuxuryBackground } from "../components/LuxuryBackground";
 import { PhoneMockup } from "../components/PhoneMockup";
+import { DynamicElements } from "../components/DynamicElements";
 
 const Feature: React.FC<{ icon: string; title: string; desc: string; delay: number }> = ({ icon, title, desc, delay }) => {
   const frame = useCurrentFrame();
@@ -11,7 +12,7 @@ const Feature: React.FC<{ icon: string; title: string; desc: string; delay: numb
     extrapolateRight: "clamp",
     easing: (t) => 1 - Math.pow(1 - t, 3),
   });
-  const glowPulse = 0.1 + 0.05 * Math.sin(frame * 0.05 + delay);
+  const glowPulse = 0.12 + 0.06 * Math.sin(frame * 0.05 + delay);
 
   return (
     <div
@@ -20,36 +21,36 @@ const Feature: React.FC<{ icon: string; title: string; desc: string; delay: numb
         transform: `translateX(${x}px)`,
         display: "flex",
         alignItems: "flex-start",
-        gap: 16,
-        padding: "18px 22px",
-        borderRadius: 18,
-        background: `linear-gradient(135deg, rgba(201,168,76,0.06) 0%, rgba(155,142,196,0.03) 100%)`,
+        gap: 18,
+        padding: "20px 24px",
+        borderRadius: 20,
+        background: `linear-gradient(135deg, rgba(201,168,76,0.08) 0%, rgba(155,142,196,0.04) 100%)`,
         border: `1px solid rgba(201,168,76,${glowPulse + 0.1})`,
         backdropFilter: "blur(12px)",
-        marginBottom: 14,
-        boxShadow: `0 4px 24px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04)`,
+        marginBottom: 16,
+        boxShadow: `0 4px 28px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04), 0 0 20px rgba(201,168,76,0.04)`,
       }}
     >
       <div
         style={{
-          width: 44,
-          height: 44,
-          borderRadius: 14,
-          background: `linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05))`,
+          width: 48,
+          height: 48,
+          borderRadius: 16,
+          background: `linear-gradient(135deg, rgba(201,168,76,0.18), rgba(201,168,76,0.06))`,
           border: `1px solid ${colors.border}`,
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          fontSize: 22,
+          fontSize: 24,
           flexShrink: 0,
-          boxShadow: `0 0 20px rgba(201,168,76,0.1)`,
+          boxShadow: `0 0 24px rgba(201,168,76,0.12)`,
         }}
       >
         {icon}
       </div>
       <div>
-        <div style={{ fontFamily: fonts.serif, fontSize: 16, color: colors.textPrimary, fontWeight: 600, marginBottom: 4 }}>{title}</div>
-        <div style={{ fontFamily: fonts.sans, fontSize: 12, color: colors.textSecondary, lineHeight: 1.5 }}>{desc}</div>
+        <div style={{ fontFamily: fonts.serif, fontSize: 18, color: colors.textPrimary, fontWeight: 600, marginBottom: 5 }}>{title}</div>
+        <div style={{ fontFamily: fonts.sans, fontSize: 13, color: colors.textSecondary, lineHeight: 1.5 }}>{desc}</div>
       </div>
     </div>
   );
@@ -107,32 +108,30 @@ export const Scene03_LandingPage: React.FC = () => {
   const titleOpacity = interpolate(frame, [20, 50], [0, 1], { extrapolateRight: "clamp" });
   const titleY = interpolate(frame, [20, 50], [40, 0], { extrapolateRight: "clamp", easing: (t) => 1 - Math.pow(1 - t, 3) });
 
-  // 3D phone angle — starts angled, settles to slight tilt
+  // 3D phone angle
   const phoneRotateY = interpolate(phoneScale, [0, 1], [-35, -8]);
   const phoneRotateX = 3 + Math.sin(frame * 0.02) * 2;
-  const phoneFloat = Math.sin(frame * 0.025) * 6;
+  const phoneFloat = Math.sin(frame * 0.025) * 8;
 
-  const dividerWidth = interpolate(frame, [50, 80], [0, 100], { extrapolateRight: "clamp" });
+  const dividerWidth = interpolate(frame, [50, 80], [0, 140], { extrapolateRight: "clamp" });
 
   return (
     <div style={{ width: "100%", height: "100%", background: colors.bg, display: "flex", alignItems: "center", opacity: fadeIn, position: "relative", overflow: "hidden" }}>
-      <LuxuryBackground variant="default" />
-
-      {/* Decorative vertical line */}
-      <div style={{ position: "absolute", left: "55%", top: "10%", width: 1, height: "80%", background: `linear-gradient(180deg, transparent, rgba(201,168,76,0.12), transparent)`, pointerEvents: "none" }} />
+      <LuxuryBackground variant="default" intensity={1.1} />
+      <DynamicElements variant="split" />
 
       {/* Left content */}
-      <div style={{ flex: 1, padding: "0 80px", opacity: titleOpacity, transform: `translateY(${titleY}px)`, zIndex: 2 }}>
-        <div style={{ fontFamily: fonts.sans, fontSize: 13, letterSpacing: 6, color: colors.gold, textTransform: "uppercase", marginBottom: 24, textShadow: `0 0 20px rgba(201,168,76,0.3)` }}>
+      <div style={{ flex: 1, padding: "0 70px", opacity: titleOpacity, transform: `translateY(${titleY}px)`, zIndex: 2 }}>
+        <div style={{ fontFamily: fonts.sans, fontSize: 14, letterSpacing: 7, color: colors.gold, textTransform: "uppercase", marginBottom: 28, textShadow: `0 0 25px rgba(201,168,76,0.4)` }}>
           Relationship Wellness Platform
         </div>
-        <div style={{ fontFamily: fonts.serif, fontSize: 58, fontWeight: 300, lineHeight: 1.12, color: colors.textPrimary, marginBottom: 28 }}>
+        <div style={{ fontFamily: fonts.serif, fontSize: 68, fontWeight: 300, lineHeight: 1.08, color: colors.textPrimary, marginBottom: 32 }}>
           Cultivate a{" "}
           <span style={{ background: `linear-gradient(135deg, ${colors.gold}, ${colors.goldLight}, ${colors.rose})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>thriving</span>{" "}
           <br />relationship
         </div>
-        <div style={{ width: dividerWidth, height: 2, background: `linear-gradient(90deg, ${colors.gold}, ${colors.rose}, transparent)`, borderRadius: 2, boxShadow: `0 0 12px rgba(201,168,76,0.3)` }} />
-        <div style={{ fontFamily: fonts.sans, fontSize: 16, color: colors.textSecondary, lineHeight: 1.7, marginTop: 28, marginBottom: 40, maxWidth: 400 }}>
+        <div style={{ width: dividerWidth, height: 2.5, background: `linear-gradient(90deg, ${colors.gold}, ${colors.rose}, transparent)`, borderRadius: 2, boxShadow: `0 0 16px rgba(201,168,76,0.4)` }} />
+        <div style={{ fontFamily: fonts.sans, fontSize: 17, color: colors.textSecondary, lineHeight: 1.7, marginTop: 28, marginBottom: 40, maxWidth: 440 }}>
           Science-backed tools and AI-powered insights to help couples build deeper connection, resolve conflict gracefully, and grow together.
         </div>
         <Feature icon="💞" title="Weekly Wellness Check-ins" desc="Stay synced on emotional health, needs & desires" delay={50} />
@@ -141,8 +140,8 @@ export const Scene03_LandingPage: React.FC = () => {
       </div>
 
       {/* Right: 3D angled phone */}
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 80px 40px 40px", transform: `translateY(${phoneFloat}px) scale(${phoneScale})`, zIndex: 2 }}>
-        <PhoneMockup scale={1.05} rotateY={phoneRotateY} rotateX={phoneRotateX} perspective={1000}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", padding: "40px 70px 40px 40px", transform: `translateY(${phoneFloat}px) scale(${phoneScale})`, zIndex: 2 }}>
+        <PhoneMockup scale={1.1} rotateY={phoneRotateY} rotateX={phoneRotateX} perspective={1000}>
           <PhoneScreen />
         </PhoneMockup>
       </div>
