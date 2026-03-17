@@ -28,7 +28,7 @@ export const Scene13_CTA: React.FC = () => {
 			<ParticleField />
 			<GlowOrb x="50%" y="50%" size={800} color={colors.gold} pulse />
 			<GlowOrb x="20%" y="20%" size={400} color={colors.rose} delay={30} />
-			<GlowOrb x="80%" y="80%" size={350} color={colors.purple} delay={60} />
+			<GlowOrb x="80%" y="80%" size={350} color={colors.clay} delay={60} />
 
 			{/* Orbiting hearts */}
 			<div style={{position: 'absolute', left: '50%', top: '50%', transform: `translate(${orbitR * Math.cos(h1Angle)}px, ${orbitR * 0.5 * Math.sin(h1Angle)}px)`, fontSize: 28, opacity: 0.4, filter: 'blur(1px)'}}>💛</div>

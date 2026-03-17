@@ -58,7 +58,7 @@ export const Scene12_RelationshipDashboard: React.FC = () => {
 							<div style={{display: 'flex', gap: 8, marginBottom: 14}}>
 								<StatBox label="Days Active" value={`${daysCount}`} color={colors.gold} />
 								<StatBox label="Week Streak" value={`${streakCount}`} color={colors.green} />
-								<StatBox label="Wellness" value="87" color={colors.blue} />
+								<StatBox label="Wellness" value="87" color={colors.terracotta} />
 							</div>
 
 							{/* Growth chart (simplified) */}

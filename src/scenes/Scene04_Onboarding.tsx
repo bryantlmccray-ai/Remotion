@@ -28,7 +28,7 @@ export const Scene04_ValuesAssessment: React.FC = () => {
 			<div style={{position: 'absolute', inset: 0, background: colors.gradientBg}} />
 			<ParticleField />
 			<GlowOrb x="20%" y="50%" size={300} color={colors.gold} />
-			<GlowOrb x="75%" y="35%" size={250} color={colors.lavender} delay={40} />
+			<GlowOrb x="75%" y="35%" size={250} color={colors.sage} delay={40} />
 
 			<div style={{position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', padding: '0 100px'}}>
 				<div style={{flex: 1, opacity: textSlide, transform: `translateX(${interpolate(textSlide, [0, 1], [-80, 0])}px)`}}>

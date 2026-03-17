@@ -15,9 +15,9 @@ export const Scene06_WeeklyCheckin: React.FC = () => {
 
 	const dimensions = [
 		{label: 'Emotional', value: 92, color: colors.gold, delay: 35},
-		{label: 'Communication', value: 78, color: colors.blue, delay: 45},
+		{label: 'Communication', value: 78, color: colors.terracotta, delay: 45},
 		{label: 'Trust', value: 95, color: colors.green, delay: 55},
-		{label: 'Growth', value: 81, color: colors.purple, delay: 65},
+		{label: 'Growth', value: 81, color: colors.sage, delay: 65},
 		{label: 'Intimacy', value: 73, color: colors.rose, delay: 75},
 	];
 

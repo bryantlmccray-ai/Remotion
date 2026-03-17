@@ -20,7 +20,7 @@ export const Scene08_AICoaching: React.FC = () => {
 	const insights = [
 		{icon: '📈', label: 'Communication', trend: '+12%', color: colors.green, delay: 80},
 		{icon: '💛', label: 'Trust Level', trend: 'Strong', color: colors.gold, delay: 95},
-		{icon: '🎯', label: 'Next Goal', trend: 'Active Listening', color: colors.blue, delay: 110},
+		{icon: '🎯', label: 'Next Goal', trend: 'Active Listening', color: colors.terracotta, delay: 110},
 	];
 
 	return (
@@ -28,7 +28,7 @@ export const Scene08_AICoaching: React.FC = () => {
 			<div style={{position: 'absolute', inset: 0, background: colors.gradientBg}} />
 			<ParticleField />
 			<GlowOrb x="20%" y="45%" size={300} color={colors.gold} />
-			<GlowOrb x="80%" y="55%" size={250} color={colors.blue} delay={30} />
+			<GlowOrb x="80%" y="55%" size={250} color={colors.terracotta} delay={30} />
 
 			<div style={{position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', padding: '0 100px'}}>
 				<div style={{flex: 1, opacity: textSlide, transform: `translateX(${interpolate(textSlide, [0, 1], [-80, 0])}px)`}}>

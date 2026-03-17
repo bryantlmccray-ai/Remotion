@@ -17,8 +17,8 @@ export const Scene07_RIFDimensions: React.FC = () => {
 		{label: 'Respect', value: 0.88, color: colors.gold},
 		{label: 'Intimacy', value: 0.75, color: colors.rose},
 		{label: 'Friendship', value: 0.92, color: colors.green},
-		{label: 'Trust', value: 0.85, color: colors.blue},
-		{label: 'Growth', value: 0.79, color: colors.purple},
+		{label: 'Trust', value: 0.85, color: colors.terracotta},
+		{label: 'Growth', value: 0.79, color: colors.clay},
 	];
 
 	const radarSize = 90;
@@ -39,7 +39,7 @@ export const Scene07_RIFDimensions: React.FC = () => {
 			<div style={{position: 'absolute', inset: 0, background: colors.gradientBg}} />
 			<ParticleField />
 			<GlowOrb x="25%" y="45%" size={350} color={colors.gold} />
-			<GlowOrb x="75%" y="55%" size={250} color={colors.purple} delay={30} />
+			<GlowOrb x="75%" y="55%" size={250} color={colors.clay} delay={30} />
 
 			<div style={{position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', padding: '0 100px'}}>
 				<div style={{flex: 1, opacity: textSlide, transform: `translateX(${interpolate(textSlide, [0, 1], [-80, 0])}px)`}}>
