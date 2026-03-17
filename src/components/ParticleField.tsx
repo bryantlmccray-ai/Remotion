@@ -13,7 +13,7 @@ interface Particle {
 	isGold: boolean;
 }
 
-const PARTICLES: Particle[] = Array.from({length: 50}, (_, i) => ({
+const PARTICLES: Particle[] = Array.from({length: 20}, (_, i) => ({
 	x: (i * 137.508) % 100,
 	y: (i * 73.21) % 120 - 10,
 	size: 3 + (i % 4) * 2,
@@ -43,7 +43,7 @@ const Pentagon: React.FC<{size: number; color: string; opacity: number; rotation
 			style={{
 				opacity,
 				transform: `rotate(${rotation}deg)`,
-				filter: `blur(${size * 0.15}px)`,
+				filter: `blur(${Math.min(size * 0.1, 1)}px)`,
 			}}
 		>
 			<polygon points={points} fill={color} />
