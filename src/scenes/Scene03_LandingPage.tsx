@@ -5,57 +5,29 @@ import { GlowOrb } from "../components/GlowOrb";
 import { ParticleField } from "../components/ParticleField";
 import { PhoneMockup } from "../components/PhoneMockup";
 import { GoldDivider } from "../components/GoldDivider";
+import { SPRING, ease } from "../utils/animations";
 
-const Feature: React.FC<{ icon: string; title: string; desc: string; delay: number }> = ({ icon, title, desc, delay }) => {
-  const frame = useCurrentFrame();
-  const opacity = interpolate(frame, [delay, delay + 25], [0, 1], { extrapolateRight: "clamp" });
-  const y = interpolate(frame, [delay, delay + 25], [30, 0], {
-    extrapolateRight: "clamp",
-    easing: (t) => 1 - Math.pow(1 - t, 3),
-  });
-  return (
-    <div
-      style={{
-        opacity,
-        transform: `translateY(${y}px)`,
-        display: "flex",
-        alignItems: "flex-start",
-        gap: 16,
-        padding: "16px 20px",
-        borderRadius: 16,
-        background: colors.bgGlass,
-        border: `1px solid ${colors.border}`,
-        backdropFilter: "blur(10px)",
-        marginBottom: 12,
-      }}
-    >
-      <div
-        style={{
-          width: 40,
-          height: 40,
-          borderRadius: 12,
-          background: "rgba(201,168,76,0.12)",
-          border: `1px solid ${colors.border}`,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: 20,
-          flexShrink: 0,
-        }}
-      >
-        {icon}
-      </div>
-      <div>
-        <div style={{ fontFamily: fonts.serif, fontSize: 15, color: colors.textPrimary, fontWeight: 600, marginBottom: 4 }}>{title}</div>
-        <div style={{ fontFamily: fonts.sans, fontSize: 12, color: colors.textSecondary, lineHeight: 1.5 }}>{desc}</div>
-      </div>
-    </div>
-  );
-};
+/**
+ * SCENE 3 — THE STATEMENT + PHONE ENTERS (0:09–0:15)
+ *
+ * "WEEKLY WELLNESS" stencils in. Copy arrives with weight.
+ * Then THE PHONE enters from off-screen right, gliding on a luxury arc
+ * with a micro-bounce (the Pixar ball). Screen blooms to life.
+ * The UI builds itself inside the phone in sequence.
+ */
 
 const PhoneScreen: React.FC = () => {
   const frame = useCurrentFrame();
-  const scrollY = interpolate(frame, [20, 120], [0, -80], { extrapolateRight: "clamp" });
+
+  // UI elements build themselves in sequence
+  const heroOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
+  const heroScale = interpolate(frame, [0, 20], [0.9, 1], { extrapolateRight: "clamp", easing: ease.outCubic });
+  const ctaSlide = interpolate(frame, [15, 35], [40, 0], { extrapolateRight: "clamp", easing: ease.outQuart });
+  const ctaOpacity = interpolate(frame, [15, 35], [0, 1], { extrapolateRight: "clamp" });
+  const statsOpacity = interpolate(frame, [30, 50], [0, 1], { extrapolateRight: "clamp" });
+
+  // Scroll the phone content gently
+  const scrollY = interpolate(frame, [50, 150], [0, -60], { extrapolateRight: "clamp", easing: ease.inOutSine });
 
   return (
     <div
@@ -71,10 +43,17 @@ const PhoneScreen: React.FC = () => {
     >
       <div style={{ transform: `translateY(${scrollY}px)` }}>
         {/* Hero text */}
-        <div style={{ textAlign: "center", marginBottom: 24 }}>
+        <div
+          style={{
+            textAlign: "center",
+            marginBottom: 20,
+            opacity: heroOpacity,
+            transform: `scale(${heroScale})`,
+          }}
+        >
           <div
             style={{
-              fontSize: 24,
+              fontSize: 22,
               fontFamily: fonts.serif,
               fontWeight: 700,
               background: colors.gradientGold,
@@ -84,83 +63,97 @@ const PhoneScreen: React.FC = () => {
               marginBottom: 8,
             }}
           >
-            Transform Your Relationship
+            Transform Your
+            <br />
+            Relationship
           </div>
-          <div style={{ fontSize: 11, color: colors.textSecondary, lineHeight: 1.5 }}>
+          <div style={{ fontSize: 10, color: colors.textSecondary, lineHeight: 1.5 }}>
             Science-backed tools for deeper connection
           </div>
         </div>
 
-        {/* CTA Button */}
+        {/* CTA Button — slides up */}
         <div
           style={{
             background: colors.gradientGold,
-            borderRadius: 30,
+            borderRadius: 28,
             padding: "12px 24px",
             textAlign: "center",
-            marginBottom: 20,
+            marginBottom: 16,
             boxShadow: "0 8px 32px rgba(201,168,76,0.3)",
+            opacity: ctaOpacity,
+            transform: `translateY(${ctaSlide}px)`,
           }}
         >
-          <div style={{ color: "#0A0A0F", fontSize: 13, fontWeight: 700, letterSpacing: 1 }}>Begin Your Journey</div>
+          <div style={{ color: "#0A0A0F", fontSize: 12, fontWeight: 700, letterSpacing: 1 }}>Begin Your Journey</div>
         </div>
 
-        {/* Stats row */}
-        <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
-          {[["50K+", "Couples"], ["4.9★", "Rating"], ["95%", "Success"]].map(([num, label]) => (
+        {/* Stats — fade in with stagger */}
+        <div style={{ display: "flex", gap: 6, marginBottom: 16, opacity: statsOpacity }}>
+          {[["50K+", "Couples"], ["4.9\u2605", "Rating"], ["95%", "Success"]].map(([num, label], i) => {
+            const staggerOp = interpolate(frame, [35 + i * 6, 50 + i * 6], [0, 1], { extrapolateRight: "clamp" });
+            return (
+              <div
+                key={label}
+                style={{
+                  flex: 1,
+                  textAlign: "center",
+                  padding: "10px 6px",
+                  borderRadius: 12,
+                  background: colors.bgGlass,
+                  border: `1px solid ${colors.border}`,
+                  opacity: staggerOp,
+                }}
+              >
+                <div
+                  style={{
+                    fontSize: 15,
+                    fontWeight: 700,
+                    background: colors.gradientGold,
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                  }}
+                >
+                  {num}
+                </div>
+                <div style={{ fontSize: 8, color: colors.textSecondary, marginTop: 2 }}>{label}</div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Feature previews — cascade in */}
+        {[
+          { icon: "\u2764\uFE0F", title: "Weekly Check-ins", desc: "Sync on what matters most" },
+          { icon: "\u2728", title: "AI Insights", desc: "Personalized guidance" },
+          { icon: "\uD83C\uDF31", title: "Growth Tracking", desc: "See your progress together" },
+        ].map(({ icon, title, desc }, i) => {
+          const fOpacity = interpolate(frame, [45 + i * 10, 65 + i * 10], [0, 1], { extrapolateRight: "clamp" });
+          const fX = interpolate(frame, [45 + i * 10, 65 + i * 10], [20, 0], { extrapolateRight: "clamp", easing: ease.outCubic });
+          return (
             <div
-              key={label}
+              key={title}
               style={{
-                flex: 1,
-                textAlign: "center",
-                padding: "12px 8px",
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                padding: "10px 12px",
                 borderRadius: 12,
                 background: colors.bgGlass,
                 border: `1px solid ${colors.border}`,
+                marginBottom: 6,
+                opacity: fOpacity,
+                transform: `translateX(${fX}px)`,
               }}
             >
-              <div
-                style={{
-                  fontSize: 16,
-                  fontWeight: 700,
-                  background: colors.gradientGold,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                {num}
+              <span style={{ fontSize: 18 }}>{icon}</span>
+              <div>
+                <div style={{ fontSize: 11, color: colors.textPrimary, fontWeight: 600 }}>{title}</div>
+                <div style={{ fontSize: 9, color: colors.textSecondary }}>{desc}</div>
               </div>
-              <div style={{ fontSize: 9, color: colors.textSecondary, marginTop: 2 }}>{label}</div>
             </div>
-          ))}
-        </div>
-
-        {/* Feature previews */}
-        {[
-          { emoji: "💞", title: "Weekly Check-ins", desc: "Sync on what matters most" },
-          { emoji: "🧠", title: "AI Insights", desc: "Personalized guidance for your bond" },
-          { emoji: "🌱", title: "Growth Tracking", desc: "See your progress together" },
-        ].map(({ emoji, title, desc }) => (
-          <div
-            key={title}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              padding: "10px 14px",
-              borderRadius: 12,
-              background: colors.bgGlass,
-              border: `1px solid ${colors.border}`,
-              marginBottom: 8,
-            }}
-          >
-            <span style={{ fontSize: 20 }}>{emoji}</span>
-            <div>
-              <div style={{ fontSize: 12, color: colors.textPrimary, fontWeight: 600 }}>{title}</div>
-              <div style={{ fontSize: 10, color: colors.textSecondary }}>{desc}</div>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -170,16 +163,49 @@ export const Scene03_LandingPage: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const fadeIn = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
+  // === LEFT COPY — arrives with intention ===
+  const labelOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
+  const labelY = interpolate(frame, [0, 20], [15, 0], { extrapolateRight: "clamp", easing: ease.outCubic });
 
-  const phoneScale = spring({ frame, fps, config: { damping: 70, stiffness: 120, mass: 1 } });
-  const phoneX = interpolate(phoneScale, [0, 1], [-200, 0]);
-
-  const titleOpacity = interpolate(frame, [20, 50], [0, 1], { extrapolateRight: "clamp" });
-  const titleY = interpolate(frame, [20, 50], [40, 0], {
+  // "Cultivate a" drops in on a downward arc
+  const headlineProgress = interpolate(frame, [10, 40], [0, 1], {
     extrapolateRight: "clamp",
-    easing: (t) => 1 - Math.pow(1 - t, 3),
+    easing: ease.outQuart,
   });
+  const headlineY = (1 - headlineProgress) * 35;
+
+  // "thriving" rises with the rose glow
+  const accentProgress = interpolate(frame, [25, 50], [0, 1], {
+    extrapolateRight: "clamp",
+    easing: ease.outCubic,
+  });
+
+  // Body copy — focus pull (blur to sharp)
+  const bodyBlur = interpolate(frame, [35, 55], [6, 0], { extrapolateRight: "clamp" });
+  const bodyOpacity = interpolate(frame, [35, 55], [0, 1], { extrapolateRight: "clamp" });
+
+  // === PHONE ENTERS — THE BIG FIX ===
+  // Enters from off-screen right, gliding on a luxury arc
+  const phoneEnterStart = 30;
+  const phoneSlide = spring({
+    frame: frame - phoneEnterStart,
+    fps,
+    config: SPRING.bounce, // micro-bounce like Pixar ball
+  });
+  const phoneX = interpolate(phoneSlide, [0, 1], [350, 0]);
+  const phoneY = interpolate(phoneSlide, [0, 0.5, 1], [30, -10, 0]); // arc motion
+  const phoneOpacity = interpolate(frame, [phoneEnterStart, phoneEnterStart + 10], [0, 1], {
+    extrapolateRight: "clamp",
+  });
+  // Subtle rotation as it settles
+  const phoneRotation = interpolate(phoneSlide, [0, 0.7, 1], [3, -1, 0]);
+
+  // Feature bullets on left — staggered
+  const features = [
+    { icon: "\uD83D\uDC9E", title: "Weekly Wellness Check-ins", desc: "Stay synced on emotional health" },
+    { icon: "\uD83E\uDDE0", title: "AI Relationship Coach", desc: "Personalized guidance for your bond" },
+    { icon: "\uD83C\uDF31", title: "Growth & Discovery", desc: "Track progress, celebrate milestones" },
+  ];
 
   return (
     <div
@@ -189,45 +215,44 @@ export const Scene03_LandingPage: React.FC = () => {
         background: colors.gradientBg,
         display: "flex",
         alignItems: "center",
-        opacity: fadeIn,
         position: "relative",
         overflow: "hidden",
       }}
     >
-      <ParticleField />
-      <GlowOrb x="20%" y="50%" size={500} color="rgba(201,168,76,0.25)" delay={0} />
-      <GlowOrb x="80%" y="30%" size={400} color="rgba(232,160,160,0.2)" delay={45} />
+      <ParticleField intensity={0.7} />
+      <GlowOrb x="15%" y="50%" size={550} color="rgba(201,168,76,0.22)" delay={0} />
+      <GlowOrb x="82%" y="35%" size={450} color="rgba(232,160,160,0.18)" delay={45} />
+      <GlowOrb x="60%" y="80%" size={300} color="rgba(155,142,196,0.12)" delay={20} />
 
-      {/* Left content */}
-      <div
-        style={{
-          flex: 1,
-          padding: "0 80px",
-          opacity: titleOpacity,
-          transform: `translateY(${titleY}px)`,
-        }}
-      >
+      {/* === LEFT CONTENT === */}
+      <div style={{ flex: 1, padding: "0 80px", maxWidth: 580 }}>
+        {/* Category label */}
         <div
           style={{
             fontFamily: fonts.sans,
-            fontSize: 13,
-            letterSpacing: 5,
+            fontSize: 12,
+            letterSpacing: 6,
             color: colors.gold,
             textTransform: "uppercase",
-            marginBottom: 20,
+            marginBottom: 24,
+            opacity: labelOpacity,
+            transform: `translateY(${labelY}px)`,
           }}
         >
           Relationship Wellness Platform
         </div>
 
+        {/* Headline */}
         <div
           style={{
             fontFamily: fonts.serif,
-            fontSize: 56,
+            fontSize: 58,
             fontWeight: 300,
-            lineHeight: 1.15,
+            lineHeight: 1.12,
             color: colors.textPrimary,
-            marginBottom: 24,
+            marginBottom: 28,
+            opacity: headlineProgress,
+            transform: `translateY(${headlineY}px)`,
           }}
         >
           Cultivate a{" "}
@@ -236,47 +261,94 @@ export const Scene03_LandingPage: React.FC = () => {
               background: colors.gradientGold,
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
+              opacity: accentProgress,
+              display: "inline-block",
+              transform: `translateY(${(1 - accentProgress) * 15}px)`,
             }}
           >
             thriving
-          </span>{" "}
+          </span>
           <br />
           relationship
         </div>
 
-        <GoldDivider width="80px" />
+        <GoldDivider width="90px" startFrame={40} />
 
+        {/* Body copy — blur to sharp, like camera deciding to focus */}
         <div
           style={{
             fontFamily: fonts.sans,
             fontSize: 16,
             color: colors.textSecondary,
-            lineHeight: 1.7,
+            lineHeight: 1.75,
             marginTop: 24,
             marginBottom: 40,
-            maxWidth: 380,
+            maxWidth: 400,
+            opacity: bodyOpacity,
+            filter: `blur(${bodyBlur}px)`,
           }}
         >
           Science-backed tools and AI-powered insights to help couples build
           deeper connection, resolve conflict gracefully, and grow together.
         </div>
 
-        <Feature icon="💞" title="Weekly Wellness Check-ins" desc="Stay synced on emotional health, needs & desires" delay={50} />
-        <Feature icon="🧠" title="AI Relationship Coach" desc="Personalized guidance tailored to your unique bond" delay={65} />
-        <Feature icon="🌱" title="Growth & Discovery" desc="Track progress and celebrate milestones together" delay={80} />
+        {/* Feature bullets — cascade */}
+        {features.map(({ icon, title, desc }, i) => {
+          const fStart = 55 + i * 12;
+          const fProgress = spring({ frame: frame - fStart, fps, config: SPRING.velvet });
+          const fOpacity = interpolate(frame, [fStart, fStart + 15], [0, 1], { extrapolateRight: "clamp" });
+          return (
+            <div
+              key={title}
+              style={{
+                opacity: fOpacity,
+                transform: `translateX(${(1 - fProgress) * 30}px)`,
+                display: "flex",
+                alignItems: "flex-start",
+                gap: 16,
+                padding: "14px 18px",
+                borderRadius: 16,
+                background: colors.bgGlass,
+                border: `1px solid ${colors.border}`,
+                backdropFilter: "blur(10px)",
+                marginBottom: 10,
+              }}
+            >
+              <div
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 12,
+                  background: colors.bgGlassWarm,
+                  border: `1px solid ${colors.border}`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: 20,
+                  flexShrink: 0,
+                }}
+              >
+                {icon}
+              </div>
+              <div>
+                <div style={{ fontFamily: fonts.serif, fontSize: 14, color: colors.textPrimary, fontWeight: 600, marginBottom: 3 }}>{title}</div>
+                <div style={{ fontFamily: fonts.sans, fontSize: 12, color: colors.textSecondary, lineHeight: 1.4 }}>{desc}</div>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Right phone mockup */}
+      {/* === PHONE — THE CO-STAR === */}
       <div
         style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
           padding: "40px 80px 40px 40px",
-          transform: `translateX(${phoneX}px) scale(${phoneScale})`,
+          opacity: phoneOpacity,
+          transform: `translateX(${phoneX}px) translateY(${phoneY}px) rotate(${phoneRotation}deg)`,
+          transformOrigin: "center center",
         }}
       >
-        <PhoneMockup scale={1}>
+        <PhoneMockup scale={1.05} screenBloom bloomDelay={15}>
           <PhoneScreen />
         </PhoneMockup>
       </div>
