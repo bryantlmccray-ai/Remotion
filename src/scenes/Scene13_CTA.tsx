@@ -19,10 +19,11 @@ export const Scene13_CTA: React.FC = () => {
 	const btnGlow = 0.3 + 0.2 * Math.sin(frame * 0.08);
 	const shimmerX = interpolate(frame, [50, 110], [-200, 500], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
 
-	// Orbiting hearts
-	const orbitR = isVertical ? 200 : 300;
-	const h1Angle = frame * 1.2 * (Math.PI / 180);
-	const h2Angle = h1Angle + Math.PI;
+	// Luxury rotating rings
+	const ring1Rot = frame * 0.4;
+	const ring2Rot = frame * -0.25;
+	const ring3Rot = frame * 0.15;
+	const ringSize = isVertical ? 500 : 700;
 
 	return (
 		<AbsoluteFill style={{background: colors.bg}}>
@@ -32,12 +33,42 @@ export const Scene13_CTA: React.FC = () => {
 			<GlowOrb x="20%" y="20%" size={400} color={colors.rose} delay={30} />
 			<GlowOrb x="80%" y="80%" size={350} color={colors.clay} delay={60} />
 
-			{/* Orbiting shapes */}
-			<div style={{position: 'absolute', left: '50%', top: '50%', transform: `translate(${orbitR * Math.cos(h1Angle)}px, ${orbitR * 0.5 * Math.sin(h1Angle)}px)`, opacity: 0.4, filter: 'blur(1px)'}}>
-				<svg width={28} height={28} viewBox="0 0 24 24" fill="none" stroke={colors.gold} strokeWidth={2}><path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41L13.7 2.71a2.41 2.41 0 0 0-3.41 0z" /></svg>
+			{/* Luxury rotating rings */}
+			<div style={{position: 'absolute', left: '50%', top: '50%', transform: `translate(-50%, -50%) rotateX(65deg) rotateZ(${ring1Rot}deg)`, transformStyle: 'preserve-3d'}}>
+				<svg width={ringSize} height={ringSize} viewBox="0 0 200 200" fill="none">
+					<defs>
+						<linearGradient id="r1" x1="0%" y1="0%" x2="100%" y2="100%">
+							<stop offset="0%" stopColor={colors.gold} stopOpacity={0.5} />
+							<stop offset="50%" stopColor={colors.goldShimmer} stopOpacity={0.15} />
+							<stop offset="100%" stopColor={colors.gold} stopOpacity={0.5} />
+						</linearGradient>
+					</defs>
+					<circle cx={100} cy={100} r={95} stroke="url(#r1)" strokeWidth={1} />
+				</svg>
 			</div>
-			<div style={{position: 'absolute', left: '50%', top: '50%', transform: `translate(${orbitR * Math.cos(h2Angle)}px, ${orbitR * 0.5 * Math.sin(h2Angle)}px)`, opacity: 0.3, filter: 'blur(1px)'}}>
-				<svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke={colors.rose} strokeWidth={2}><circle cx={12} cy={12} r={10} /></svg>
+			<div style={{position: 'absolute', left: '50%', top: '50%', transform: `translate(-50%, -50%) rotateX(65deg) rotateZ(${ring2Rot}deg)`, transformStyle: 'preserve-3d'}}>
+				<svg width={ringSize * 0.75} height={ringSize * 0.75} viewBox="0 0 200 200" fill="none">
+					<defs>
+						<linearGradient id="r2" x1="0%" y1="0%" x2="100%" y2="100%">
+							<stop offset="0%" stopColor={colors.rose} stopOpacity={0.3} />
+							<stop offset="50%" stopColor={colors.gold} stopOpacity={0.1} />
+							<stop offset="100%" stopColor={colors.rose} stopOpacity={0.3} />
+						</linearGradient>
+					</defs>
+					<circle cx={100} cy={100} r={95} stroke="url(#r2)" strokeWidth={0.8} strokeDasharray="12 8" />
+				</svg>
+			</div>
+			<div style={{position: 'absolute', left: '50%', top: '50%', transform: `translate(-50%, -50%) rotateX(65deg) rotateZ(${ring3Rot}deg)`, transformStyle: 'preserve-3d'}}>
+				<svg width={ringSize * 1.15} height={ringSize * 1.15} viewBox="0 0 200 200" fill="none">
+					<defs>
+						<linearGradient id="r3" x1="0%" y1="0%" x2="100%" y2="100%">
+							<stop offset="0%" stopColor={colors.goldShimmer} stopOpacity={0.25} />
+							<stop offset="50%" stopColor={colors.gold} stopOpacity={0.05} />
+							<stop offset="100%" stopColor={colors.goldShimmer} stopOpacity={0.25} />
+						</linearGradient>
+					</defs>
+					<circle cx={100} cy={100} r={95} stroke="url(#r3)" strokeWidth={0.5} />
+				</svg>
 			</div>
 
 			<div style={{position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
