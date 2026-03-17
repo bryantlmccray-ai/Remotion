@@ -3,53 +3,47 @@ import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
 import { colors, fonts } from "../utils/colors";
 import { GlowOrb } from "../components/GlowOrb";
 import { ParticleField } from "../components/ParticleField";
+import { MonArkLogo } from "../components/MonArkLogo";
 import { SPRING, ease } from "../utils/animations";
 
 /**
- * SCENE 2 — THE PULSE (0:05–0:09)
+ * SCENE 2 — THE PULSE (4 sec / 120 frames)
  *
- * The MonArk heart beats. Concentric pulse rings expand outward.
- * Energy builds. A loading sequence with luxurious progress.
- * "Your Love. Elevated." arrives with gravity.
+ * The compass rose logo at center. Concentric pulse rings.
+ * Loading bar sweeps fast. "Date well." tagline.
+ * Everything moves — nothing static.
  */
 export const Scene02_SplashScreen: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // === HEARTBEAT PULSE — three concentric rings, staggered ===
-  const pulseRings = [0, 20, 40].map((offset) => {
-    const beatFrame = (frame + offset) % 75;
+  // Pulse rings — fast heartbeat
+  const pulseRings = [0, 15, 30].map((offset) => {
+    const beatFrame = (frame + offset) % 60;
     return {
-      scale: 1 + interpolate(beatFrame, [0, 55], [0, 2.2], { extrapolateRight: "clamp" }),
-      opacity: interpolate(beatFrame, [0, 10, 55], [0, 0.5, 0], { extrapolateRight: "clamp" }),
+      scale: 1 + interpolate(beatFrame, [0, 45], [0, 2.5], { extrapolateRight: "clamp" }),
+      opacity: interpolate(beatFrame, [0, 8, 45], [0, 0.45, 0], { extrapolateRight: "clamp" }),
     };
   });
 
-  // === HEART LOGO — breathes with the pulse ===
-  const heartScale = 1 + 0.06 * Math.sin(frame * 0.15);
-  const heartGlow = 0.3 + 0.15 * Math.sin(frame * 0.15);
-  const heartEntrance = spring({ frame, fps, config: SPRING.bounce });
+  // Logo breathes
+  const logoScale = 1 + 0.04 * Math.sin(frame * 0.12);
+  const logoEntrance = spring({ frame, fps, config: SPRING.snap });
 
-  // === LOADING BAR — sweeps with luxury ===
-  const loadProgress = interpolate(frame, [15, 85], [0, 100], {
+  // Loading bar — fast sweep
+  const loadProgress = interpolate(frame, [10, 70], [0, 100], {
     extrapolateRight: "clamp",
     easing: ease.outQuart,
   });
 
-  // === BRAND TEXT — floats gently ===
-  const floatY = 6 * Math.sin(frame * 0.04);
-  const brandOpacity = interpolate(frame, [10, 30], [0, 1], {
-    extrapolateRight: "clamp",
-  });
+  // Float
+  const floatY = 5 * Math.sin(frame * 0.05);
 
-  // === TAGLINE — arrives with weight ===
-  const tagScale = spring({ frame: frame - 50, fps, config: SPRING.velvet });
-  const tagOpacity = interpolate(frame, [50, 70], [0, 1], {
-    extrapolateRight: "clamp",
-  });
+  // Brand text
+  const brandOpacity = interpolate(frame, [5, 18], [0, 1], { extrapolateRight: "clamp" });
 
-  // === AMBIENT ROTATION — subtle world rotation ===
-  const worldRotation = frame * 0.08;
+  // Bottom tagline
+  const tagOpacity = interpolate(frame, [40, 55], [0, 1], { extrapolateRight: "clamp" });
 
   return (
     <div
@@ -65,12 +59,11 @@ export const Scene02_SplashScreen: React.FC = () => {
         overflow: "hidden",
       }}
     >
-      <ParticleField intensity={0.6} />
-      <GlowOrb x="50%" y="45%" size={700} color="rgba(201,168,76,0.18)" delay={0} />
-      <GlowOrb x="25%" y="65%" size={350} color="rgba(232,160,160,0.12)" delay={40} />
-      <GlowOrb x="75%" y="30%" size={300} color="rgba(155,142,196,0.1)" delay={80} />
+      <ParticleField intensity={0.5} />
+      <GlowOrb x="50%" y="45%" size={650} color="rgba(201,168,76,0.15)" delay={0} />
+      <GlowOrb x="30%" y="65%" size={300} color="rgba(201,168,76,0.1)" delay={40} />
 
-      {/* === PULSE RINGS — radiating life === */}
+      {/* Pulse rings */}
       {pulseRings.map((ring, i) => (
         <div
           key={i}
@@ -78,68 +71,37 @@ export const Scene02_SplashScreen: React.FC = () => {
             position: "absolute",
             top: "50%",
             left: "50%",
-            width: 100,
-            height: 100,
+            width: 90,
+            height: 90,
             borderRadius: "50%",
-            border: `${1.5 - i * 0.3}px solid`,
-            borderColor: i === 0 ? colors.gold : i === 1 ? colors.rose : colors.lavender,
+            border: `${1.5 - i * 0.3}px solid ${colors.gold}`,
             opacity: ring.opacity,
-            transform: `translate(-50%, -50%) scale(${ring.scale}) rotate(${worldRotation + i * 30}deg)`,
+            transform: `translate(-50%, -50%) scale(${ring.scale})`,
             pointerEvents: "none",
           }}
         />
       ))}
 
-      {/* === HEART LOGO === */}
+      {/* Logo + brand */}
       <div
         style={{
-          transform: `translateY(${floatY}px) scale(${heartEntrance * heartScale})`,
+          transform: `translateY(${floatY}px) scale(${logoEntrance * logoScale})`,
           opacity: brandOpacity,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: 28,
-          position: "relative",
+          gap: 24,
         }}
       >
-        {/* Heart container with glow */}
-        <div
-          style={{
-            width: 130,
-            height: 130,
-            borderRadius: "50%",
-            border: `2px solid ${colors.borderBright}`,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "rgba(201,168,76,0.04)",
-            boxShadow: `0 0 80px rgba(201,168,76,${heartGlow}), 0 0 160px rgba(201,168,76,${heartGlow * 0.3})`,
-            position: "relative",
-          }}
-        >
-          <svg width="52" height="48" viewBox="0 0 48 44" fill="none">
-            <path
-              d="M24 40C24 40 2 26 2 14C2 7.4 7.4 2 14 2C17.6 2 20.8 3.6 24 6.4C27.2 3.6 30.4 2 34 2C40.6 2 46 7.4 46 14C46 26 24 40 24 40Z"
-              fill="url(#heartGradSplash)"
-            />
-            <defs>
-              <linearGradient id="heartGradSplash" x1="2" y1="2" x2="46" y2="40" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#C9A84C" />
-                <stop offset="0.5" stopColor="#E8C97A" />
-                <stop offset="1" stopColor="#E8A0A0" />
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
+        <MonArkLogo size={120} animate={false} showTagline={false} />
 
-        {/* Brand name */}
         <div style={{ textAlign: "center" }}>
           <div
             style={{
               fontFamily: fonts.serif,
-              fontSize: 52,
+              fontSize: 48,
               fontWeight: 300,
-              letterSpacing: 14,
+              letterSpacing: 12,
               color: colors.textPrimary,
               textTransform: "uppercase",
             }}
@@ -148,23 +110,24 @@ export const Scene02_SplashScreen: React.FC = () => {
           </div>
           <div
             style={{
-              fontFamily: fonts.sans,
-              fontSize: 12,
+              fontFamily: fonts.serif,
+              fontSize: 14,
+              fontStyle: "italic",
               fontWeight: 300,
-              letterSpacing: 6,
-              color: colors.textSecondary,
-              textTransform: "uppercase",
+              color: colors.gold,
+              letterSpacing: 3,
               marginTop: 8,
+              opacity: 0.8,
             }}
           >
-            Relationship Wellness
+            Date well.
           </div>
         </div>
 
-        {/* Loading bar — luxurious sweep */}
+        {/* Loading bar */}
         <div
           style={{
-            width: 220,
+            width: 200,
             height: 2,
             background: "rgba(255,255,255,0.06)",
             borderRadius: 2,
@@ -178,16 +141,15 @@ export const Scene02_SplashScreen: React.FC = () => {
               width: `${loadProgress}%`,
               background: colors.gradientGoldHoriz,
               borderRadius: 2,
-              boxShadow: `0 0 10px rgba(201,168,76,0.4)`,
+              boxShadow: `0 0 8px rgba(201,168,76,0.4)`,
             }}
           />
-          {/* Moving highlight on loading bar */}
           <div
             style={{
               position: "absolute",
               top: 0,
-              left: `${loadProgress - 8}%`,
-              width: "8%",
+              left: `${loadProgress - 6}%`,
+              width: "6%",
               height: "100%",
               background: "rgba(255,255,255,0.5)",
               borderRadius: 2,
@@ -197,27 +159,20 @@ export const Scene02_SplashScreen: React.FC = () => {
         </div>
       </div>
 
-      {/* === TAGLINE — arrives last === */}
+      {/* Bottom tagline */}
       <div
         style={{
           position: "absolute",
-          bottom: 65,
+          bottom: 55,
           opacity: tagOpacity,
-          transform: `translateY(${(1 - tagScale) * 10}px)`,
-          textAlign: "center",
+          fontFamily: fonts.sans,
+          fontSize: 11,
+          letterSpacing: 3,
+          color: colors.textMuted,
+          textTransform: "uppercase",
         }}
       >
-        <div
-          style={{
-            fontFamily: fonts.sans,
-            fontSize: 13,
-            letterSpacing: 4,
-            color: colors.textMuted,
-            textTransform: "uppercase",
-          }}
-        >
-          Your Love. Elevated.
-        </div>
+        Your Love. Elevated.
       </div>
     </div>
   );

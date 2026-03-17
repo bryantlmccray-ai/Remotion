@@ -308,9 +308,9 @@ export const Scene04_Onboarding: React.FC = () => {
 
   const fadeIn = interpolate(frame, [0, 12], [0, 1], { extrapolateRight: "clamp" });
 
-  // Which step to show — transitions at specific frames
-  const step = frame < 95 ? 0 : frame < 190 ? 1 : 2;
-  const stepLocalFrame = step === 0 ? frame : step === 1 ? frame - 95 : frame - 190;
+  // Which step to show — FAST transitions, 4 sec total
+  const step = frame < 55 ? 0 : frame < 100 ? 1 : 2;
+  const stepLocalFrame = step === 0 ? frame : step === 1 ? frame - 55 : frame - 100;
 
   // Phone position — slight drift to keep it alive
   const phoneFloat = 5 * Math.sin(frame * 0.03);
@@ -357,7 +357,7 @@ export const Scene04_Onboarding: React.FC = () => {
               marginBottom: 22,
             }}
           >
-            Personalized Journey
+            Your Journey
           </div>
           <div
             style={{

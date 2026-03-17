@@ -239,7 +239,7 @@ export const Scene03_LandingPage: React.FC = () => {
             transform: `translateY(${labelY}px)`,
           }}
         >
-          Relationship Wellness Platform
+          Date well.
         </div>
 
         {/* Headline */}

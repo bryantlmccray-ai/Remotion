@@ -195,7 +195,7 @@ export const Scene05_ProfileCreation: React.FC = () => {
         }}
       >
         <div style={{ fontFamily: fonts.sans, fontSize: 12, letterSpacing: 6, color: colors.rose, textTransform: "uppercase", marginBottom: 22 }}>
-          Your Identity
+          Your Profile
         </div>
         <div style={{ fontFamily: fonts.serif, fontSize: 52, fontWeight: 300, lineHeight: 1.12, color: colors.textPrimary, marginBottom: 24 }}>
           A profile as{" "}

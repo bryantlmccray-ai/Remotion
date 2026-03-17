@@ -11,31 +11,31 @@ import { Scene08_Discovery } from "./scenes/Scene08_Discovery";
 import { Scene09_CTA } from "./scenes/Scene09_CTA";
 import { FadeTransition, GoldWipeTransition, BlurTransition } from "./components/SceneTransition";
 
-// Scene durations at 30fps — paced for cinematic impact
+// Scene durations at 30fps — FAST pacing, ~4 sec per scene
 const SCENES = [
-  { component: Scene01_BrandReveal, duration: 150, label: "The Arrival", transition: "fade" },           // 5s
-  { component: Scene02_SplashScreen, duration: 120, label: "The Pulse", transition: "blur" },             // 4s
-  { component: Scene03_LandingPage, duration: 195, label: "The Statement", transition: "gold-wipe" },     // 6.5s
-  { component: Scene04_Onboarding, duration: 310, label: "The Journey", transition: "blur" },             // ~10.3s
-  { component: Scene05_ProfileCreation, duration: 210, label: "Your Identity", transition: "gold-wipe" }, // 7s
-  { component: Scene06_WeeklyCheckin, duration: 240, label: "Weekly Wellness", transition: "blur" },      // 8s
-  { component: Scene07_AIInsights, duration: 220, label: "AI Coach", transition: "gold-wipe" },           // ~7.3s
-  { component: Scene08_Discovery, duration: 210, label: "Discovery", transition: "blur" },                // 7s
-  { component: Scene09_CTA, duration: 215, label: "The Finale", transition: "fade" },                     // ~7.2s
+  { component: Scene01_BrandReveal, duration: 120, label: "The Arrival", transition: "fade" },         // 4s
+  { component: Scene02_SplashScreen, duration: 105, label: "The Pulse", transition: "blur" },           // 3.5s
+  { component: Scene03_LandingPage, duration: 120, label: "The Statement", transition: "gold-wipe" },   // 4s
+  { component: Scene04_Onboarding, duration: 150, label: "The Journey", transition: "blur" },           // 5s (3 steps)
+  { component: Scene05_ProfileCreation, duration: 120, label: "Your Profile", transition: "gold-wipe" },// 4s
+  { component: Scene06_WeeklyCheckin, duration: 120, label: "Weekly Wellness", transition: "blur" },    // 4s
+  { component: Scene07_AIInsights, duration: 120, label: "AI Coach", transition: "gold-wipe" },         // 4s
+  { component: Scene08_Discovery, duration: 120, label: "Discovery", transition: "blur" },              // 4s
+  { component: Scene09_CTA, duration: 135, label: "The Finale", transition: "fade" },                   // 4.5s
 ];
 
 export const TOTAL_DURATION = SCENES.reduce((sum, s) => sum + s.duration, 0);
-// Total: ~62 seconds
+// Total: ~37 seconds — fast, punchy, dynamic
 
 const TransitionOverlay: React.FC<{ type: string; duration: number }> = ({ type, duration }) => {
   switch (type) {
     case "gold-wipe":
-      return <GoldWipeTransition durationIn={20} durationOut={18} totalFrames={duration} />;
+      return <GoldWipeTransition durationIn={12} durationOut={10} totalFrames={duration} />;
     case "blur":
-      return <BlurTransition durationIn={18} durationOut={16} totalFrames={duration} />;
+      return <BlurTransition durationIn={10} durationOut={10} totalFrames={duration} />;
     case "fade":
     default:
-      return <FadeTransition durationIn={15} durationOut={15} totalFrames={duration} />;
+      return <FadeTransition durationIn={10} durationOut={10} totalFrames={duration} />;
   }
 };
 
@@ -52,7 +52,7 @@ const SceneWithTransition: React.FC<{
 
 export const WellnessDemo: React.FC = () => {
   return (
-    <AbsoluteFill style={{ background: "#07070C" }}>
+    <AbsoluteFill style={{ background: "#0B0E17" }}>
       <Series>
         {SCENES.map(({ component: SceneComp, duration, label, transition }) => (
           <Series.Sequence key={label} durationInFrames={duration}>
