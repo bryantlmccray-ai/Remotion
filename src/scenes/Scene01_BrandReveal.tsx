@@ -1,196 +1,106 @@
-import React from "react";
-import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
-import { colors, fonts } from "../utils/colors";
-import { GlowOrb } from "../components/GlowOrb";
-import { ParticleField } from "../components/ParticleField";
+import React from 'react';
+import {AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {colors, fonts} from '../utils/colors';
+import {ParticleField} from '../components/ParticleField';
+import {GlowOrb} from '../components/GlowOrb';
 
 export const Scene01_BrandReveal: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+	const frame = useCurrentFrame();
+	const {fps} = useVideoConfig();
 
-  // Logo ring animation
-  const ringScale = spring({ frame, fps, config: { damping: 60, stiffness: 80, mass: 1.2 } });
-  const ringOpacity = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
+	const logoScale = spring({frame, fps, config: {damping: 16, stiffness: 80, mass: 1}});
+	const logoRotation = interpolate(logoScale, [0, 1], [90, 0]);
+	const logoOpacity = interpolate(frame, [0, 15], [0, 1], {extrapolateRight: 'clamp', extrapolateLeft: 'clamp'});
+	const ringRotate = frame * 0.5;
+	const titleProgress = spring({frame: Math.max(0, frame - 25), fps, config: {damping: 14, stiffness: 120}});
+	const taglineProgress = spring({frame: Math.max(0, frame - 50), fps, config: {damping: 14, stiffness: 100}});
+	const taglineY = interpolate(taglineProgress, [0, 1], [40, 0]);
+	const shimmerX = interpolate(frame, [35, 100], [-100, 200], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
 
-  // Crown/logo inner
-  const innerScale = spring({ frame: frame - 15, fps, config: { damping: 80, stiffness: 200, mass: 0.6 } });
-  const innerOpacity = interpolate(frame, [15, 35], [0, 1], { extrapolateRight: "clamp" });
+	return (
+		<AbsoluteFill style={{background: colors.bg}}>
+			<div style={{position: 'absolute', inset: 0, background: colors.gradientBg}} />
+			<ParticleField />
+			<GlowOrb x="30%" y="40%" size={500} color={colors.gold} delay={0} />
+			<GlowOrb x="70%" y="60%" size={400} color={colors.rose} delay={50} />
 
-  // Title text
-  const titleOpacity = interpolate(frame, [40, 65], [0, 1], { extrapolateRight: "clamp" });
-  const titleY = interpolate(frame, [40, 65], [30, 0], {
-    extrapolateRight: "clamp",
-    easing: (t) => 1 - Math.pow(1 - t, 3),
-  });
+			<div style={{position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
+				{/* Compass Rose Logo */}
+				<div style={{opacity: logoOpacity, transform: `scale(${logoScale}) rotate(${logoRotation}deg)`, marginBottom: 40}}>
+					<svg width={240} height={240} viewBox="0 0 240 240">
+						<circle cx={120} cy={120} r={108} fill="none" stroke={colors.gold} strokeWidth={2} opacity={0.5} />
+						<g transform={`rotate(${ringRotate}, 120, 120)`}>
+							{[0, 90, 180, 270].map((angle) => (
+								<React.Fragment key={angle}>
+									<line
+										x1={120} y1={18} x2={120} y2={42}
+										transform={`rotate(${angle}, 120, 120)`}
+										stroke={colors.gold} strokeWidth={2.5} opacity={0.7}
+									/>
+									<polygon
+										points="120,42 126,62 120,80 114,62"
+										transform={`rotate(${angle}, 120, 120)`}
+										fill={colors.gold} opacity={0.4}
+									/>
+								</React.Fragment>
+							))}
+						</g>
+						<circle cx={120} cy={120} r={65} fill="none" stroke={colors.gold} strokeWidth={1.5} opacity={0.3} />
+						<text
+							x={120} y={132}
+							textAnchor="middle"
+							fill={colors.goldLight}
+							fontFamily="Georgia, serif"
+							fontSize={56}
+							fontWeight="bold"
+							letterSpacing={6}
+						>
+							MA
+						</text>
+					</svg>
+				</div>
 
-  // Tagline
-  const taglineOpacity = interpolate(frame, [60, 85], [0, 1], { extrapolateRight: "clamp" });
-  const taglineY = interpolate(frame, [60, 85], [20, 0], {
-    extrapolateRight: "clamp",
-    easing: (t) => 1 - Math.pow(1 - t, 3),
-  });
+				{/* MONARK Title */}
+				<div style={{opacity: titleProgress, transform: `scale(${interpolate(titleProgress, [0, 1], [0.8, 1])})`, position: 'relative', overflow: 'hidden'}}>
+					<h1 style={{
+						fontFamily: fonts.serif,
+						fontSize: 100,
+						fontWeight: 'bold',
+						color: colors.goldLight,
+						letterSpacing: 24,
+						margin: 0,
+					}}>
+						MONARK
+					</h1>
+					<div style={{
+						position: 'absolute', top: 0, left: `${shimmerX}%`,
+						width: 80, height: '100%',
+						background: `linear-gradient(90deg, transparent, ${colors.goldShimmer}40, transparent)`,
+						transform: 'skewX(-20deg)',
+					}} />
+				</div>
 
-  // Shimmer on title
-  const shimmerX = interpolate(frame, [70, 120], [-100, 300], { extrapolateRight: "clamp" });
+				{/* Gold divider */}
+				<div style={{
+					width: interpolate(titleProgress, [0, 1], [0, 180]),
+					height: 2, background: colors.gradientGold,
+					marginTop: 28, marginBottom: 28,
+				}} />
 
-  return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        background: colors.gradientBg,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      <ParticleField />
-      <GlowOrb x="15%" y="25%" size={600} color="rgba(201,168,76,0.3)" delay={0} />
-      <GlowOrb x="85%" y="75%" size={500} color="rgba(232,160,160,0.25)" delay={60} />
-      <GlowOrb x="50%" y="10%" size={400} color="rgba(155,142,196,0.2)" delay={30} />
-
-      {/* Logo Ring */}
-      <div
-        style={{
-          position: "relative",
-          width: 160,
-          height: 160,
-          marginBottom: 40,
-          opacity: ringOpacity,
-          transform: `scale(${ringScale})`,
-        }}
-      >
-        {/* Outer ring */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            borderRadius: "50%",
-            border: `2px solid`,
-            borderColor: colors.borderBright,
-            boxShadow: `0 0 40px rgba(201,168,76,0.3), inset 0 0 40px rgba(201,168,76,0.05)`,
-          }}
-        />
-        {/* Rotating gradient ring */}
-        <div
-          style={{
-            position: "absolute",
-            inset: -2,
-            borderRadius: "50%",
-            background: `conic-gradient(from ${frame * 1.5}deg, transparent 70%, ${colors.gold} 85%, transparent 100%)`,
-            mask: "radial-gradient(circle, transparent 68px, black 70px, black 80px, transparent 82px)",
-            WebkitMask: "radial-gradient(circle, transparent 68px, black 70px, black 80px, transparent 82px)",
-          }}
-        />
-        {/* Inner glow */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 20,
-            borderRadius: "50%",
-            background: `radial-gradient(circle, rgba(201,168,76,0.12) 0%, transparent 70%)`,
-            opacity: innerOpacity,
-            transform: `scale(${innerScale})`,
-          }}
-        />
-        {/* Monogram */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            opacity: innerOpacity,
-            transform: `scale(${innerScale})`,
-          }}
-        >
-          <span
-            style={{
-              fontFamily: fonts.serif,
-              fontSize: 64,
-              fontWeight: 700,
-              background: colors.gradientGold,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              lineHeight: 1,
-              letterSpacing: -2,
-            }}
-          >
-            M
-          </span>
-        </div>
-      </div>
-
-      {/* Brand Name */}
-      <div
-        style={{
-          opacity: titleOpacity,
-          transform: `translateY(${titleY}px)`,
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            fontFamily: fonts.serif,
-            fontSize: 72,
-            fontWeight: 300,
-            letterSpacing: 18,
-            color: colors.textPrimary,
-            textTransform: "uppercase",
-            lineHeight: 1,
-          }}
-        >
-          MONARK
-        </div>
-        {/* Shimmer sweep */}
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            background: `linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)`,
-            transform: `translateX(${shimmerX}%)`,
-            width: "40%",
-            pointerEvents: "none",
-          }}
-        />
-      </div>
-
-      {/* Tagline */}
-      <div
-        style={{
-          opacity: taglineOpacity,
-          transform: `translateY(${taglineY}px)`,
-          marginTop: 16,
-          textAlign: "center",
-        }}
-      >
-        <div
-          style={{
-            fontFamily: fonts.sans,
-            fontSize: 16,
-            fontWeight: 300,
-            letterSpacing: 6,
-            color: colors.textSecondary,
-            textTransform: "uppercase",
-          }}
-        >
-          Relationship Wellness
-        </div>
-        <div
-          style={{
-            width: 80,
-            height: 1,
-            background: colors.gradientGold,
-            margin: "16px auto 0",
-            opacity: taglineOpacity,
-          }}
-        />
-      </div>
-    </div>
-  );
+				{/* Tagline */}
+				<p style={{
+					fontFamily: fonts.serif,
+					fontSize: 40,
+					fontStyle: 'italic',
+					color: colors.textSecondary,
+					letterSpacing: 8,
+					margin: 0,
+					opacity: taglineProgress,
+					transform: `translateY(${taglineY}px)`,
+				}}>
+					Date well.
+				</p>
+			</div>
+		</AbsoluteFill>
+	);
 };

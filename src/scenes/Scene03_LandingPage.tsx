@@ -1,285 +1,93 @@
-import React from "react";
-import { interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
-import { colors, fonts } from "../utils/colors";
-import { GlowOrb } from "../components/GlowOrb";
-import { ParticleField } from "../components/ParticleField";
-import { PhoneMockup } from "../components/PhoneMockup";
-import { GoldDivider } from "../components/GoldDivider";
+import React from 'react';
+import {AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
+import {colors, fonts} from '../utils/colors';
+import {ParticleField} from '../components/ParticleField';
+import {PhoneMockup} from '../components/PhoneMockup';
+import {GlowOrb} from '../components/GlowOrb';
 
-const Feature: React.FC<{ icon: string; title: string; desc: string; delay: number }> = ({ icon, title, desc, delay }) => {
-  const frame = useCurrentFrame();
-  const opacity = interpolate(frame, [delay, delay + 25], [0, 1], { extrapolateRight: "clamp" });
-  const y = interpolate(frame, [delay, delay + 25], [30, 0], {
-    extrapolateRight: "clamp",
-    easing: (t) => 1 - Math.pow(1 - t, 3),
-  });
-  return (
-    <div
-      style={{
-        opacity,
-        transform: `translateY(${y}px)`,
-        display: "flex",
-        alignItems: "flex-start",
-        gap: 16,
-        padding: "16px 20px",
-        borderRadius: 16,
-        background: colors.bgGlass,
-        border: `1px solid ${colors.border}`,
-        backdropFilter: "blur(10px)",
-        marginBottom: 12,
-      }}
-    >
-      <div
-        style={{
-          width: 40,
-          height: 40,
-          borderRadius: 12,
-          background: "rgba(201,168,76,0.12)",
-          border: `1px solid ${colors.border}`,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: 20,
-          flexShrink: 0,
-        }}
-      >
-        {icon}
-      </div>
-      <div>
-        <div style={{ fontFamily: fonts.serif, fontSize: 15, color: colors.textPrimary, fontWeight: 600, marginBottom: 4 }}>{title}</div>
-        <div style={{ fontFamily: fonts.sans, fontSize: 12, color: colors.textSecondary, lineHeight: 1.5 }}>{desc}</div>
-      </div>
-    </div>
-  );
+export const Scene03_CreateAccount: React.FC = () => {
+	const frame = useCurrentFrame();
+	const {fps} = useVideoConfig();
+
+	const textSlide = spring({frame: Math.max(0, frame - 5), fps, config: {damping: 14, stiffness: 120}});
+	const phoneSlide = spring({frame: Math.max(0, frame - 12), fps, config: {damping: 12, stiffness: 80, mass: 1.1}});
+
+	const field1 = spring({frame: Math.max(0, frame - 30), fps, config: {damping: 14, stiffness: 140}});
+	const field2 = spring({frame: Math.max(0, frame - 42), fps, config: {damping: 14, stiffness: 140}});
+	const field3 = spring({frame: Math.max(0, frame - 54), fps, config: {damping: 14, stiffness: 140}});
+	const field4 = spring({frame: Math.max(0, frame - 66), fps, config: {damping: 14, stiffness: 140}});
+
+	const nameText = 'Jordan M.';
+	const nameChars = Math.min(Math.floor(interpolate(frame, [50, 80], [0, nameText.length], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})), nameText.length);
+	const typedName = nameText.substring(0, nameChars);
+	const cursorBlink = Math.sin(frame * 0.2) > 0;
+
+	return (
+		<AbsoluteFill style={{background: colors.bg}}>
+			<div style={{position: 'absolute', inset: 0, background: colors.gradientBg}} />
+			<ParticleField />
+			<GlowOrb x="25%" y="45%" size={300} color={colors.gold} />
+
+			<div style={{position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', padding: '0 100px'}}>
+				<div style={{flex: 1, opacity: textSlide, transform: `translateX(${interpolate(textSlide, [0, 1], [-80, 0])}px)`}}>
+					<div style={{fontFamily: fonts.sans, fontSize: 24, color: colors.gold, letterSpacing: 6, textTransform: 'uppercase', marginBottom: 16, fontWeight: 'bold'}}>Step 2</div>
+					<h2 style={{fontFamily: fonts.serif, fontSize: 72, color: colors.textPrimary, margin: '0 0 16px 0', lineHeight: 1.1, fontWeight: 'bold'}}>
+						Create Your
+						<br /><span style={{color: colors.gold}}>Account</span>
+					</h2>
+					<div style={{width: 120, height: 3, background: colors.gradientGold, marginBottom: 24}} />
+					<p style={{fontFamily: fonts.sans, fontSize: 28, color: colors.textSecondary, lineHeight: 1.6, maxWidth: 480}}>
+						Quick, secure sign-up.
+						<br />Your data stays private,
+						<br />always.
+					</p>
+				</div>
+
+				<div style={{flex: 1, display: 'flex', justifyContent: 'center', transform: `translateX(${interpolate(phoneSlide, [0, 1], [200, 0])}px)`, opacity: phoneSlide}}>
+					<PhoneMockup scale={0.95}>
+						<div style={{width: '100%', height: '100%', background: colors.bg, padding: '60px 24px 24px'}}>
+							<div style={{textAlign: 'center', marginBottom: 28}}>
+								<span style={{fontFamily: fonts.serif, fontSize: 18, color: colors.goldLight, letterSpacing: 3}}>MONARK</span>
+							</div>
+							<h3 style={{fontFamily: fonts.serif, fontSize: 24, color: colors.textPrimary, textAlign: 'center', margin: '0 0 28px 0'}}>Create Account</h3>
+
+							<FormField label="Full Name" value={`${typedName}${cursorBlink && nameChars < nameText.length ? '|' : ''}`} opacity={field1} />
+							<FormField label="Email" value="jordan@email.com" opacity={field2} />
+							<FormField label="Password" value="••••••••" opacity={field3} />
+
+							<div style={{marginTop: 24, padding: '14px 0', borderRadius: 30, background: colors.gradientGold, textAlign: 'center', opacity: field4, transform: `translateY(${interpolate(field4, [0, 1], [20, 0])}px)`}}>
+								<span style={{fontFamily: fonts.sans, fontSize: 15, fontWeight: 'bold', color: colors.bg}}>CREATE ACCOUNT</span>
+							</div>
+
+							<div style={{display: 'flex', alignItems: 'center', gap: 12, margin: '20px 0', opacity: field4}}>
+								<div style={{flex: 1, height: 1, background: colors.border}} />
+								<span style={{fontFamily: fonts.sans, fontSize: 12, color: colors.textMuted}}>OR</span>
+								<div style={{flex: 1, height: 1, background: colors.border}} />
+							</div>
+
+							<div style={{display: 'flex', gap: 12, opacity: field4}}>
+								<SocialBtn icon="G" label="Google" />
+								<SocialBtn icon="🍎" label="Apple" />
+							</div>
+						</div>
+					</PhoneMockup>
+				</div>
+			</div>
+		</AbsoluteFill>
+	);
 };
 
-const PhoneScreen: React.FC = () => {
-  const frame = useCurrentFrame();
-  const scrollY = interpolate(frame, [20, 120], [0, -80], { extrapolateRight: "clamp" });
+const FormField: React.FC<{label: string; value: string; opacity: number}> = ({label, value, opacity}) => (
+	<div style={{marginBottom: 16, opacity, transform: `translateY(${interpolate(opacity, [0, 1], [15, 0])}px)`}}>
+		<div style={{fontFamily: fonts.sans, fontSize: 11, color: colors.textMuted, marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1}}>{label}</div>
+		<div style={{padding: '12px 16px', borderRadius: 12, background: colors.bgGlass, border: `1px solid ${colors.border}`}}>
+			<span style={{fontFamily: fonts.sans, fontSize: 15, color: colors.textPrimary}}>{value}</span>
+		</div>
+	</div>
+);
 
-  return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        background: colors.bg,
-        display: "flex",
-        flexDirection: "column",
-        padding: "60px 20px 20px",
-        fontFamily: fonts.sans,
-      }}
-    >
-      <div style={{ transform: `translateY(${scrollY}px)` }}>
-        {/* Hero text */}
-        <div style={{ textAlign: "center", marginBottom: 24 }}>
-          <div
-            style={{
-              fontSize: 24,
-              fontFamily: fonts.serif,
-              fontWeight: 700,
-              background: colors.gradientGold,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              lineHeight: 1.2,
-              marginBottom: 8,
-            }}
-          >
-            Transform Your Relationship
-          </div>
-          <div style={{ fontSize: 11, color: colors.textSecondary, lineHeight: 1.5 }}>
-            Science-backed tools for deeper connection
-          </div>
-        </div>
-
-        {/* CTA Button */}
-        <div
-          style={{
-            background: colors.gradientGold,
-            borderRadius: 30,
-            padding: "12px 24px",
-            textAlign: "center",
-            marginBottom: 20,
-            boxShadow: "0 8px 32px rgba(201,168,76,0.3)",
-          }}
-        >
-          <div style={{ color: "#0A0A0F", fontSize: 13, fontWeight: 700, letterSpacing: 1 }}>Begin Your Journey</div>
-        </div>
-
-        {/* Stats row */}
-        <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
-          {[["50K+", "Couples"], ["4.9★", "Rating"], ["95%", "Success"]].map(([num, label]) => (
-            <div
-              key={label}
-              style={{
-                flex: 1,
-                textAlign: "center",
-                padding: "12px 8px",
-                borderRadius: 12,
-                background: colors.bgGlass,
-                border: `1px solid ${colors.border}`,
-              }}
-            >
-              <div
-                style={{
-                  fontSize: 16,
-                  fontWeight: 700,
-                  background: colors.gradientGold,
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                {num}
-              </div>
-              <div style={{ fontSize: 9, color: colors.textSecondary, marginTop: 2 }}>{label}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Feature previews */}
-        {[
-          { emoji: "💞", title: "Weekly Check-ins", desc: "Sync on what matters most" },
-          { emoji: "🧠", title: "AI Insights", desc: "Personalized guidance for your bond" },
-          { emoji: "🌱", title: "Growth Tracking", desc: "See your progress together" },
-        ].map(({ emoji, title, desc }) => (
-          <div
-            key={title}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 12,
-              padding: "10px 14px",
-              borderRadius: 12,
-              background: colors.bgGlass,
-              border: `1px solid ${colors.border}`,
-              marginBottom: 8,
-            }}
-          >
-            <span style={{ fontSize: 20 }}>{emoji}</span>
-            <div>
-              <div style={{ fontSize: 12, color: colors.textPrimary, fontWeight: 600 }}>{title}</div>
-              <div style={{ fontSize: 10, color: colors.textSecondary }}>{desc}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
-export const Scene03_LandingPage: React.FC = () => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-
-  const fadeIn = interpolate(frame, [0, 20], [0, 1], { extrapolateRight: "clamp" });
-
-  const phoneScale = spring({ frame, fps, config: { damping: 70, stiffness: 120, mass: 1 } });
-  const phoneX = interpolate(phoneScale, [0, 1], [-200, 0]);
-
-  const titleOpacity = interpolate(frame, [20, 50], [0, 1], { extrapolateRight: "clamp" });
-  const titleY = interpolate(frame, [20, 50], [40, 0], {
-    extrapolateRight: "clamp",
-    easing: (t) => 1 - Math.pow(1 - t, 3),
-  });
-
-  return (
-    <div
-      style={{
-        width: "100%",
-        height: "100%",
-        background: colors.gradientBg,
-        display: "flex",
-        alignItems: "center",
-        opacity: fadeIn,
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      <ParticleField />
-      <GlowOrb x="20%" y="50%" size={500} color="rgba(201,168,76,0.25)" delay={0} />
-      <GlowOrb x="80%" y="30%" size={400} color="rgba(232,160,160,0.2)" delay={45} />
-
-      {/* Left content */}
-      <div
-        style={{
-          flex: 1,
-          padding: "0 80px",
-          opacity: titleOpacity,
-          transform: `translateY(${titleY}px)`,
-        }}
-      >
-        <div
-          style={{
-            fontFamily: fonts.sans,
-            fontSize: 13,
-            letterSpacing: 5,
-            color: colors.gold,
-            textTransform: "uppercase",
-            marginBottom: 20,
-          }}
-        >
-          Relationship Wellness Platform
-        </div>
-
-        <div
-          style={{
-            fontFamily: fonts.serif,
-            fontSize: 56,
-            fontWeight: 300,
-            lineHeight: 1.15,
-            color: colors.textPrimary,
-            marginBottom: 24,
-          }}
-        >
-          Cultivate a{" "}
-          <span
-            style={{
-              background: colors.gradientGold,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
-            thriving
-          </span>{" "}
-          <br />
-          relationship
-        </div>
-
-        <GoldDivider width="80px" />
-
-        <div
-          style={{
-            fontFamily: fonts.sans,
-            fontSize: 16,
-            color: colors.textSecondary,
-            lineHeight: 1.7,
-            marginTop: 24,
-            marginBottom: 40,
-            maxWidth: 380,
-          }}
-        >
-          Science-backed tools and AI-powered insights to help couples build
-          deeper connection, resolve conflict gracefully, and grow together.
-        </div>
-
-        <Feature icon="💞" title="Weekly Wellness Check-ins" desc="Stay synced on emotional health, needs & desires" delay={50} />
-        <Feature icon="🧠" title="AI Relationship Coach" desc="Personalized guidance tailored to your unique bond" delay={65} />
-        <Feature icon="🌱" title="Growth & Discovery" desc="Track progress and celebrate milestones together" delay={80} />
-      </div>
-
-      {/* Right phone mockup */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "40px 80px 40px 40px",
-          transform: `translateX(${phoneX}px) scale(${phoneScale})`,
-        }}
-      >
-        <PhoneMockup scale={1}>
-          <PhoneScreen />
-        </PhoneMockup>
-      </div>
-    </div>
-  );
-};
+const SocialBtn: React.FC<{icon: string; label: string}> = ({icon, label}) => (
+	<div style={{flex: 1, padding: '12px 0', borderRadius: 12, background: colors.bgGlass, border: `1px solid ${colors.border}`, textAlign: 'center'}}>
+		<span style={{fontFamily: fonts.sans, fontSize: 14, color: colors.textSecondary}}>{icon} {label}</span>
+	</div>
+);
