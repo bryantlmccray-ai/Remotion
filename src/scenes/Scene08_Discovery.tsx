@@ -5,6 +5,7 @@ import {ParticleField} from '../components/ParticleField';
 import {PhoneMockup} from '../components/PhoneMockup';
 import {GlowOrb} from '../components/GlowOrb';
 import {useLayout} from '../utils/useLayout';
+import {BrainIcon, TrendUpIcon, ShieldIcon, TargetIcon} from '../components/Icons';
 
 export const Scene08_AICoaching: React.FC = () => {
 	const frame = useCurrentFrame();
@@ -20,9 +21,9 @@ export const Scene08_AICoaching: React.FC = () => {
 	const showCursor = charCount < aiMessage.length && Math.sin(frame * 0.2) > 0;
 
 	const insights = [
-		{icon: '📈', label: 'Communication', trend: '+12%', color: colors.green, delay: 80},
-		{icon: '💛', label: 'Trust Level', trend: 'Strong', color: colors.gold, delay: 95},
-		{icon: '🎯', label: 'Next Goal', trend: 'Active Listening', color: colors.terracotta, delay: 110},
+		{iconEl: <TrendUpIcon size={18} color={colors.green} />, label: 'Communication', trend: '+12%', color: colors.green, delay: 80},
+		{iconEl: <ShieldIcon size={18} color={colors.gold} />, label: 'Trust Level', trend: 'Strong', color: colors.gold, delay: 95},
+		{iconEl: <TargetIcon size={18} color={colors.terracotta} />, label: 'Next Goal', trend: 'Active Listening', color: colors.terracotta, delay: 110},
 	];
 
 	return (
@@ -57,7 +58,7 @@ export const Scene08_AICoaching: React.FC = () => {
 
 							<div style={{display: 'flex', gap: 10, marginBottom: 14, alignItems: 'flex-start'}}>
 								<div style={{width: 36, height: 36, borderRadius: 18, background: colors.gradientGold, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0}}>
-									<span style={{fontSize: 16}}>🤖</span>
+									<BrainIcon size={16} color={colors.primaryForeground} />
 								</div>
 								<div style={{flex: 1, padding: '12px 14px', borderRadius: '4px 16px 16px 16px', background: colors.gradientCard, border: `1px solid ${colors.border}`}}>
 									<span style={{fontFamily: fonts.sans, fontSize: 13, color: colors.textPrimary, lineHeight: 1.5}}>
@@ -75,7 +76,7 @@ export const Scene08_AICoaching: React.FC = () => {
 										border: `1px solid ${colors.border}`, marginBottom: 8,
 										opacity: cardAnim, transform: `translateX(${interpolate(cardAnim, [0, 1], [30, 0])}px)`,
 									}}>
-										<span style={{fontSize: 22}}>{insight.icon}</span>
+										<span style={{display: 'flex', alignItems: 'center'}}>{insight.iconEl}</span>
 										<div style={{flex: 1}}>
 											<div style={{fontFamily: fonts.sans, fontSize: 13, color: colors.textPrimary, fontWeight: 'bold'}}>{insight.label}</div>
 										</div>

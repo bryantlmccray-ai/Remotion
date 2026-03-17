@@ -69,7 +69,7 @@ export const Scene03_CreateAccount: React.FC = () => {
 
 							<div style={{display: 'flex', gap: 12, opacity: field4}}>
 								<SocialBtn icon="G" label="Google" />
-								<SocialBtn icon="🍎" label="Apple" />
+								<SocialBtn icon="A" label="Apple" />
 							</div>
 						</div>
 					</PhoneMockup>

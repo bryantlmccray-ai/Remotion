@@ -5,6 +5,7 @@ import {ParticleField} from '../components/ParticleField';
 import {PhoneMockup} from '../components/PhoneMockup';
 import {GlowOrb} from '../components/GlowOrb';
 import {useLayout} from '../utils/useLayout';
+import {InitialAvatar} from '../components/Icons';
 
 export const Scene09_Discovery: React.FC = () => {
 	const frame = useCurrentFrame();
@@ -15,10 +16,10 @@ export const Scene09_Discovery: React.FC = () => {
 	const phoneSlide = spring({frame: Math.max(0, frame - 10), fps, config: {damping: 12, stiffness: 80, mass: 1.1}});
 
 	const profiles = [
-		{emoji: '👨‍💼', name: 'James', age: 30, compat: 94, delay: 30},
-		{emoji: '👩‍🎨', name: 'Sophie', age: 27, compat: 87, delay: 45},
-		{emoji: '👨‍🔬', name: 'Marcus', age: 32, compat: 82, delay: 60},
-		{emoji: '👩‍⚕️', name: 'Elena', age: 29, compat: 91, delay: 75},
+		{initial: 'J', name: 'James', age: 30, compat: 94, delay: 30},
+		{initial: 'S', name: 'Sophie', age: 27, compat: 87, delay: 45},
+		{initial: 'M', name: 'Marcus', age: 32, compat: 82, delay: 60},
+		{initial: 'E', name: 'Elena', age: 29, compat: 91, delay: 75},
 	];
 
 	return (
@@ -71,8 +72,8 @@ export const Scene09_Discovery: React.FC = () => {
 										border: `1px solid ${colors.border}`, marginBottom: 8,
 										opacity: cardAnim, transform: `translateX(${interpolate(cardAnim, [0, 1], [40, 0])}px)`,
 									}}>
-										<div style={{width: 44, height: 44, borderRadius: 22, background: `linear-gradient(135deg, ${colors.gold}20, ${colors.rose}15)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0}}>
-											{p.emoji}
+										<div style={{width: 44, height: 44, borderRadius: 22, background: `linear-gradient(135deg, ${colors.gold}20, ${colors.rose}15)`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0}}>
+											<InitialAvatar letter={p.initial} size={36} color={colors.textPrimary} />
 										</div>
 										<div style={{flex: 1}}>
 											<div style={{fontFamily: fonts.sans, fontSize: 14, color: colors.textPrimary, fontWeight: 'bold'}}>{p.name}, {p.age}</div>

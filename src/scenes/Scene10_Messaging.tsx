@@ -5,6 +5,7 @@ import {ParticleField} from '../components/ParticleField';
 import {PhoneMockup} from '../components/PhoneMockup';
 import {GlowOrb} from '../components/GlowOrb';
 import {useLayout} from '../utils/useLayout';
+import {InitialAvatar} from '../components/Icons';
 
 export const Scene10_Messaging: React.FC = () => {
 	const frame = useCurrentFrame();
@@ -16,9 +17,9 @@ export const Scene10_Messaging: React.FC = () => {
 
 	const messages = [
 		{text: 'Hey! I loved your take on growth mindset', sent: false, delay: 30},
-		{text: 'Thanks! It\'s something I really value 🌱', sent: true, delay: 50},
+		{text: 'Thanks! It\'s something I really value', sent: true, delay: 50},
 		{text: 'Same here. Coffee this weekend?', sent: false, delay: 70},
-		{text: 'I\'d love that ☕️', sent: true, delay: 90},
+		{text: 'I\'d love that', sent: true, delay: 90},
 	];
 
 	return (
@@ -48,8 +49,8 @@ export const Scene10_Messaging: React.FC = () => {
 						<div style={{width: '100%', height: '100%', background: colors.bg, padding: '55px 14px 14px', display: 'flex', flexDirection: 'column'}}>
 							{/* Chat header */}
 							<div style={{display: 'flex', alignItems: 'center', gap: 10, padding: '0 4px 12px', borderBottom: `1px solid ${colors.border}`, marginBottom: 14}}>
-								<div style={{width: 36, height: 36, borderRadius: 18, background: `linear-gradient(135deg, ${colors.gold}30, ${colors.rose}20)`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 18}}>
-									👨‍💼
+								<div style={{width: 36, height: 36, borderRadius: 18, background: `linear-gradient(135deg, ${colors.gold}30, ${colors.rose}20)`, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+									<InitialAvatar letter="J" size={30} color={colors.textPrimary} />
 								</div>
 								<div>
 									<div style={{fontFamily: fonts.sans, fontSize: 14, color: colors.textPrimary, fontWeight: 'bold'}}>James, 30</div>

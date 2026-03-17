@@ -5,6 +5,7 @@ import {ParticleField} from '../components/ParticleField';
 import {PhoneMockup} from '../components/PhoneMockup';
 import {GlowOrb} from '../components/GlowOrb';
 import {useLayout} from '../utils/useLayout';
+import {ShieldIcon, SproutIcon, DiamondIcon, LinkIcon, TargetIcon, MountainIcon} from '../components/Icons';
 
 export const Scene04_ValuesAssessment: React.FC = () => {
 	const frame = useCurrentFrame();
@@ -15,12 +16,12 @@ export const Scene04_ValuesAssessment: React.FC = () => {
 	const phoneSlide = spring({frame: Math.max(0, frame - 10), fps, config: {damping: 12, stiffness: 80, mass: 1.1}});
 
 	const values = [
-		{emoji: '💛', label: 'Trust', delay: 25},
-		{emoji: '🌱', label: 'Growth', delay: 35},
-		{emoji: '✨', label: 'Honesty', delay: 45},
-		{emoji: '🤝', label: 'Loyalty', delay: 55},
-		{emoji: '🎯', label: 'Purpose', delay: 65},
-		{emoji: '💪', label: 'Resilience', delay: 75},
+		{icon: <ShieldIcon size={24} />, label: 'Trust', delay: 25},
+		{icon: <SproutIcon size={24} />, label: 'Growth', delay: 35},
+		{icon: <DiamondIcon size={24} />, label: 'Honesty', delay: 45},
+		{icon: <LinkIcon size={24} />, label: 'Loyalty', delay: 55},
+		{icon: <TargetIcon size={24} />, label: 'Purpose', delay: 65},
+		{icon: <MountainIcon size={24} />, label: 'Resilience', delay: 75},
 	];
 	const selectedIndices = [0, 2, 4];
 	const selectFrame = 90;
@@ -70,7 +71,7 @@ export const Scene04_ValuesAssessment: React.FC = () => {
 											textAlign: 'center', opacity: appear,
 											transform: `translateY(${interpolate(appear, [0, 1], [20, 0])}px) scale(${isSelected ? 1 + selectAnim * 0.05 : 1})`,
 										}}>
-											<div style={{fontSize: 28, marginBottom: 4}}>{v.emoji}</div>
+											<div style={{marginBottom: 4, display: 'flex', justifyContent: 'center'}}>{v.icon}</div>
 											<div style={{fontFamily: fonts.sans, fontSize: 13, color: isSelected && selectAnim > 0.5 ? colors.gold : colors.textSecondary, fontWeight: isSelected ? 'bold' : 'normal'}}>{v.label}</div>
 											{isSelected && selectAnim > 0.5 && <div style={{fontSize: 14, color: colors.gold, marginTop: 2, opacity: selectAnim}}>✓</div>}
 										</div>

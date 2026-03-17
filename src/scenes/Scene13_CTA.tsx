@@ -32,9 +32,13 @@ export const Scene13_CTA: React.FC = () => {
 			<GlowOrb x="20%" y="20%" size={400} color={colors.rose} delay={30} />
 			<GlowOrb x="80%" y="80%" size={350} color={colors.clay} delay={60} />
 
-			{/* Orbiting hearts */}
-			<div style={{position: 'absolute', left: '50%', top: '50%', transform: `translate(${orbitR * Math.cos(h1Angle)}px, ${orbitR * 0.5 * Math.sin(h1Angle)}px)`, fontSize: 28, opacity: 0.4, filter: 'blur(1px)'}}>💛</div>
-			<div style={{position: 'absolute', left: '50%', top: '50%', transform: `translate(${orbitR * Math.cos(h2Angle)}px, ${orbitR * 0.5 * Math.sin(h2Angle)}px)`, fontSize: 24, opacity: 0.3, filter: 'blur(1px)'}}>🌹</div>
+			{/* Orbiting shapes */}
+			<div style={{position: 'absolute', left: '50%', top: '50%', transform: `translate(${orbitR * Math.cos(h1Angle)}px, ${orbitR * 0.5 * Math.sin(h1Angle)}px)`, opacity: 0.4, filter: 'blur(1px)'}}>
+				<svg width={28} height={28} viewBox="0 0 24 24" fill="none" stroke={colors.gold} strokeWidth={2}><path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41L13.7 2.71a2.41 2.41 0 0 0-3.41 0z" /></svg>
+			</div>
+			<div style={{position: 'absolute', left: '50%', top: '50%', transform: `translate(${orbitR * Math.cos(h2Angle)}px, ${orbitR * 0.5 * Math.sin(h2Angle)}px)`, opacity: 0.3, filter: 'blur(1px)'}}>
+				<svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke={colors.rose} strokeWidth={2}><circle cx={12} cy={12} r={10} /></svg>
+			</div>
 
 			<div style={{position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
 				{/* Compass logo small */}

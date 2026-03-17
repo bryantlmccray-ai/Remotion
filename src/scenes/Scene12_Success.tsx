@@ -5,6 +5,7 @@ import {ParticleField} from '../components/ParticleField';
 import {PhoneMockup} from '../components/PhoneMockup';
 import {GlowOrb} from '../components/GlowOrb';
 import {useLayout} from '../utils/useLayout';
+import {TrophyIcon, ChatIcon, StarIcon, HeartIcon, TargetIcon} from '../components/Icons';
 
 export const Scene12_RelationshipDashboard: React.FC = () => {
 	const frame = useCurrentFrame();
@@ -19,11 +20,11 @@ export const Scene12_RelationshipDashboard: React.FC = () => {
 	const streakCount = Math.min(Math.floor(interpolate(frame, [50, 100], [0, 14], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})), 14);
 
 	const milestones = [
-		{icon: '🏆', label: 'First Check-in', done: true, delay: 45},
-		{icon: '💬', label: '100 Messages', done: true, delay: 55},
-		{icon: '🌟', label: 'Values Aligned', done: true, delay: 65},
-		{icon: '❤️', label: 'Perfect Week', done: true, delay: 75},
-		{icon: '🎯', label: 'Growth Master', done: false, delay: 85},
+		{iconEl: <TrophyIcon size={16} color={colors.gold} />, label: 'First Check-in', done: true, delay: 45},
+		{iconEl: <ChatIcon size={16} color={colors.gold} />, label: '100 Messages', done: true, delay: 55},
+		{iconEl: <StarIcon size={16} color={colors.gold} />, label: 'Values Aligned', done: true, delay: 65},
+		{iconEl: <HeartIcon size={16} color={colors.rose} />, label: 'Perfect Week', done: true, delay: 75},
+		{iconEl: <TargetIcon size={16} color={colors.textMuted} />, label: 'Growth Master', done: false, delay: 85},
 	];
 
 	return (
@@ -101,7 +102,7 @@ export const Scene12_RelationshipDashboard: React.FC = () => {
 										marginBottom: 6, opacity: mAnim,
 										transform: `translateX(${interpolate(mAnim, [0, 1], [20, 0])}px)`,
 									}}>
-										<span style={{fontSize: 16}}>{m.icon}</span>
+										<span style={{display: 'flex', alignItems: 'center'}}>{m.iconEl}</span>
 										<span style={{fontFamily: fonts.sans, fontSize: 12, color: m.done ? colors.textPrimary : colors.textMuted, flex: 1}}>{m.label}</span>
 										{m.done && <span style={{fontSize: 12, color: colors.gold}}>✓</span>}
 									</div>

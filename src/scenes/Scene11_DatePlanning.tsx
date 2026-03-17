@@ -5,6 +5,7 @@ import {ParticleField} from '../components/ParticleField';
 import {PhoneMockup} from '../components/PhoneMockup';
 import {GlowOrb} from '../components/GlowOrb';
 import {useLayout} from '../utils/useLayout';
+import {CoffeeIcon, PaletteIcon, LeafIcon, SparkleIcon} from '../components/Icons';
 
 export const Scene11_DatePlanning: React.FC = () => {
 	const frame = useCurrentFrame();
@@ -15,9 +16,9 @@ export const Scene11_DatePlanning: React.FC = () => {
 	const phoneSlide = spring({frame: Math.max(0, frame - 10), fps, config: {damping: 12, stiffness: 80, mass: 1.1}});
 
 	const dateIdeas = [
-		{icon: '☕️', title: 'Coffee & Walk', location: 'Blue Bottle, DUMBO', time: 'Sat 10am', delay: 35},
-		{icon: '🎨', title: 'Art Gallery Night', location: 'MoMA PS1', time: 'Fri 7pm', delay: 50},
-		{icon: '🌿', title: 'Botanical Garden', location: 'Brooklyn Botanic', time: 'Sun 2pm', delay: 65},
+		{iconEl: <CoffeeIcon size={20} />, title: 'Coffee & Walk', location: 'Blue Bottle, DUMBO', time: 'Sat 10am', delay: 35},
+		{iconEl: <PaletteIcon size={20} />, title: 'Art Gallery Night', location: 'MoMA PS1', time: 'Fri 7pm', delay: 50},
+		{iconEl: <LeafIcon size={20} />, title: 'Botanical Garden', location: 'Brooklyn Botanic', time: 'Sun 2pm', delay: 65},
 	];
 
 	return (
@@ -59,7 +60,7 @@ export const Scene11_DatePlanning: React.FC = () => {
 								opacity: interpolate(frame, [25, 40], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'}),
 							}}>
 								<div style={{display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6}}>
-									<span style={{fontSize: 14}}>✨</span>
+									<SparkleIcon size={14} color={colors.gold} />
 									<span style={{fontFamily: fonts.sans, fontSize: 10, color: colors.gold, fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: 1}}>AI Pick</span>
 								</div>
 								<div style={{fontFamily: fonts.sans, fontSize: 12, color: colors.textPrimary, lineHeight: 1.4}}>
@@ -77,8 +78,8 @@ export const Scene11_DatePlanning: React.FC = () => {
 										border: `1px solid ${colors.border}`, marginBottom: 8,
 										opacity: cardAnim, transform: `translateY(${interpolate(cardAnim, [0, 1], [20, 0])}px)`,
 									}}>
-										<div style={{width: 44, height: 44, borderRadius: 12, background: `${colors.gold}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, flexShrink: 0}}>
-											{d.icon}
+										<div style={{width: 44, height: 44, borderRadius: 12, background: `${colors.gold}15`, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0}}>
+											{d.iconEl}
 										</div>
 										<div style={{flex: 1}}>
 											<div style={{fontFamily: fonts.sans, fontSize: 14, color: colors.textPrimary, fontWeight: 'bold'}}>{d.title}</div>

@@ -5,6 +5,7 @@ import {ParticleField} from '../components/ParticleField';
 import {PhoneMockup} from '../components/PhoneMockup';
 import {GlowOrb} from '../components/GlowOrb';
 import {useLayout} from '../utils/useLayout';
+import {UserIcon, CameraIcon} from '../components/Icons';
 
 export const Scene05_ProfileBuild: React.FC = () => {
 	const frame = useCurrentFrame();
@@ -17,7 +18,7 @@ export const Scene05_ProfileBuild: React.FC = () => {
 	const avatarScale = spring({frame: Math.max(0, frame - 25), fps, config: {damping: 12, stiffness: 100}});
 
 	const fields = [
-		{label: 'Bio', value: 'Exploring life with intention ✨', delay: 35},
+		{label: 'Bio', value: 'Exploring life with intention', delay: 35},
 		{label: 'Location', value: 'Brooklyn, NY', delay: 45},
 		{label: 'Age', value: '28', delay: 55},
 		{label: 'Looking For', value: 'Meaningful Connection', delay: 65},
@@ -69,7 +70,7 @@ export const Scene05_ProfileBuild: React.FC = () => {
 										<circle cx={40} cy={40} r={38} fill="none" stroke="url(#avGrad)" strokeWidth={2.5} strokeDasharray="8 4" />
 									</svg>
 									<div style={{position: 'absolute', inset: 6, borderRadius: '50%', background: `linear-gradient(135deg, ${colors.gold}30, ${colors.rose}30)`, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-										<span style={{fontSize: 28}}>👤</span>
+										<UserIcon size={28} color={colors.textSecondary} />
 									</div>
 								</div>
 							</div>
@@ -85,7 +86,7 @@ export const Scene05_ProfileBuild: React.FC = () => {
 										display: 'flex', alignItems: 'center', justifyContent: 'center',
 										opacity: p, transform: `scale(${p})`,
 									}}>
-										<span style={{fontSize: i === 0 ? 24 : 18, opacity: i === 0 ? 1 : 0.4}}>{i === 0 ? '📸' : '+'}</span>
+										{i === 0 ? <CameraIcon size={20} color={colors.gold} /> : <span style={{fontSize: 18, opacity: 0.4}}>+</span>}
 									</div>
 								))}
 							</div>
