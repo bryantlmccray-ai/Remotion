@@ -14,6 +14,15 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
         defaultProps={{}}
       />
+      <Composition
+        id="WellnessDemoVertical"
+        component={WellnessDemo}
+        durationInFrames={TOTAL_DURATION}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{}}
+      />
     </>
   );
 };

@@ -3,10 +3,12 @@ import {AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig} from
 import {colors, fonts} from '../utils/colors';
 import {ParticleField} from '../components/ParticleField';
 import {GlowOrb} from '../components/GlowOrb';
+import {useLayout} from '../utils/useLayout';
 
 export const Scene13_CTA: React.FC = () => {
 	const frame = useCurrentFrame();
 	const {fps} = useVideoConfig();
+	const {isVertical} = useLayout();
 
 	const titleScale = spring({frame, fps, config: {damping: 14, stiffness: 80, mass: 1}});
 	const tagProgress = spring({frame: Math.max(0, frame - 25), fps, config: {damping: 14, stiffness: 100}});
@@ -18,7 +20,7 @@ export const Scene13_CTA: React.FC = () => {
 	const shimmerX = interpolate(frame, [50, 110], [-200, 500], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
 
 	// Orbiting hearts
-	const orbitR = 300;
+	const orbitR = isVertical ? 200 : 300;
 	const h1Angle = frame * 1.2 * (Math.PI / 180);
 	const h2Angle = h1Angle + Math.PI;
 
@@ -46,12 +48,12 @@ export const Scene13_CTA: React.FC = () => {
 
 				{/* MONARK */}
 				<div style={{opacity: titleScale, position: 'relative', overflow: 'hidden', marginBottom: 16}}>
-					<h1 style={{fontFamily: fonts.serif, fontSize: 96, fontWeight: 'bold', color: colors.goldLight, letterSpacing: 24, margin: 0}}>MONARK</h1>
+					<h1 style={{fontFamily: fonts.serif, fontSize: isVertical ? 72 : 96, fontWeight: 'bold', color: colors.goldLight, letterSpacing: isVertical ? 16 : 24, margin: 0}}>MONARK</h1>
 					<div style={{position: 'absolute', top: 0, left: `${shimmerX}px`, width: 100, height: '100%', background: `linear-gradient(90deg, transparent, ${colors.goldShimmer}40, transparent)`, transform: 'skewX(-20deg)'}} />
 				</div>
 
 				{/* Tagline */}
-				<p style={{fontFamily: fonts.serif, fontSize: 36, color: colors.textPrimary, margin: '0 0 8px 0', opacity: tagProgress, transform: `translateY(${interpolate(tagProgress, [0, 1], [30, 0])}px)`}}>
+				<p style={{fontFamily: fonts.serif, fontSize: isVertical ? 28 : 36, color: colors.textPrimary, margin: '0 0 8px 0', opacity: tagProgress, transform: `translateY(${interpolate(tagProgress, [0, 1], [30, 0])}px)`, textAlign: 'center', padding: isVertical ? '0 40px' : undefined}}>
 					Your dating journey deserves
 					<br /><span style={{color: colors.gold}}>extraordinary care</span>
 				</p>
@@ -60,12 +62,12 @@ export const Scene13_CTA: React.FC = () => {
 				</p>
 
 				{/* Stats */}
-				<div style={{display: 'flex', gap: 28, marginBottom: 50, opacity: statsProgress}}>
+				<div style={{display: 'flex', gap: isVertical ? 16 : 28, marginBottom: isVertical ? 36 : 50, opacity: statsProgress, flexWrap: isVertical ? 'wrap' : undefined, justifyContent: 'center'}}>
 					{[{num: '50K+', label: 'Active Users'}, {num: '4.9★', label: 'App Rating'}, {num: '95%', label: 'Satisfaction'}].map(({num, label}, i) => {
 						const pillAnim = spring({frame: Math.max(0, frame - 50 - i * 8), fps, config: {damping: 14, stiffness: 140}});
 						return (
-							<div key={label} style={{padding: '20px 36px', borderRadius: 20, background: `${colors.gold}08`, border: `1px solid ${colors.borderBright}`, textAlign: 'center', opacity: pillAnim, transform: `scale(${pillAnim})`}}>
-								<div style={{fontFamily: fonts.serif, fontSize: 42, fontWeight: 'bold', color: colors.gold, lineHeight: 1, marginBottom: 6}}>{num}</div>
+							<div key={label} style={{padding: isVertical ? '16px 28px' : '20px 36px', borderRadius: 20, background: `${colors.gold}08`, border: `1px solid ${colors.borderBright}`, textAlign: 'center', opacity: pillAnim, transform: `scale(${pillAnim})`}}>
+								<div style={{fontFamily: fonts.serif, fontSize: isVertical ? 32 : 42, fontWeight: 'bold', color: colors.gold, lineHeight: 1, marginBottom: 6}}>{num}</div>
 								<div style={{fontFamily: fonts.sans, fontSize: 14, color: colors.textSecondary, letterSpacing: 1}}>{label}</div>
 							</div>
 						);

@@ -5,7 +5,8 @@
   "scripts": {
     "start": "remotion studio",
     "build": "remotion render",
-    "render": "remotion render WellnessDemo out/wellness-demo.mp4 --codec=h264"
+    "render": "remotion render WellnessDemo out/wellness-demo.mp4 --codec=h264",
+    "render:vertical": "remotion render WellnessDemoVertical out/wellness-demo-vertical.mp4 --codec=h264"
   },
   "dependencies": {
     "@remotion/cli": "4.0.250",

@@ -3,10 +3,12 @@ import {AbsoluteFill, interpolate, spring, useCurrentFrame, useVideoConfig} from
 import {colors, fonts} from '../utils/colors';
 import {ParticleField} from '../components/ParticleField';
 import {GlowOrb} from '../components/GlowOrb';
+import {useLayout} from '../utils/useLayout';
 
 export const Scene01_BrandReveal: React.FC = () => {
 	const frame = useCurrentFrame();
 	const {fps} = useVideoConfig();
+	const {isVertical} = useLayout();
 
 	const logoScale = spring({frame, fps, config: {damping: 16, stiffness: 80, mass: 1}});
 	const logoRotation = interpolate(logoScale, [0, 1], [90, 0]);
@@ -64,7 +66,7 @@ export const Scene01_BrandReveal: React.FC = () => {
 				<div style={{opacity: titleProgress, transform: `scale(${interpolate(titleProgress, [0, 1], [0.8, 1])})`, position: 'relative', overflow: 'hidden'}}>
 					<h1 style={{
 						fontFamily: fonts.serif,
-						fontSize: 100,
+						fontSize: isVertical ? 80 : 100,
 						fontWeight: 'bold',
 						color: colors.goldLight,
 						letterSpacing: 24,
@@ -90,7 +92,7 @@ export const Scene01_BrandReveal: React.FC = () => {
 				{/* Tagline */}
 				<p style={{
 					fontFamily: fonts.serif,
-					fontSize: 40,
+					fontSize: isVertical ? 32 : 40,
 					fontStyle: 'italic',
 					color: colors.textSecondary,
 					letterSpacing: 8,
