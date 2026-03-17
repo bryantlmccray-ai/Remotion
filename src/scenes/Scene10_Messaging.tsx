@@ -80,7 +80,7 @@ export const Scene10_Messaging: React.FC = () => {
 											}}>
 												<span style={{
 													fontFamily: fonts.sans, fontSize: 13,
-													color: msg.sent ? colors.bg : colors.textPrimary,
+													color: msg.sent ? colors.primaryForeground : colors.textPrimary,
 													lineHeight: 1.4,
 												}}>
 													{msg.text}
@@ -100,7 +100,7 @@ export const Scene10_Messaging: React.FC = () => {
 							}}>
 								<span style={{fontFamily: fonts.sans, fontSize: 13, color: colors.textMuted, flex: 1}}>Type a message...</span>
 								<div style={{width: 28, height: 28, borderRadius: 14, background: colors.gradientGold, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-									<span style={{fontSize: 12, color: colors.bg}}>→</span>
+									<span style={{fontSize: 12, color: colors.primaryForeground}}>→</span>
 								</div>
 							</div>
 						</div>

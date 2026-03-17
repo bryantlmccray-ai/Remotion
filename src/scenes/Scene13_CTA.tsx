@@ -78,7 +78,7 @@ export const Scene13_CTA: React.FC = () => {
 				<div style={{transform: `scale(${btnPulse})`, opacity: btnProgress, position: 'relative'}}>
 					<div style={{position: 'absolute', inset: -10, borderRadius: 50, background: colors.gradientGold, opacity: btnGlow * 0.3, filter: 'blur(20px)'}} />
 					<div style={{position: 'relative', background: colors.gradientGold, borderRadius: 50, padding: '22px 64px', boxShadow: `0 8px 40px ${colors.gold}${Math.round(btnGlow * 255).toString(16).padStart(2, '0')}`}}>
-						<span style={{fontFamily: fonts.sans, fontSize: 20, fontWeight: 'bold', color: colors.bg, letterSpacing: 3, textTransform: 'uppercase'}}>Begin Your Journey</span>
+						<span style={{fontFamily: fonts.sans, fontSize: 20, fontWeight: 'bold', color: colors.primaryForeground, letterSpacing: 3, textTransform: 'uppercase'}}>Begin Your Journey</span>
 					</div>
 				</div>
 

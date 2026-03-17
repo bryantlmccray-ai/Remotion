@@ -32,9 +32,9 @@ export const PhoneMockup: React.FC<PhoneMockupProps> = ({
 				overflow: 'hidden',
 				boxShadow: `
 					0 0 0 ${border}px ${colors.bgCard},
-					0 40px 120px rgba(0,0,0,0.8),
-					0 0 80px ${glowColor}25,
-					inset 0 1px 0 rgba(255,255,255,0.1)
+					0 40px 120px rgba(100,80,60,0.25),
+					0 0 80px ${glowColor}15,
+					inset 0 1px 0 rgba(255,255,255,0.3)
 				`,
 				...style,
 			}}

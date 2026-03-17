@@ -48,12 +48,12 @@ export const Scene02_AppDownload: React.FC = () => {
 					<PhoneMockup scale={layout.phoneScale}>
 						<div style={{width: '100%', height: '100%', background: `linear-gradient(180deg, ${colors.bgCard} 0%, ${colors.bg} 100%)`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', opacity: screenGlow}}>
 							<div style={{width: 80, height: 80, borderRadius: 20, background: colors.gradientGold, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 16, boxShadow: `0 8px 30px ${colors.gold}40`}}>
-								<span style={{fontFamily: fonts.serif, fontSize: 32, fontWeight: 'bold', color: colors.bg}}>MA</span>
+								<span style={{fontFamily: fonts.serif, fontSize: 32, fontWeight: 'bold', color: colors.primaryForeground}}>MA</span>
 							</div>
 							<span style={{fontFamily: fonts.serif, fontSize: 22, color: colors.goldLight, letterSpacing: 4}}>MONARK</span>
 							<span style={{fontFamily: fonts.serif, fontSize: 13, color: colors.textMuted, fontStyle: 'italic', marginTop: 6}}>Date well.</span>
 							<div style={{marginTop: 40, padding: '14px 48px', borderRadius: 30, background: colors.gradientGold, opacity: interpolate(frame, [70, 85], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'})}}>
-								<span style={{fontFamily: fonts.sans, fontSize: 16, fontWeight: 'bold', color: colors.bg}}>GET STARTED</span>
+								<span style={{fontFamily: fonts.sans, fontSize: 16, fontWeight: 'bold', color: colors.primaryForeground}}>GET STARTED</span>
 							</div>
 						</div>
 					</PhoneMockup>

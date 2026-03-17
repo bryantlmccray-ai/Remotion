@@ -20,7 +20,7 @@ export const GlowOrb: React.FC<GlowOrbProps> = ({
 }) => {
 	const frame = useCurrentFrame();
 	const scale = pulse ? 1 + 0.1 * Math.sin((frame + delay) * 0.04) : 1;
-	const opacity = 0.2 + 0.1 * Math.sin((frame + delay) * 0.03);
+	const opacity = 0.12 + 0.06 * Math.sin((frame + delay) * 0.03);
 
 	return (
 		<div

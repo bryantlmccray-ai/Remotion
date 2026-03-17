@@ -88,7 +88,7 @@ export const Scene08_AICoaching: React.FC = () => {
 								marginTop: 12, padding: '10px 0', borderRadius: 20, background: colors.gradientGold, textAlign: 'center',
 								opacity: spring({frame: Math.max(0, frame - 130), fps, config: {damping: 14, stiffness: 140}}),
 							}}>
-								<span style={{fontFamily: fonts.sans, fontSize: 13, fontWeight: 'bold', color: colors.bg}}>VIEW FULL INSIGHTS</span>
+								<span style={{fontFamily: fonts.sans, fontSize: 13, fontWeight: 'bold', color: colors.primaryForeground}}>VIEW FULL INSIGHTS</span>
 							</div>
 						</div>
 					</PhoneMockup>

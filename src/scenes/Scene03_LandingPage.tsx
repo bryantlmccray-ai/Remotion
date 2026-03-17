@@ -58,7 +58,7 @@ export const Scene03_CreateAccount: React.FC = () => {
 							<FormField label="Password" value="••••••••" opacity={field3} />
 
 							<div style={{marginTop: 24, padding: '14px 0', borderRadius: 30, background: colors.gradientGold, textAlign: 'center', opacity: field4, transform: `translateY(${interpolate(field4, [0, 1], [20, 0])}px)`}}>
-								<span style={{fontFamily: fonts.sans, fontSize: 15, fontWeight: 'bold', color: colors.bg}}>CREATE ACCOUNT</span>
+								<span style={{fontFamily: fonts.sans, fontSize: 15, fontWeight: 'bold', color: colors.primaryForeground}}>CREATE ACCOUNT</span>
 							</div>
 
 							<div style={{display: 'flex', alignItems: 'center', gap: 12, margin: '20px 0', opacity: field4}}>

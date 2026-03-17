@@ -94,7 +94,7 @@ export const Scene11_DatePlanning: React.FC = () => {
 								marginTop: 12, padding: '12px 0', borderRadius: 24, background: colors.gradientGold, textAlign: 'center',
 								opacity: spring({frame: Math.max(0, frame - 90), fps, config: {damping: 14, stiffness: 140}}),
 							}}>
-								<span style={{fontFamily: fonts.sans, fontSize: 14, fontWeight: 'bold', color: colors.bg}}>PLAN THIS DATE</span>
+								<span style={{fontFamily: fonts.sans, fontSize: 14, fontWeight: 'bold', color: colors.primaryForeground}}>PLAN THIS DATE</span>
 							</div>
 						</div>
 					</PhoneMockup>
